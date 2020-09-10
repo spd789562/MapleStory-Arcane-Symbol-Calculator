@@ -216,6 +216,10 @@ export default function Home() {
     <Layout className="layout">
       <Head>
         <title>秘法符文計算機</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
       </Head>
       <Header className={styles.header}>
         <h2>秘法符文計算機</h2>
