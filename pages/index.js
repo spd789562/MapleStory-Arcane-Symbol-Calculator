@@ -126,11 +126,10 @@ const ResultTable = ({ getFieldsValue }) => {
   const FinialData = arcaneLocals.map(({ name, key, coin }) => {
     const {
       [key]: currentCount,
-      [`${key}-daily`]: dailySymbol,
-      [`${key}-coin`]: dailyCoin,
+      [`${key}-daily`]: dailySymbol = 0,
+      [`${key}-coin`]: dailyCoin = 0,
     } = getFieldsValue()
     const dailyTotalCount = dailySymbol + (coin ? dailyCoin / coin.unit : 0)
-
     const subTableData =
       +!!dailyTotalCount !== 0 && +!!currentCount !== 0
         ? Object.values(ArcMapping)
