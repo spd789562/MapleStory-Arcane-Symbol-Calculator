@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import {
@@ -23,10 +24,11 @@ import ArcInfo from '../src/mapping/arcane-info'
 import styles from '../styles/Home.module.css'
 
 import moment from 'moment'
+import { Fragment } from 'react'
 
 const { Header, Content, Footer } = Layout
 
-const { Line } = dynamic(() => import('@ant-design/charts'), {
+const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
 // Vanishing Journey
@@ -65,7 +67,7 @@ const arcMatching = (arcane) =>
       arcane < (arr[index + 1] ? arr[index + 1].stack : arc.stack + 1)
   ) || { level: 0, stack: 0, count: 0 }
 
-const toRowData = ({ level, currentCount, dailyTotalCount }) => {
+const toRowData = ({ key, level, currentCount, dailyTotalCount }) => {
   const TargetArcane = ArcMapping[level]
   const currentArcane = arcMatching(currentCount)
   const remainDays = Math.ceil(
@@ -83,10 +85,13 @@ const toRowData = ({ level, currentCount, dailyTotalCount }) => {
     },
     0
   )
+  const completeDate = moment().add(remainDays, 'days').format('YYYY-MM-DD')
   return {
+    key,
     level,
+    completeDate,
     currentLevel: currentArcane.level,
-    completeDate:
+    completeDateText:
       moment().add(remainDays, 'days').format('YYYY-MM-DD') +
       `(${remainDays}天)`,
     accumulativeNeed: TargetArcane.stack - currentCount,
@@ -138,6 +143,7 @@ const ResultTable = ({ getFieldsValue }) => {
             })
             .map(({ level }) =>
               toRowData({
+                key,
                 level,
                 currentCount,
                 dailyTotalCount,
@@ -146,11 +152,11 @@ const ResultTable = ({ getFieldsValue }) => {
         : []
     return {
       ...toRowData({
+        key,
         level: 20,
         currentCount,
         dailyTotalCount,
       }),
-      key,
       dailyTotalCount,
       currentCount,
       name,
@@ -159,54 +165,94 @@ const ResultTable = ({ getFieldsValue }) => {
       ...(subTableData.length ? { children: subTableData } : {}),
     }
   })
+  const chartData = Object.entries(
+    FinialData.filter(({ currentLevel }) => currentLevel).reduce((acc, inc) => {
+      acc['2020-09-10'] =
+        (acc['2020-09-10'] || 0) + 30 + (inc.currentLevel - 1) * 10
+      if (inc.children) {
+        inc.children.forEach(
+          ({ completeDate, level }) =>
+            (acc[completeDate] = (acc[completeDate] || 0) + 10)
+        )
+      }
+      return acc
+    }, {})
+  )
+    .map(([date, value]) => ({ date, value }))
+    .sort((a, b) => moment(a.date).unix() - moment(b.date).unix())
+    .reduce((acc, inc, index, arr) => {
+      if (!acc.length) acc = [...arr]
+      if (index !== 0) acc[index].value += arr[index - 1].value || 0
+      return acc
+    }, [])
   return (
-    <Table
-      columns={[
-        {
-          title: '地區',
-          dataIndex: 'name',
-          key: 'name',
-          width: 120,
-          align: 'center',
-        },
-        {
-          title: '等級',
-          dataIndex: 'level',
-          key: 'level',
-          align: 'center',
-          width: 60,
-          render: renderIfMaxLevel,
-        },
-        {
-          title: '達成日期(天數)',
-          dataIndex: 'completeDate',
-          key: 'completeDate',
-          align: 'center',
-          width: 190,
-          render: renderEmptyIfMaxLevel,
-        },
-        {
-          title: '累計符文',
-          dataIndex: 'accumulativeNeed',
-          key: 'accumulativeNeed',
-          align: 'center',
-          width: 100,
-          render: renderEmptyIfMaxLevel,
-        },
-        {
-          title: '累計楓幣',
-          dataIndex: 'totalCost',
-          key: 'totalCost',
-          align: 'center',
-          width: 120,
-          render: renderEmptyIfMaxLevel,
-        },
-      ]}
-      dataSource={FinialData}
-      pagination={false}
-      scroll={{ x: '100%' }}
-      sticky
-    ></Table>
+    <Fragment>
+      <Table
+        columns={[
+          {
+            title: '地區',
+            dataIndex: 'name',
+            key: 'name',
+            width: 120,
+            align: 'center',
+          },
+          {
+            title: '等級',
+            dataIndex: 'level',
+            key: 'level',
+            align: 'center',
+            width: 60,
+            render: renderIfMaxLevel,
+          },
+          {
+            title: '達成日期(天數)',
+            dataIndex: 'completeDateText',
+            key: 'completeDateText',
+            align: 'center',
+            width: 190,
+            render: renderEmptyIfMaxLevel,
+          },
+          {
+            title: '累計符文',
+            dataIndex: 'accumulativeNeed',
+            key: 'accumulativeNeed',
+            align: 'center',
+            width: 100,
+            render: renderEmptyIfMaxLevel,
+          },
+          {
+            title: '累計楓幣',
+            dataIndex: 'totalCost',
+            key: 'totalCost',
+            align: 'center',
+            width: 120,
+            render: renderEmptyIfMaxLevel,
+          },
+        ]}
+        dataSource={FinialData}
+        pagination={false}
+        scroll={{ x: '100%' }}
+        sticky
+      ></Table>
+      <Suspense fallback={<span></span>}>
+        <Line
+          {...{
+            title: {
+              visible: true,
+              text: 'arc 趨勢圖',
+            },
+            forceFit: true,
+            data: chartData,
+            padding: 'auto',
+            xField: 'date',
+            yField: 'value',
+            xAxis: {
+              type: 'dateTime',
+            },
+          }}
+        ></Line>
+      </Suspense>
+    </Fragment>
   )
 }
 
