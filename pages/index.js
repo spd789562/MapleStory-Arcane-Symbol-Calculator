@@ -453,7 +453,9 @@ export default function Home() {
                     <Card>
                       <Statistic
                         title="屬性加成量"
-                        value={statisticData.total * 100}
+                        value={
+                          (statisticData.total + statisticData.holded * 2) * 100
+                        }
                       />
                     </Card>
                   </Col>
