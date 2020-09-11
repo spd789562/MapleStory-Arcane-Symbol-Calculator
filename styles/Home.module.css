@@ -1,21 +1,36 @@
 .header {
   background-color: #c1c8f1;
+}
+.header-container {
   background-image: url('/harmony_spirit.png');
-  background-position: calc(100% - 50px) center;
+  background-position: 100% center;
   background-size: auto 100%;
   background-repeat: no-repeat;
 }
-.header,
+.content {
+  padding-top: 0.5rem;
+}
+.header-container,
 .content,
 .footer {
   padding-left: 3rem;
   padding-right: 3rem;
 }
 @media screen and (max-width: 768px) {
-  .header,
+  .header-container,
   .content,
   .footer {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header-container,
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }

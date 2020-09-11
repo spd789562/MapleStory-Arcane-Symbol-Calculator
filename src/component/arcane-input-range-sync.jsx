@@ -21,7 +21,7 @@ const Level = ({ value: arcane, onChange }) => {
       max={20}
       step={arcMatching.count}
       value={currentArcane.level}
-      style={{ width: 70 }}
+      style={{ width: 60 }}
       onChange={(value) => {
         onChange(
           value ? arcane - currentArcane.stack + ArcMapping[value].stack : 0
@@ -53,12 +53,7 @@ const Exp = ({ value: arcane, onChange }) => {
 
 const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
   <Fragment>
-    <Form.Item
-      label="當前等級"
-      labelCol={{ xs: 6, sm: 8 }}
-      wrapperCol={{ xs: 18, sm: 16 }}
-      style={{ marginBottom: 0 }}
-    >
+    <Form.Item label="Lv." style={{ marginBottom: 0 }}>
       <Input.Group compact>
         <Form.Item noStyle>
           <Level value={value} onChange={onChange}></Level>

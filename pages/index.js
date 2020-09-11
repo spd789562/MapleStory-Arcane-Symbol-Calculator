@@ -7,13 +7,14 @@ import {
   Input,
   Radio,
   InputNumber,
-  Slider,
   Row,
   Col,
   Table,
   BackTop,
   Statistic,
   Card,
+  Avatar,
+  Space,
 } from 'antd'
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 // import { Line } from '@ant-design/charts'
@@ -237,7 +238,6 @@ const ResultTable = ({ getFieldsValue }) => {
   //   }
   //   return acc
   // }, {})
-  console.log(testData)
   return (
     <Fragment>
       <Table
@@ -321,16 +321,13 @@ export default function Home() {
         />
       </Head>
       <Header className={styles.header}>
-        <h2>秘法符文計算機</h2>
+        <div className={styles['header-container']}>
+          <h2>秘法符文計算機</h2>
+        </div>
       </Header>
       <BackTop />
       <Content className={styles.content}>
-        <Form
-          form={form}
-          initialValues={{}}
-          labelCol={{ xs: 6, sm: 8 }}
-          wrapperCol={{ xs: 18, sm: 16 }}
-        >
+        <Form form={form} initialValues={{}}>
           {/* <Form.Item label="職業" name="role">
             <Radio.Group buttonStyle="solid">
               <Radio.Button value="1">一般</Radio.Button>
@@ -338,43 +335,62 @@ export default function Home() {
               <Radio.Button value="3">惡魔復仇者</Radio.Button>
             </Radio.Group>
           </Form.Item> */}
-          {arcaneLocals.map(({ name, key, coin }) => (
-            <Row key={key}>
-              <Col span={24}>
-                <div
-                  className="ant-row ant-form-item"
-                  style={{ marginBottom: 0 }}
-                >
-                  <div className="ant-col ant-form-item-label">
-                    <label className="" title={name}>
-                      {name}
-                    </label>
-                  </div>
-                </div>
+          <Row gutter={[8, 8]}>
+            {arcaneLocals.map(({ name, key, coin }) => (
+              <Col key={key} span={24} md={12}>
+                <Card>
+                  <Card.Meta
+                    avatar={
+                      <Avatar src={`/arcane-symbol-${key}.png`} alt={key} />
+                    }
+                    title={
+                      <Fragment>
+                        {name}&nbsp;
+                        <Form.Item
+                          name={key}
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <ArcaneInputRangeSync name={key} />
+                        </Form.Item>
+                      </Fragment>
+                    }
+                    description={
+                      <Space>
+                        {/* <Form.Item name={key} wrapperCol={{ xs: 24, sm: 24 }}>
+                          <ArcaneInputRangeSync name={key} />
+                        </Form.Item> */}
+                        <Form.Item
+                          name={`${key}-daily`}
+                          label="每日可獲得數"
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <InputNumber min={0} defaultValue={0} />
+                        </Form.Item>
+                        {coin && (
+                          <Form.Item
+                            name={`${key}-coin`}
+                            label={
+                              <Avatar
+                                src={`/${key}-coin.png`}
+                                alt={`${key}-coin`}
+                              />
+                            }
+                            style={{ display: 'inline-flex', marginBottom: 0 }}
+                          >
+                            <InputNumber
+                              min={0}
+                              max={coin.dailyMax || Infinity}
+                              defaultValue={0}
+                            />
+                          </Form.Item>
+                        )}
+                      </Space>
+                    }
+                  />
+                </Card>
               </Col>
-              <Col span={24} sm={12} md={8}>
-                <Form.Item name={key} wrapperCol={{ xs: 24, sm: 24 }}>
-                  <ArcaneInputRangeSync name={key} />
-                </Form.Item>
-              </Col>
-              <Col span={24} sm={12} md={8}>
-                <Form.Item name={`${key}-daily`} label="每日可獲得數">
-                  <InputNumber min={0} defaultValue={0} />
-                </Form.Item>
-              </Col>
-              {coin && (
-                <Col span={24} sm={12} md={8}>
-                  <Form.Item name={`${key}-coin`} label="每日硬幣數">
-                    <InputNumber
-                      min={0}
-                      max={coin.dailyMax || Infinity}
-                      defaultValue={0}
-                    />
-                  </Form.Item>
-                </Col>
-              )}
-            </Row>
-          ))}
+            ))}
+          </Row>
           <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
             {({ getFieldsValue }) => {
               const statisticData = arcaneLocals
@@ -400,7 +416,6 @@ export default function Home() {
                 })
                 .reduce(
                   (acc, inc) => {
-                    console.log(moment(inc.completeDate).isValid())
                     acc.completeDate = acc.completeDate
                       ? moment(inc.completeDate).isValid() &&
                         moment(inc.completeDate).isAfter(
@@ -423,10 +438,9 @@ export default function Home() {
                   },
                   { total: 0, holded: 0, remainDays: 0 }
                 )
-              console.log(statisticData.remainDays)
               return (
-                <Row gutter={[16, 8]}>
-                  <Col xs={24} sm={8}>
+                <Row gutter={[8, 8]}>
+                  <Col xs={24} sm={12} md={6}>
                     <Card>
                       <Statistic
                         title="Arc"
@@ -437,7 +451,7 @@ export default function Home() {
                       />
                     </Card>
                   </Col>
-                  <Col xs={24} sm={8}>
+                  <Col xs={24} sm={12} md={6}>
                     <Card>
                       <Statistic
                         title="屬性加成量"
@@ -445,7 +459,7 @@ export default function Home() {
                       />
                     </Card>
                   </Col>
-                  <Col xs={24} sm={8}>
+                  <Col xs={24} sm={24} md={12}>
                     <Card>
                       <Statistic
                         title="完成日期(天數)"
@@ -457,8 +471,9 @@ export default function Home() {
                             : '無'
                         }
                         suffix={
-                          statisticData.remainDays &&
-                          `(${statisticData.remainDays}天)`
+                          statisticData.remainDays
+                            ? `(${statisticData.remainDays}天)`
+                            : ''
                         }
                       />
                     </Card>
