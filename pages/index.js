@@ -12,11 +12,11 @@ import {
   Col,
   Table,
   BackTop,
+  Statistic,
+  Card,
 } from 'antd'
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 // import { Line } from '@ant-design/charts'
-
-import formFieldAreUpdated from '../src/util/form-fields-are-updated'
 
 import ArcMapping from '../src/mapping/arcane'
 import ArcInfo from '../src/mapping/arcane-info'
@@ -91,6 +91,7 @@ const toRowData = ({ key, level, currentCount, dailyTotalCount }) => {
     level,
     completeDate,
     currentLevel: currentArcane.level,
+    remainDays,
     completeDateText:
       moment().add(remainDays, 'days').format('YYYY-MM-DD') +
       `(${remainDays}天)`,
@@ -143,7 +144,7 @@ const ResultTable = ({ getFieldsValue }) => {
             })
             .map(({ level }) =>
               toRowData({
-                key,
+                key: `${key}-${level}`,
                 level,
                 currentCount,
                 dailyTotalCount,
@@ -161,30 +162,82 @@ const ResultTable = ({ getFieldsValue }) => {
       currentCount,
       name,
       coin,
-      fieldKey: key,
       ...(subTableData.length ? { children: subTableData } : {}),
     }
   })
-  const chartData = Object.entries(
-    FinialData.filter(({ currentLevel }) => currentLevel).reduce((acc, inc) => {
-      acc['2020-09-10'] =
-        (acc['2020-09-10'] || 0) + 30 + (inc.currentLevel - 1) * 10
-      if (inc.children) {
-        inc.children.forEach(
-          ({ completeDate, level }) =>
-            (acc[completeDate] = (acc[completeDate] || 0) + 10)
-        )
-      }
-      return acc
-    }, {})
+  const today = moment().format('YYYY-MM-DD')
+
+  const chartData = Object.values(
+    FinialData.filter(({ currentLevel }) => currentLevel).reduce(
+      (acc, inc) => {
+        acc.data.push({
+          date: today,
+          type: inc.key,
+          value: (inc.currentLevel + 2) * 10,
+        })
+        acc.total[today] = (acc.total[today] || 0) + (inc.currentLevel + 2) * 10
+        if (inc.children) {
+          inc.children.forEach(({ completeDate }) => {
+            acc.data.push({
+              date: completeDate,
+              type: inc.key,
+              value: 10,
+            })
+            acc.total[completeDate] = (acc.total[completeDate] || 0) + 10
+          })
+        }
+        return acc
+      },
+      { data: [], total: {} }
+    )
   )
-    .map(([date, value]) => ({ date, value }))
+    .reduce(
+      (acc, inc) =>
+        Array.isArray(inc)
+          ? [...inc, ...acc]
+          : [
+              ...Object.entries(inc).map(([date, value]) => ({
+                date,
+                type: '總和',
+                value,
+              })),
+              ...acc,
+            ],
+      []
+    )
     .sort((a, b) => moment(a.date).unix() - moment(b.date).unix())
-    .reduce((acc, inc, index, arr) => {
-      if (!acc.length) acc = [...arr]
-      if (index !== 0) acc[index].value += arr[index - 1].value || 0
-      return acc
-    }, [])
+    .reduce(
+      (acc, inc) => {
+        if (!acc.data[inc.date]) acc.data[inc.date] = { ...acc.stack }
+        acc.stack[inc.type] = (acc.stack[inc.type] || 0) + inc.value
+        acc.data[inc.date][inc.type] = acc.stack[inc.type]
+        return acc
+      },
+      { data: {}, stack: {} }
+    ).data
+  const testData = Object.entries(chartData)
+    .map(([date, data]) =>
+      Object.entries(data).map(([type, value]) => ({
+        type,
+        value,
+        date,
+      }))
+    )
+    .reduce((acc, inc) => acc.concat(inc), [])
+  // .reduce((acc, inc, index, arr) => {
+  //   if (!acc.data) {
+  //     acc.data = arr
+  //     acc.stack = {}
+  //   }
+  //   if (!acc.stack[inc.type]) {
+  //     acc.stack[inc.type] = inc.value
+  //   } else {
+  //     acc.stack[inc.type] += inc.value
+  //     acc.data[index].value = acc.stack[inc.type]
+  //   }
+  //   return acc
+  // }, {})
+  console.log(testData)
   return (
     <Fragment>
       <Table
@@ -234,22 +287,24 @@ const ResultTable = ({ getFieldsValue }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      <Line
+      {/* <Line
         {...{
           title: {
             visible: true,
             text: 'arc 趨勢圖',
           },
           forceFit: true,
-          data: chartData,
+          data: testData,
           padding: 'auto',
           xField: 'date',
           yField: 'value',
+          seriesField: 'type',
           xAxis: {
             type: 'dateTime',
           },
+          legend: { position: 'right-top' },
         }}
-      ></Line>
+      ></Line> */}
     </Fragment>
   )
 }
@@ -290,8 +345,8 @@ export default function Home() {
                   className="ant-row ant-form-item"
                   style={{ marginBottom: 0 }}
                 >
-                  <div class="ant-col ant-form-item-label">
-                    <label class="" title={name}>
+                  <div className="ant-col ant-form-item-label">
+                    <label className="" title={name}>
                       {name}
                     </label>
                   </div>
@@ -320,6 +375,98 @@ export default function Home() {
               )}
             </Row>
           ))}
+          <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
+            {({ getFieldsValue }) => {
+              const statisticData = arcaneLocals
+                .map(({ name, key, coin }) => {
+                  const {
+                    [key]: currentCount,
+                    [`${key}-daily`]: dailySymbol = 0,
+                    [`${key}-coin`]: dailyCoin = 0,
+                  } = getFieldsValue()
+                  const dailyTotalCount =
+                    dailySymbol + (coin ? dailyCoin / coin.unit : 0)
+                  const { completeDate, remainDays } = toRowData({
+                    key,
+                    level: 20,
+                    currentCount,
+                    dailyTotalCount,
+                  })
+                  return {
+                    level: arcMatching(currentCount).level || 0,
+                    completeDate,
+                    remainDays,
+                  }
+                })
+                .reduce(
+                  (acc, inc) => {
+                    console.log(moment(inc.completeDate).isValid())
+                    acc.completeDate = acc.completeDate
+                      ? moment(inc.completeDate).isValid() &&
+                        moment(inc.completeDate).isAfter(
+                          acc.completeDate,
+                          'days'
+                        )
+                        ? inc.completeDate
+                        : acc.completeDate
+                      : moment(inc.completeDate).isValid()
+                      ? inc.completeDate
+                      : undefined
+                    acc.total += inc.level
+                    acc.holded += inc.level !== 0 ? 1 : 0
+                    acc.remainDays =
+                      inc.remainDays !== Infinity &&
+                      inc.remainDays > acc.remainDays
+                        ? inc.remainDays
+                        : acc.remainDays
+                    return acc
+                  },
+                  { total: 0, holded: 0, remainDays: 0 }
+                )
+              console.log(statisticData.remainDays)
+              return (
+                <Row gutter={[16, 8]}>
+                  <Col xs={24} sm={8}>
+                    <Card>
+                      <Statistic
+                        title="Arc"
+                        value={
+                          statisticData.total * 10 + statisticData.holded * 20
+                        }
+                        suffix={`/ ${statisticData.holded * 220}`}
+                      />
+                    </Card>
+                  </Col>
+                  <Col xs={24} sm={8}>
+                    <Card>
+                      <Statistic
+                        title="屬性加成量"
+                        value={statisticData.total * 100}
+                      />
+                    </Card>
+                  </Col>
+                  <Col xs={24} sm={8}>
+                    <Card>
+                      <Statistic
+                        title="完成日期(天數)"
+                        value={
+                          statisticData.total
+                            ? statisticData.remainDays === 0
+                              ? '永遠完成不了'
+                              : statisticData.completeDate
+                            : '無'
+                        }
+                        suffix={
+                          statisticData.remainDays &&
+                          `(${statisticData.remainDays}天)`
+                        }
+                      />
+                    </Card>
+                  </Col>
+                </Row>
+              )
+            }}
+          </Form.Item>
           <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
             {({ getFieldsValue }) => (
               <ResultTable getFieldsValue={getFieldsValue} />
