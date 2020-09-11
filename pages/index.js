@@ -343,22 +343,20 @@ export default function Home() {
                     avatar={
                       <Avatar src={`/arcane-symbol-${key}.png`} alt={key} />
                     }
-                    title={
-                      <Fragment>
-                        {name}&nbsp;
-                        <Form.Item
-                          name={key}
-                          style={{ display: 'inline-flex', marginBottom: 0 }}
-                        >
-                          <ArcaneInputRangeSync name={key} />
-                        </Form.Item>
-                      </Fragment>
-                    }
+                    title={<Fragment>{name}</Fragment>}
                     description={
-                      <Space>
+                      <Fragment>
                         {/* <Form.Item name={key} wrapperCol={{ xs: 24, sm: 24 }}>
                           <ArcaneInputRangeSync name={key} />
                         </Form.Item> */}
+                        <Col span={24}>
+                          <Form.Item
+                            name={key}
+                            style={{ display: 'inline-flex', marginBottom: 0 }}
+                          >
+                            <ArcaneInputRangeSync name={key} />
+                          </Form.Item>
+                        </Col>
                         <Form.Item
                           name={`${key}-daily`}
                           label="每日可獲得數"
@@ -384,7 +382,7 @@ export default function Home() {
                             />
                           </Form.Item>
                         )}
-                      </Space>
+                      </Fragment>
                     }
                   />
                 </Card>

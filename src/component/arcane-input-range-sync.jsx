@@ -53,11 +53,12 @@ const Exp = ({ value: arcane, onChange }) => {
 
 const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
   <Fragment>
-    <Form.Item label="Lv." style={{ marginBottom: 0 }}>
-      <Input.Group compact>
+    <Form.Item label="Lv / Exp" style={{ marginBottom: 0 }}>
+      <Input.Group>
         <Form.Item noStyle>
           <Level value={value} onChange={onChange}></Level>
         </Form.Item>
+        &nbsp;&nbsp;/&nbsp;&nbsp;
         <Form.Item noStyle>
           <Exp value={value} onChange={onChange}></Exp>
         </Form.Item>
