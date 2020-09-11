@@ -234,24 +234,22 @@ const ResultTable = ({ getFieldsValue }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      <Suspense fallback={<span></span>}>
-        <Line
-          {...{
-            title: {
-              visible: true,
-              text: 'arc 趨勢圖',
-            },
-            forceFit: true,
-            data: chartData,
-            padding: 'auto',
-            xField: 'date',
-            yField: 'value',
-            xAxis: {
-              type: 'dateTime',
-            },
-          }}
-        ></Line>
-      </Suspense>
+      <Line
+        {...{
+          title: {
+            visible: true,
+            text: 'arc 趨勢圖',
+          },
+          forceFit: true,
+          data: chartData,
+          padding: 'auto',
+          xField: 'date',
+          yField: 'value',
+          xAxis: {
+            type: 'dateTime',
+          },
+        }}
+      ></Line>
     </Fragment>
   )
 }
