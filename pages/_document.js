@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-import { GOOGlE_AD_ID } from '../local.config'
+import { GOOGlE_AD_ID } from '../src/config'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

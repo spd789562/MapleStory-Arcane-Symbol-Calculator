@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { GOOGlE_AD_ID, GOOGlE_AD_SLOT } from '../../local.config'
+import { GOOGlE_AD_ID, GOOGlE_AD_SLOT } from '../config'
 
 const GoogleAd = () => {
   useEffect(() => {
