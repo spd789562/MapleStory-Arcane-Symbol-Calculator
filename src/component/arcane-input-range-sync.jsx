@@ -53,27 +53,28 @@ const Exp = ({ value: arcane, onChange }) => {
 
 const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
   <Fragment>
-    <Form.Item
-      label={
-        <Tooltip title="符文等級 / 當前經驗值">
+    <Tooltip title="符文等級 / 當前經驗值">
+      <Form.Item
+        label={
           <Avatar
             src={`/arcane-symbol-${name}.png`}
             alt="符文等級 / 當前經驗值"
+            style={{ cursor: 'pointer' }}
           />
-        </Tooltip>
-      }
-      style={{ marginBottom: 0 }}
-    >
-      <Input.Group>
-        <Form.Item noStyle>
-          <Level value={value} onChange={onChange}></Level>
-        </Form.Item>
-        &nbsp;&nbsp;/&nbsp;&nbsp;
-        <Form.Item noStyle>
-          <Exp value={value} onChange={onChange}></Exp>
-        </Form.Item>
-      </Input.Group>
-    </Form.Item>
+        }
+        style={{ display: 'inline-flex', marginBottom: 0 }}
+      >
+        <Input.Group>
+          <Form.Item noStyle>
+            <Level value={value} onChange={onChange}></Level>
+          </Form.Item>
+          &nbsp;&nbsp;/&nbsp;&nbsp;
+          <Form.Item noStyle>
+            <Exp value={value} onChange={onChange}></Exp>
+          </Form.Item>
+        </Input.Group>
+      </Form.Item>
+    </Tooltip>
     <Form.Item name={[name, 'count']} noStyle>
       <Slider
         max={2679}

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Fragment } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import {
@@ -27,7 +27,6 @@ import ArcInfo from '../src/mapping/arcane-info'
 import styles from '../styles/Home.module.css'
 
 import moment from 'moment'
-import { Fragment } from 'react'
 
 const { Header, Content, Footer } = Layout
 
@@ -58,13 +57,19 @@ const arcaneLocals = [
     name: '拉契爾恩',
     key: 'lachelein',
     daily: 4,
-    coin: { name: '毀夢者', unit: 30, dailyMax: 500 },
+    coin: {
+      name: '毀夢者',
+      unit: 30,
+      basic: 24,
+      dailyMax: 500,
+      desc: `毀夢者: 最多可獲得 ${500} 個, ${30} 個可兌換 1 個符文, 已自動計入雕像對話保底 24 個`,
+    },
   },
   {
     name: '阿爾卡納',
     key: 'arcana',
     daily: 8,
-    coin: { name: '精靈救援者', unit: 3, dailyMax: 30 },
+    coin: { name: '精靈救援者', unit: 3, basic: 0, dailyMax: 30 },
   },
   { name: '魔菈斯', daily: 8, key: 'morass' },
   { name: '艾斯佩拉', daily: 8, key: 'esfera' },
@@ -368,91 +373,114 @@ export default function Home() {
                         <ArcaneInputRangeSync name={key} />
                       </Form.Item>
                     </Col>
+                    <Col span={24}>
+                      <h4>每日符文獲取來源:</h4>
+                    </Col>
                     <Col span={12}>
-                      <Form.Item
-                        name={[key, 'quest']}
-                        label={
-                          <Tooltip
-                            title={`每日任務: 此地區每日可獲得 ${daily} 個`}
-                          >
+                      <Tooltip title={`每日任務: 此地區每日可獲得 ${daily} 個`}>
+                        <Form.Item
+                          name={[key, 'quest']}
+                          label={
                             <Avatar
                               shape="square"
                               src="/daily.png"
                               alt="daily"
+                              style={{ cursor: 'pointer' }}
                             />
-                          </Tooltip>
-                        }
-                        style={{ display: 'inline-flex', marginBottom: 0 }}
-                      >
-                        <Switch checkedChildren={daily} unCheckedChildren="0" />
-                      </Form.Item>
-                    </Col>
-                    {pquest && (
-                      <Col span={12}>
-                        <Form.Item
-                          name={[key, 'party']}
-                          label={
-                            <Tooltip
-                              title={`${pquest.name}: 最多可獲得 ${
-                                pquest.count || pquest.dailyMax
-                              } 個`}
-                            >
-                              組隊任務
-                            </Tooltip>
                           }
                           style={{ display: 'inline-flex', marginBottom: 0 }}
                         >
-                          {pquest.count ? (
-                            <Switch
-                              checkedChildren={pquest.count}
-                              unCheckedChildren="0"
-                            />
-                          ) : (
-                            <InputNumber
-                              min={0}
-                              max={pquest.dailyMax}
-                              defaultValue={0}
-                            />
-                          )}
+                          <Switch
+                            checkedChildren={daily}
+                            unCheckedChildren="0"
+                          />
                         </Form.Item>
+                      </Tooltip>
+                    </Col>
+                    {pquest && (
+                      <Col span={12}>
+                        <Tooltip
+                          title={`${pquest.name}: 最多可獲得 ${
+                            pquest.count || pquest.dailyMax
+                          } 個`}
+                        >
+                          <Form.Item
+                            name={[key, 'party']}
+                            label={
+                              <div style={{ cursor: 'pointer' }}>組隊任務</div>
+                            }
+                            style={{ display: 'inline-flex', marginBottom: 0 }}
+                          >
+                            {pquest.count ? (
+                              <Switch
+                                checkedChildren={pquest.count}
+                                unCheckedChildren="0"
+                              />
+                            ) : (
+                              <InputNumber
+                                min={0}
+                                max={pquest.dailyMax}
+                                defaultValue={0}
+                              />
+                            )}
+                          </Form.Item>
+                        </Tooltip>
                       </Col>
                     )}
                     {coin && (
                       <Col span={12}>
-                        <Form.Item
-                          name={[key, 'coin']}
-                          label={
-                            <Tooltip
-                              title={`${coin.name}: 最多可獲得 ${coin.dailyMax} 個, ${coin.unit} 個可兌換 1 個符文`}
-                            >
-                              <Avatar
-                                src={`/${key}-coin.png`}
-                                alt={`${key}-coin`}
-                              />
-                            </Tooltip>
+                        <Tooltip
+                          title={
+                            coin.desc
+                              ? coin.desc
+                              : `${coin.name}: 最多可獲得 ${coin.dailyMax} 個, ${coin.unit} 個可兌換 1 個符文`
                           }
-                          style={{ display: 'inline-flex', marginBottom: 0 }}
                         >
-                          <InputNumber
-                            min={0}
-                            max={coin.dailyMax || Infinity}
-                            defaultValue={0}
-                          />
-                        </Form.Item>
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
+                            <Form.Item
+                              name={[key, 'coin']}
+                              label={
+                                <Avatar
+                                  src={`/${key}-coin.png`}
+                                  alt={`${key}-coin`}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                              }
+                              style={{
+                                display: 'inline-flex',
+                                marginBottom: 0,
+                              }}
+                            >
+                              <InputNumber
+                                min={0}
+                                max={coin.dailyMax || Infinity}
+                                defaultValue={0}
+                                style={{ width: 70 }}
+                              />
+                            </Form.Item>
+                            <span>&nbsp;/&nbsp;{coin.unit}</span>
+                          </div>
+                        </Tooltip>
                       </Col>
                     )}
                     <Col span={12} xl={24}>
-                      <Form.Item
-                        name={[key, 'daily']}
-                        label={
-                          <Tooltip title="每日可額外獲得數">
-                            <Avatar src="/selectable.png" alt="selectable" />
-                          </Tooltip>
-                        }
-                        style={{ display: 'inline-flex', marginBottom: 0 }}
-                      >
-                        <InputNumber min={0} defaultValue={0} />
-                      </Form.Item>
+                      <Tooltip title="每日額外獲取數 Ex. 選擇秘法符文">
+                        <Form.Item
+                          name={[key, 'extra']}
+                          label={
+                            <Avatar
+                              src="/selectable.png"
+                              alt="selectable"
+                              style={{ cursor: 'pointer' }}
+                            />
+                          }
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <InputNumber min={0} defaultValue={0} />
+                        </Form.Item>
+                      </Tooltip>
                     </Col>
                   </Row>
                 </Card>
@@ -471,7 +499,9 @@ export default function Home() {
                   } = getFieldValue(key)
                   const dailyTotalCount =
                     dailySymbol +
-                    (coin ? dailyCoin / coin.unit : 0) +
+                    (coin && dailyCoin
+                      ? (dailyCoin + coin.basic) / coin.unit
+                      : 0) +
                     (dailyQuest ? daily : 0)
                   const { completeDate, remainDays } = toRowData({
                     key,
