@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Form, Input, InputNumber, Slider } from 'antd'
+import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 
 import ArcMapping from '../mapping/arcane'
 
@@ -53,7 +53,17 @@ const Exp = ({ value: arcane, onChange }) => {
 
 const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
   <Fragment>
-    <Form.Item label="Lv / Exp" style={{ marginBottom: 0 }}>
+    <Form.Item
+      label={
+        <Tooltip title="符文等級 / 當前經驗值">
+          <Avatar
+            src={`/arcane-symbol-${name}.png`}
+            alt="符文等級 / 當前經驗值"
+          />
+        </Tooltip>
+      }
+      style={{ marginBottom: 0 }}
+    >
       <Input.Group>
         <Form.Item noStyle>
           <Level value={value} onChange={onChange}></Level>
@@ -64,7 +74,7 @@ const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
         </Form.Item>
       </Input.Group>
     </Form.Item>
-    {/* <Form.Item name={name}>
+    <Form.Item name={[name, 'count']}>
       <Slider
         max={2679}
         value={value}
@@ -73,7 +83,7 @@ const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
           `${value - arcMatching(value).stack}`
         }
       />
-    </Form.Item> */}
+    </Form.Item>
   </Fragment>
 )
 
