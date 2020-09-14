@@ -74,7 +74,7 @@ const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
         </Form.Item>
       </Input.Group>
     </Form.Item>
-    <Form.Item name={[name, 'count']}>
+    <Form.Item name={[name, 'count']} noStyle>
       <Slider
         max={2679}
         value={value}

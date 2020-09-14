@@ -42,19 +42,29 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
 // Esfera
 
 const arcaneLocals = [
-  { name: '消逝的旅途', daily: 8, key: 'vanishingjourney' },
-  { name: '啾啾愛爾蘭', daily: 4, key: 'chuchu' },
+  {
+    name: '消逝的旅途',
+    daily: 8,
+    pquest: { name: '艾爾達斯光譜', count: 6 },
+    key: 'vanishingjourney',
+  },
+  {
+    name: '啾啾愛爾蘭',
+    daily: 4,
+    pquest: { name: '肚子餓的武藤', dailyMax: 15 },
+    key: 'chuchu',
+  },
   {
     name: '拉契爾恩',
     key: 'lachelein',
     daily: 4,
-    coin: { unit: 30 },
+    coin: { name: '毀夢者', unit: 30, dailyMax: 500 },
   },
   {
     name: '阿爾卡納',
     key: 'arcana',
     daily: 8,
-    coin: { unit: 3, dailyMax: 30 },
+    coin: { name: '精靈救援者', unit: 3, dailyMax: 30 },
   },
   { name: '魔菈斯', daily: 8, key: 'morass' },
   { name: '艾斯佩拉', daily: 8, key: 'esfera' },
@@ -346,10 +356,10 @@ export default function Home() {
           colon={false}
         >
           <Row gutter={[8, 8]}>
-            {arcaneLocals.map(({ name, key, coin, daily }) => (
-              <Col key={key} span={24} md={12}>
+            {arcaneLocals.map(({ name, key, coin, daily, pquest }) => (
+              <Col key={key} span={24} md={12} xl={8}>
                 <Card title={name}>
-                  <Fragment>
+                  <Row gutter={[0, 12]}>
                     <Col span={24}>
                       <Form.Item
                         name={[key, 'count']}
@@ -377,32 +387,74 @@ export default function Home() {
                         <Switch checkedChildren={daily} unCheckedChildren="0" />
                       </Form.Item>
                     </Col>
-                    <Form.Item
-                      name={[key, 'daily']}
-                      label="每日可獲得數"
-                      style={{ display: 'inline-flex', marginBottom: 0 }}
-                    >
-                      <InputNumber min={0} defaultValue={0} />
-                    </Form.Item>
+                    {pquest && (
+                      <Col span={12}>
+                        <Form.Item
+                          name={[key, 'party']}
+                          label={
+                            <Tooltip
+                              title={`${pquest.name}: 最多可獲得 ${
+                                pquest.count || pquest.dailyMax
+                              } 個`}
+                            >
+                              組隊任務
+                            </Tooltip>
+                          }
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          {pquest.count ? (
+                            <Switch
+                              checkedChildren={pquest.count}
+                              unCheckedChildren="0"
+                            />
+                          ) : (
+                            <InputNumber
+                              min={0}
+                              max={pquest.dailyMax}
+                              defaultValue={0}
+                            />
+                          )}
+                        </Form.Item>
+                      </Col>
+                    )}
                     {coin && (
-                      <Form.Item
-                        name={[key, 'coin']}
-                        label={
-                          <Avatar
-                            src={`/${key}-coin.png`}
-                            alt={`${key}-coin`}
+                      <Col span={12}>
+                        <Form.Item
+                          name={[key, 'coin']}
+                          label={
+                            <Tooltip
+                              title={`${coin.name}: 最多可獲得 ${coin.dailyMax} 個, ${coin.unit} 個可兌換 1 個符文`}
+                            >
+                              <Avatar
+                                src={`/${key}-coin.png`}
+                                alt={`${key}-coin`}
+                              />
+                            </Tooltip>
+                          }
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <InputNumber
+                            min={0}
+                            max={coin.dailyMax || Infinity}
+                            defaultValue={0}
                           />
+                        </Form.Item>
+                      </Col>
+                    )}
+                    <Col span={12} xl={24}>
+                      <Form.Item
+                        name={[key, 'daily']}
+                        label={
+                          <Tooltip title="每日可額外獲得數">
+                            <Avatar src="/selectable.png" alt="selectable" />
+                          </Tooltip>
                         }
                         style={{ display: 'inline-flex', marginBottom: 0 }}
                       >
-                        <InputNumber
-                          min={0}
-                          max={coin.dailyMax || Infinity}
-                          defaultValue={0}
-                        />
+                        <InputNumber min={0} defaultValue={0} />
                       </Form.Item>
-                    )}
-                  </Fragment>
+                    </Col>
+                  </Row>
                 </Card>
               </Col>
             ))}
