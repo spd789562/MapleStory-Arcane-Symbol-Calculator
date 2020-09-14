@@ -558,10 +558,10 @@ export default function Home() {
                     <Card>
                       <Statistic
                         title="Arc"
-                        value={
+                        value={cashFormat(
                           statisticData.total * 10 + statisticData.holded * 20
-                        }
-                        suffix={`/ ${statisticData.holded * 220}`}
+                        )}
+                        suffix={`/ ${cashFormat(statisticData.holded * 220)}`}
                       />
                     </Card>
                   </Col>
@@ -609,7 +609,11 @@ export default function Home() {
                         value={
                           statisticData.total
                             ? statisticData.remainDays === 0
-                              ? '永遠完成不了'
+                              ? statisticData.total * 10 +
+                                  statisticData.holded * 20 ===
+                                statisticData.holded * 220
+                                ? '已達成當前上限'
+                                : '永遠完成不了'
                               : statisticData.completeDate
                             : '無'
                         }
