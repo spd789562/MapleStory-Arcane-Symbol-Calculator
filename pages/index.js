@@ -526,7 +526,9 @@ export default function Home() {
                     <Card>
                       <Statistic
                         title="屬性加成量"
-                        value={cashFormat(statisticData.total * 100)}
+                        value={cashFormat(
+                          (statisticData.total + statisticData.holded * 2) * 100
+                        )}
                       />
                     </Card>
                   </Col>
