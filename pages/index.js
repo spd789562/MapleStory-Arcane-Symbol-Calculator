@@ -5,7 +5,7 @@ import {
   Layout,
   Form,
   Input,
-  Radio,
+  Select,
   InputNumber,
   Row,
   Col,
@@ -73,6 +73,21 @@ const arcaneLocals = [
   },
   { name: '魔菈斯', daily: 8, key: 'morass' },
   { name: '艾斯佩拉', daily: 8, key: 'esfera' },
+]
+
+const roleMapping = [
+  {
+    name: '一般職業',
+    unit: 100,
+  },
+  {
+    name: '傑諾',
+    unit: 39,
+  },
+  {
+    name: '惡復',
+    unit: 1750,
+  },
 ]
 
 const arcMatching = (arcane) =>
@@ -334,13 +349,6 @@ export default function Home() {
   const [form] = Form.useForm()
   return (
     <Layout className="layout">
-      <Head>
-        <title>秘法符文計算機</title>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-      </Head>
       <Header className={styles.header}>
         <div className={styles['header-container']}>
           <h2>秘法符文計算機</h2>
@@ -351,6 +359,7 @@ export default function Home() {
         <Form
           form={form}
           initialValues={{
+            role: 0,
             vanishingjourney: {},
             chuchu: {},
             lachelein: {},
@@ -554,12 +563,39 @@ export default function Home() {
                   </Col>
                   <Col xs={24} sm={12} md={6}>
                     <Card>
-                      <Statistic
-                        title="屬性加成量"
-                        value={cashFormat(
-                          (statisticData.total + statisticData.holded * 2) * 100
-                        )}
-                      />
+                      <Row>
+                        <Col span={12}>
+                          <Form.Item shouldUpdate={() => true} noStyle>
+                            {({ getFieldValue }) => {
+                              const role = getFieldValue('role')
+                              return (
+                                <Statistic
+                                  title="屬性加成量"
+                                  value={cashFormat(
+                                    (statisticData.total +
+                                      statisticData.holded * 2) *
+                                      roleMapping[role].unit
+                                  )}
+                                />
+                              )
+                            }}
+                          </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                          <Form.Item name="role" noStyle>
+                            <Select>
+                              {roleMapping.map(({ name }, index) => (
+                                <Select.Option
+                                  value={index}
+                                  key={`role-${index}`}
+                                >
+                                  {name}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+                        </Col>
+                      </Row>
                     </Card>
                   </Col>
                   <Col xs={24} sm={24} md={12}>
