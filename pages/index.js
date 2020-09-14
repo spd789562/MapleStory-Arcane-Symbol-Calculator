@@ -1,19 +1,22 @@
-import React, { Suspense } from 'react'
+import React, { Fragment } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import {
   Layout,
   Form,
   Input,
-  Radio,
+  Select,
   InputNumber,
-  Slider,
   Row,
   Col,
   Table,
   BackTop,
   Statistic,
   Card,
+  Avatar,
+  Space,
+  Tooltip,
+  Switch,
 } from 'antd'
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 // import { Line } from '@ant-design/charts'
@@ -24,7 +27,6 @@ import ArcInfo from '../src/mapping/arcane-info'
 import styles from '../styles/Home.module.css'
 
 import moment from 'moment'
-import { Fragment } from 'react'
 
 const { Header, Content, Footer } = Layout
 
@@ -39,24 +41,53 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
 // Esfera
 
 const arcaneLocals = [
-  { name: '消逝的旅途', key: 'vanishingjourney' },
-  { name: '啾啾愛爾蘭', key: 'chuchu' },
+  {
+    name: '消逝的旅途',
+    daily: 8,
+    pquest: { name: '艾爾達斯光譜', count: 6 },
+    key: 'vanishingjourney',
+  },
+  {
+    name: '啾啾愛爾蘭',
+    daily: 4,
+    pquest: { name: '肚子餓的武藤', dailyMax: 15 },
+    key: 'chuchu',
+  },
   {
     name: '拉契爾恩',
     key: 'lachelein',
-    hasCoin: true,
-    coinUnit: 30,
-    coin: { unit: 30 },
+    daily: 4,
+    coin: {
+      name: '毀夢者',
+      unit: 30,
+      basic: 24,
+      dailyMax: 500,
+      desc: `毀夢者: 最多可獲得 ${500} 個, ${30} 個可兌換 1 個符文, 已自動計入雕像對話保底 24 個`,
+    },
   },
   {
     name: '阿爾卡納',
     key: 'arcana',
-    hasCoin: true,
-    coinUnit: 3,
-    coin: { unit: 3, dailyMax: 30 },
+    daily: 8,
+    coin: { name: '精靈救援者', unit: 3, basic: 0, dailyMax: 30 },
   },
-  { name: '魔菈斯', key: 'morass' },
-  { name: '艾斯佩拉', key: 'esfera' },
+  { name: '魔菈斯', daily: 8, key: 'morass' },
+  { name: '艾斯佩拉', daily: 8, key: 'esfera' },
+]
+
+const roleMapping = [
+  {
+    name: '一般職業',
+    unit: 100,
+  },
+  {
+    name: '傑諾',
+    unit: 39,
+  },
+  {
+    name: '惡復',
+    unit: 1750,
+  },
 ]
 
 const arcMatching = (arcane) =>
@@ -67,14 +98,14 @@ const arcMatching = (arcane) =>
       arcane < (arr[index + 1] ? arr[index + 1].stack : arc.stack + 1)
   ) || { level: 0, stack: 0, count: 0 }
 
+const cashFormat = (number) => `${number}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
 const toRowData = ({ key, level, currentCount, dailyTotalCount }) => {
   const TargetArcane = ArcMapping[level]
   const currentArcane = arcMatching(currentCount)
   const remainDays = Math.ceil(
     (TargetArcane.stack - currentCount) / dailyTotalCount
   )
-  const cashFormat = (number) =>
-    `${number}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   const totalCost = Object.values(ArcMapping).reduce(
     (totalCost, { level: arcaneLevel, cost }) => {
       totalCost +=
@@ -94,7 +125,7 @@ const toRowData = ({ key, level, currentCount, dailyTotalCount }) => {
     remainDays,
     completeDateText:
       moment().add(remainDays, 'days').format('YYYY-MM-DD') +
-      `(${remainDays}天)`,
+      `(${cashFormat(remainDays)}天)`,
     accumulativeNeed: TargetArcane.stack - currentCount,
     totalCost: cashFormat(totalCost),
   }
@@ -126,16 +157,22 @@ const renderEmptyIfMaxLevel = (text, row) =>
           colSpan: 0,
         },
       }
+    : typeof text === 'number'
+    ? cashFormat(text)
     : text
 
-const ResultTable = ({ getFieldsValue }) => {
-  const FinialData = arcaneLocals.map(({ name, key, coin }) => {
+const ResultTable = ({ getFieldValue }) => {
+  const FinialData = arcaneLocals.map(({ name, key, coin, daily }) => {
     const {
-      [key]: currentCount,
-      [`${key}-daily`]: dailySymbol = 0,
-      [`${key}-coin`]: dailyCoin = 0,
-    } = getFieldsValue()
-    const dailyTotalCount = dailySymbol + (coin ? dailyCoin / coin.unit : 0)
+      count: currentCount,
+      daily: dailySymbol = 0,
+      coin: dailyCoin = 0,
+      quest: dailyQuest = 0,
+    } = getFieldValue(key)
+    const dailyTotalCount =
+      dailySymbol +
+      (coin ? dailyCoin / coin.unit : 0) +
+      (dailyQuest ? daily : 0)
     const subTableData =
       +!!dailyTotalCount !== 0 && +!!currentCount !== 0
         ? Object.values(ArcMapping)
@@ -237,7 +274,6 @@ const ResultTable = ({ getFieldsValue }) => {
   //   }
   //   return acc
   // }, {})
-  console.log(testData)
   return (
     <Fragment>
       <Table
@@ -313,79 +349,173 @@ export default function Home() {
   const [form] = Form.useForm()
   return (
     <Layout className="layout">
-      <Head>
-        <title>秘法符文計算機</title>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-      </Head>
       <Header className={styles.header}>
-        <h2>秘法符文計算機</h2>
+        <div className={styles['header-container']}>
+          <h2>秘法符文計算機</h2>
+        </div>
       </Header>
       <BackTop />
       <Content className={styles.content}>
         <Form
           form={form}
-          initialValues={{}}
-          labelCol={{ xs: 6, sm: 8 }}
-          wrapperCol={{ xs: 18, sm: 16 }}
+          initialValues={{
+            role: 0,
+            vanishingjourney: {},
+            chuchu: {},
+            lachelein: {},
+            arcana: {},
+            morass: {},
+            esfera: {},
+          }}
+          colon={false}
         >
-          {/* <Form.Item label="職業" name="role">
-            <Radio.Group buttonStyle="solid">
-              <Radio.Button value="1">一般</Radio.Button>
-              <Radio.Button value="2">傑諾</Radio.Button>
-              <Radio.Button value="3">惡魔復仇者</Radio.Button>
-            </Radio.Group>
-          </Form.Item> */}
-          {arcaneLocals.map(({ name, key, coin }) => (
-            <Row key={key}>
-              <Col span={24}>
-                <div
-                  className="ant-row ant-form-item"
-                  style={{ marginBottom: 0 }}
-                >
-                  <div className="ant-col ant-form-item-label">
-                    <label className="" title={name}>
-                      {name}
-                    </label>
-                  </div>
-                </div>
+          <Row gutter={[8, 8]}>
+            {arcaneLocals.map(({ name, key, coin, daily, pquest }) => (
+              <Col key={key} span={24} md={12} xl={8}>
+                <Card title={name}>
+                  <Row gutter={[0, 12]}>
+                    <Col span={24}>
+                      <Form.Item
+                        name={[key, 'count']}
+                        style={{ marginBottom: 0 }}
+                      >
+                        <ArcaneInputRangeSync name={key} />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <h4>每日符文獲取來源:</h4>
+                    </Col>
+                    <Col span={12}>
+                      <Tooltip title={`每日任務: 此地區每日可獲得 ${daily} 個`}>
+                        <Form.Item
+                          name={[key, 'quest']}
+                          label={
+                            <Avatar
+                              shape="square"
+                              src="/daily.png"
+                              alt="daily"
+                              style={{ cursor: 'pointer' }}
+                            />
+                          }
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <Switch
+                            checkedChildren={daily}
+                            unCheckedChildren="0"
+                          />
+                        </Form.Item>
+                      </Tooltip>
+                    </Col>
+                    {pquest && (
+                      <Col span={12}>
+                        <Tooltip
+                          title={`${pquest.name}: 最多可獲得 ${
+                            pquest.count || pquest.dailyMax
+                          } 個`}
+                        >
+                          <Form.Item
+                            name={[key, 'party']}
+                            label={
+                              <div style={{ cursor: 'pointer' }}>組隊任務</div>
+                            }
+                            style={{ display: 'inline-flex', marginBottom: 0 }}
+                          >
+                            {pquest.count ? (
+                              <Switch
+                                checkedChildren={pquest.count}
+                                unCheckedChildren="0"
+                              />
+                            ) : (
+                              <InputNumber
+                                min={0}
+                                max={pquest.dailyMax}
+                                defaultValue={0}
+                              />
+                            )}
+                          </Form.Item>
+                        </Tooltip>
+                      </Col>
+                    )}
+                    {coin && (
+                      <Col span={12}>
+                        <Tooltip
+                          title={
+                            coin.desc
+                              ? coin.desc
+                              : `${coin.name}: 最多可獲得 ${coin.dailyMax} 個, ${coin.unit} 個可兌換 1 個符文`
+                          }
+                        >
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
+                            <Form.Item
+                              name={[key, 'coin']}
+                              label={
+                                <Avatar
+                                  src={`/${key}-coin.png`}
+                                  alt={`${key}-coin`}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                              }
+                              style={{
+                                display: 'inline-flex',
+                                marginBottom: 0,
+                              }}
+                            >
+                              <InputNumber
+                                min={0}
+                                max={coin.dailyMax || Infinity}
+                                defaultValue={0}
+                                style={{ width: 70 }}
+                              />
+                            </Form.Item>
+                            <span>&nbsp;/&nbsp;{coin.unit}</span>
+                          </div>
+                        </Tooltip>
+                      </Col>
+                    )}
+                    <Col span={12} xl={24}>
+                      <Tooltip title="每日額外獲取數 Ex. 選擇秘法符文">
+                        <Form.Item
+                          name={[key, 'extra']}
+                          label={
+                            <Avatar
+                              src="/selectable.png"
+                              alt="selectable"
+                              style={{ cursor: 'pointer' }}
+                            />
+                          }
+                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                        >
+                          <InputNumber min={0} defaultValue={0} />
+                        </Form.Item>
+                      </Tooltip>
+                    </Col>
+                  </Row>
+                </Card>
               </Col>
-              <Col span={24} sm={12} md={8}>
-                <Form.Item name={key} wrapperCol={{ xs: 24, sm: 24 }}>
-                  <ArcaneInputRangeSync name={key} />
-                </Form.Item>
-              </Col>
-              <Col span={24} sm={12} md={8}>
-                <Form.Item name={`${key}-daily`} label="每日可獲得數">
-                  <InputNumber min={0} defaultValue={0} />
-                </Form.Item>
-              </Col>
-              {coin && (
-                <Col span={24} sm={12} md={8}>
-                  <Form.Item name={`${key}-coin`} label="每日硬幣數">
-                    <InputNumber
-                      min={0}
-                      max={coin.dailyMax || Infinity}
-                      defaultValue={0}
-                    />
-                  </Form.Item>
-                </Col>
-              )}
-            </Row>
-          ))}
-          <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
-            {({ getFieldsValue }) => {
+            ))}
+          </Row>
+          <Form.Item
+            shouldUpdate={() => true}
+            wrapperCol={{ xs: 24, sm: 24 }}
+            style={{ marginBottom: 0 }}
+          >
+            {({ getFieldValue }) => {
               const statisticData = arcaneLocals
-                .map(({ name, key, coin }) => {
+                .map(({ name, key, coin, daily }) => {
                   const {
-                    [key]: currentCount,
-                    [`${key}-daily`]: dailySymbol = 0,
-                    [`${key}-coin`]: dailyCoin = 0,
-                  } = getFieldsValue()
+                    count: currentCount,
+                    daily: dailySymbol = 0,
+                    coin: dailyCoin = 0,
+                    quest: dailyQuest,
+                  } = getFieldValue(key)
                   const dailyTotalCount =
-                    dailySymbol + (coin ? dailyCoin / coin.unit : 0)
+                    dailySymbol +
+                    (coin && dailyCoin
+                      ? (dailyCoin + coin.basic) / coin.unit
+                      : 0) +
+                    (dailyQuest ? daily : 0)
                   const { completeDate, remainDays } = toRowData({
                     key,
                     level: 20,
@@ -400,7 +530,6 @@ export default function Home() {
                 })
                 .reduce(
                   (acc, inc) => {
-                    console.log(moment(inc.completeDate).isValid())
                     acc.completeDate = acc.completeDate
                       ? moment(inc.completeDate).isValid() &&
                         moment(inc.completeDate).isAfter(
@@ -423,10 +552,9 @@ export default function Home() {
                   },
                   { total: 0, holded: 0, remainDays: 0 }
                 )
-              console.log(statisticData.remainDays)
               return (
-                <Row gutter={[16, 8]}>
-                  <Col xs={24} sm={8}>
+                <Row gutter={[8, 8]}>
+                  <Col xs={24} sm={12} md={6}>
                     <Card>
                       <Statistic
                         title="Arc"
@@ -437,15 +565,44 @@ export default function Home() {
                       />
                     </Card>
                   </Col>
-                  <Col xs={24} sm={8}>
+                  <Col xs={24} sm={12} md={6}>
                     <Card>
-                      <Statistic
-                        title="屬性加成量"
-                        value={statisticData.total * 100}
-                      />
+                      <Row>
+                        <Col span={12}>
+                          <Form.Item shouldUpdate={() => true} noStyle>
+                            {({ getFieldValue }) => {
+                              const role = getFieldValue('role')
+                              return (
+                                <Statistic
+                                  title="屬性加成量"
+                                  value={cashFormat(
+                                    (statisticData.total +
+                                      statisticData.holded * 2) *
+                                      roleMapping[role].unit
+                                  )}
+                                />
+                              )
+                            }}
+                          </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                          <Form.Item name="role" noStyle>
+                            <Select>
+                              {roleMapping.map(({ name }, index) => (
+                                <Select.Option
+                                  value={index}
+                                  key={`role-${index}`}
+                                >
+                                  {name}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+                        </Col>
+                      </Row>
                     </Card>
                   </Col>
-                  <Col xs={24} sm={8}>
+                  <Col xs={24} sm={24} md={12}>
                     <Card>
                       <Statistic
                         title="完成日期(天數)"
@@ -457,8 +614,9 @@ export default function Home() {
                             : '無'
                         }
                         suffix={
-                          statisticData.remainDays &&
-                          `(${statisticData.remainDays}天)`
+                          statisticData.remainDays
+                            ? `(${cashFormat(statisticData.remainDays)}天)`
+                            : ''
                         }
                       />
                     </Card>
@@ -468,8 +626,8 @@ export default function Home() {
             }}
           </Form.Item>
           <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
-            {({ getFieldsValue }) => (
-              <ResultTable getFieldsValue={getFieldsValue} />
+            {({ getFieldValue }) => (
+              <ResultTable getFieldValue={getFieldValue} />
             )}
           </Form.Item>
         </Form>

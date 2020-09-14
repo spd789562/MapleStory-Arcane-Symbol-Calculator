@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Form, Input, InputNumber, Slider } from 'antd'
+import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 
 import ArcMapping from '../mapping/arcane'
 
@@ -21,7 +21,7 @@ const Level = ({ value: arcane, onChange }) => {
       max={20}
       step={arcMatching.count}
       value={currentArcane.level}
-      style={{ width: 70 }}
+      style={{ width: 60 }}
       onChange={(value) => {
         onChange(
           value ? arcane - currentArcane.stack + ArcMapping[value].stack : 0
@@ -53,22 +53,29 @@ const Exp = ({ value: arcane, onChange }) => {
 
 const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
   <Fragment>
-    <Form.Item
-      label="當前等級"
-      labelCol={{ xs: 6, sm: 8 }}
-      wrapperCol={{ xs: 18, sm: 16 }}
-      style={{ marginBottom: 0 }}
-    >
-      <Input.Group compact>
-        <Form.Item noStyle>
-          <Level value={value} onChange={onChange}></Level>
-        </Form.Item>
-        <Form.Item noStyle>
-          <Exp value={value} onChange={onChange}></Exp>
-        </Form.Item>
-      </Input.Group>
-    </Form.Item>
-    {/* <Form.Item name={name}>
+    <Tooltip title="符文等級 / 當前經驗值">
+      <Form.Item
+        label={
+          <Avatar
+            src={`/arcane-symbol-${name}.png`}
+            alt="符文等級 / 當前經驗值"
+            style={{ cursor: 'pointer' }}
+          />
+        }
+        style={{ display: 'inline-flex', marginBottom: 0 }}
+      >
+        <Input.Group>
+          <Form.Item noStyle>
+            <Level value={value} onChange={onChange}></Level>
+          </Form.Item>
+          &nbsp;&nbsp;/&nbsp;&nbsp;
+          <Form.Item noStyle>
+            <Exp value={value} onChange={onChange}></Exp>
+          </Form.Item>
+        </Input.Group>
+      </Form.Item>
+    </Tooltip>
+    <Form.Item name={[name, 'count']} noStyle>
       <Slider
         max={2679}
         value={value}
@@ -77,7 +84,7 @@ const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
           `${value - arcMatching(value).stack}`
         }
       />
-    </Form.Item> */}
+    </Form.Item>
   </Fragment>
 )
 
