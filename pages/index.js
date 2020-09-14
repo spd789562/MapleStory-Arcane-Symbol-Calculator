@@ -496,7 +496,11 @@ export default function Home() {
               </Col>
             ))}
           </Row>
-          <Form.Item shouldUpdate={() => true} wrapperCol={{ xs: 24, sm: 24 }}>
+          <Form.Item
+            shouldUpdate={() => true}
+            wrapperCol={{ xs: 24, sm: 24 }}
+            style={{ marginBottom: 0 }}
+          >
             {({ getFieldValue }) => {
               const statisticData = arcaneLocals
                 .map(({ name, key, coin, daily }) => {
