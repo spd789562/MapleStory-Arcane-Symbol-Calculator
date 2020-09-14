@@ -430,6 +430,7 @@ export default function Home() {
                                 min={0}
                                 max={pquest.dailyMax}
                                 defaultValue={0}
+                                style={{ width: 60 }}
                               />
                             )}
                           </Form.Item>
@@ -487,7 +488,11 @@ export default function Home() {
                           }
                           style={{ display: 'inline-flex', marginBottom: 0 }}
                         >
-                          <InputNumber min={0} defaultValue={0} />
+                          <InputNumber
+                            min={0}
+                            defaultValue={0}
+                            style={{ width: 70 }}
+                          />
                         </Form.Item>
                       </Tooltip>
                     </Col>
