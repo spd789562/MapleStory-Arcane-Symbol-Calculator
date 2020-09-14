@@ -162,17 +162,19 @@ const renderEmptyIfMaxLevel = (text, row) =>
     : text
 
 const ResultTable = ({ getFieldValue }) => {
-  const FinialData = arcaneLocals.map(({ name, key, coin, daily }) => {
+  const FinialData = arcaneLocals.map(({ name, key, coin, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
       coin: dailyCoin = 0,
       quest: dailyQuest = 0,
+      party: dailyParty = 0,
     } = getFieldValue(key)
     const dailyTotalCount =
       dailySymbol +
       (coin ? dailyCoin / coin.unit : 0) +
-      (dailyQuest ? daily : 0)
+      (dailyQuest ? daily : 0) +
+      (dailyParty && pquest ? pquest.count || dailyParty : 0)
     const subTableData =
       +!!dailyTotalCount !== 0 && +!!currentCount !== 0
         ? Object.values(ArcMapping)
@@ -478,7 +480,7 @@ export default function Home() {
                     <Col span={12} xl={24}>
                       <Tooltip title="每日額外獲取數 Ex. 選擇秘法符文">
                         <Form.Item
-                          name={[key, 'extra']}
+                          name={[key, 'daily']}
                           label={
                             <Avatar
                               src="/selectable.png"
@@ -508,19 +510,21 @@ export default function Home() {
           >
             {({ getFieldValue }) => {
               const statisticData = arcaneLocals
-                .map(({ name, key, coin, daily }) => {
+                .map(({ name, key, coin, daily, pquest }) => {
                   const {
                     count: currentCount,
                     daily: dailySymbol = 0,
                     coin: dailyCoin = 0,
                     quest: dailyQuest,
+                    party: dailyParty = 0,
                   } = getFieldValue(key)
                   const dailyTotalCount =
                     dailySymbol +
                     (coin && dailyCoin
                       ? (dailyCoin + coin.basic) / coin.unit
                       : 0) +
-                    (dailyQuest ? daily : 0)
+                    (dailyQuest ? daily : 0) +
+                    (dailyParty && pquest ? pquest.count || dailyParty : 0)
                   const { completeDate, remainDays } = toRowData({
                     key,
                     level: 20,
