@@ -72,19 +72,20 @@ const renderEmptyIfMaxLevel = (text, row) =>
     : text
 
 const ResultTable = ({ getFieldValue }) => {
-  const FinialData = ArcZone.map(({ name, key, coin, daily, pquest }) => {
+  const FinialData = ArcZone.map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
-      coin: dailyCoin = 0,
       quest: dailyQuest = 0,
       party: dailyParty = 0,
     } = getFieldValue(key)
     const dailyTotalCount =
       dailySymbol +
-      (coin ? dailyCoin / coin.unit : 0) +
       (dailyQuest ? daily : 0) +
-      (dailyParty && pquest ? pquest.count || dailyParty : 0)
+      (dailyParty && pquest
+        ? pquest.count ||
+          (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
+        : 0)
     const subTableData =
       +!!dailyTotalCount !== 0 && +!!currentCount !== 0
         ? ArcMapping.filter(({ stack }) => {
@@ -108,7 +109,6 @@ const ResultTable = ({ getFieldValue }) => {
       dailyTotalCount,
       currentCount,
       name,
-      coin,
       ...(subTableData.length ? { children: subTableData } : {}),
     }
   })
@@ -280,7 +280,7 @@ export default function Home() {
           colon={false}
         >
           <Row gutter={[8, 8]}>
-            {ArcZone.map(({ name, key, coin, daily, pquest }) => (
+            {ArcZone.map(({ name, key, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
                 <Card title={name}>
                   <Row gutter={[0, 12]}>
@@ -319,68 +319,58 @@ export default function Home() {
                     {pquest && (
                       <Col span={12}>
                         <Tooltip
-                          title={`${pquest.name}: 最多可獲得 ${
-                            pquest.count || pquest.dailyMax
-                          } 個`}
-                        >
-                          <Form.Item
-                            name={[key, 'party']}
-                            label={
-                              <div style={{ cursor: 'pointer' }}>組隊任務</div>
-                            }
-                            style={{ display: 'inline-flex', marginBottom: 0 }}
-                          >
-                            {pquest.count ? (
-                              <Switch
-                                checkedChildren={pquest.count}
-                                unCheckedChildren="0"
-                              />
-                            ) : (
-                              <InputNumber
-                                min={0}
-                                max={pquest.dailyMax}
-                                defaultValue={0}
-                                style={{ width: 60 }}
-                              />
-                            )}
-                          </Form.Item>
-                        </Tooltip>
-                      </Col>
-                    )}
-                    {coin && (
-                      <Col span={12}>
-                        <Tooltip
                           title={
-                            coin.desc
-                              ? coin.desc
-                              : `${coin.name}: 最多可獲得 ${coin.dailyMax} 個, ${coin.unit} 個可兌換 1 個符文`
+                            pquest.desc
+                              ? pquest.desc
+                              : `${pquest.name}: 最多可獲得 ${
+                                  pquest.count || pquest.dailyMax
+                                } 個${
+                                  pquest.unit
+                                    ? `, ${pquest.unit} 個可兌換 1 個符文`
+                                    : ''
+                                }`
                           }
                         >
                           <div
                             style={{ display: 'flex', alignItems: 'center' }}
                           >
                             <Form.Item
-                              name={[key, 'coin']}
+                              name={[key, 'party']}
                               label={
-                                <Avatar
-                                  src={`/${key}-coin.png`}
-                                  alt={`${key}-coin`}
-                                  style={{ cursor: 'pointer' }}
-                                />
+                                pquest.type === 'symbol' ? (
+                                  <div style={{ cursor: 'pointer' }}>
+                                    組隊任務
+                                  </div>
+                                ) : (
+                                  <Avatar
+                                    src={`/${key}-coin.png`}
+                                    alt={`${key}-coin`}
+                                    style={{ cursor: 'pointer' }}
+                                  />
+                                )
                               }
                               style={{
                                 display: 'inline-flex',
                                 marginBottom: 0,
                               }}
                             >
-                              <InputNumber
-                                min={0}
-                                max={coin.dailyMax || Infinity}
-                                defaultValue={0}
-                                style={{ width: 70 }}
-                              />
+                              {pquest.count ? (
+                                <Switch
+                                  checkedChildren={pquest.count}
+                                  unCheckedChildren="0"
+                                />
+                              ) : (
+                                <InputNumber
+                                  min={0}
+                                  max={pquest.dailyMax}
+                                  defaultValue={0}
+                                  style={{ width: 70 }}
+                                />
+                              )}
                             </Form.Item>
-                            <span>&nbsp;/&nbsp;{coin.unit}</span>
+                            {pquest.unit && (
+                              <span>&nbsp;/&nbsp;{pquest.unit}</span>
+                            )}
                           </div>
                         </Tooltip>
                       </Col>
@@ -418,21 +408,20 @@ export default function Home() {
           >
             {({ getFieldValue }) => {
               const statisticData = ArcZone.map(
-                ({ name, key, coin, daily, pquest }) => {
+                ({ name, key, daily, pquest }) => {
                   const {
                     count: currentCount,
                     daily: dailySymbol = 0,
-                    coin: dailyCoin = 0,
                     quest: dailyQuest,
                     party: dailyParty = 0,
                   } = getFieldValue(key)
                   const dailyTotalCount =
                     dailySymbol +
-                    (coin && dailyCoin
-                      ? (dailyCoin + coin.basic) / coin.unit
-                      : 0) +
                     (dailyQuest ? daily : 0) +
-                    (dailyParty && pquest ? pquest.count || dailyParty : 0)
+                    (dailyParty && pquest
+                      ? pquest.count ||
+                        (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
+                      : 0)
                   const { completeDate, remainDays } = parserTableData({
                     key,
                     level: 20,
