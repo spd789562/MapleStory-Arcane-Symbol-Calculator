@@ -128,7 +128,7 @@ const useChartData = (tableData) => {
           : [
               ...Object.entries(inc).map(([date, value]) => ({
                 date,
-                type: 'arc',
+                type: 'ARC',
                 value,
               })),
               ...acc,
@@ -149,7 +149,7 @@ const useChartData = (tableData) => {
   return Object.entries(chartData)
     .map(([date, data]) =>
       Object.entries(data)
-        .filter(([type]) => type === 'arc')
+        .filter(([type]) => type === 'ARC')
         .map(([type, value]) => ({
           type,
           value,
@@ -229,7 +229,7 @@ const ResultTable = ({ data }) => {
         {...{
           title: {
             visible: true,
-            text: 'arc 趨勢圖',
+            text: 'ARC 趨勢圖',
           },
           forceFit: true,
           data: chartData,
