@@ -19,13 +19,16 @@ const useStatisticData = (data) => {
       quest: dailyQuest,
       party: dailyParty = 0,
     } = data[key]
-    const dailyTotalCount =
-      dailySymbol +
-      (dailyQuest ? daily : 0) +
-      (dailyParty && pquest
+    
+    const dailyQuestCount = dailyQuest ? daily : 0
+    // has party quest
+    const dailyPartyQuestCount =
+      dailyParty && pquest
         ? pquest.count ||
+          // if not a static value then calculating
           (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
-        : 0)
+        : 0
+    const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
     const { completeDate, remainDays } = parserTableData({
       key,
       level: 20,
