@@ -7,6 +7,7 @@
   background-position: 100% center;
   background-size: auto 100%;
   background-repeat: no-repeat;
+  background-origin: content-box;
 }
 .content {
   padding-top: 0.5rem;

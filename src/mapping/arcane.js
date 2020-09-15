@@ -1,137 +1,131 @@
-export default {
-  0: { level: 0, stack: 0, count: 1, cost: '0' },
-  1: { level: 1, stack: 1, count: 12, cost: '19040000', totalCost: '0' },
-  2: {
+/**
+ * ArcaneSymbol
+ * @description arcane river zone data
+ * @type {Array<ArcaneSymbolData>}
+ *
+ * @typedef {object} ArcaneSymbolData
+ * @property {string} level - symbol level
+ * @property {string} stack - symbol current level need symbol
+ * @property {number} count - symbol current level need symbol to upgrade
+ * @property {number} cost - symbol current level upgrade cost
+ */
+const ArcaneSymbol = [
+  { level: 0, stack: 0, count: 1, cost: '0' },
+  { level: 1, stack: 1, count: 12, cost: '19040000' },
+  {
     level: 2,
     stack: 12,
     count: 15,
     cost: '25640000',
-    totalCost: '19040000',
   },
-  3: {
+  {
     level: 3,
     stack: 27,
     count: 20,
     cost: '32240000',
-    totalCost: '44680000',
   },
-  4: {
+  {
     level: 4,
     stack: 47,
     count: 27,
     cost: '38840000',
-    totalCost: '76920000',
   },
-  5: {
+  {
     level: 5,
     stack: 74,
     count: 36,
     cost: '45440000',
-    totalCost: '115760000',
   },
-  6: {
+  {
     level: 6,
     stack: 110,
     count: 47,
     cost: '52040000',
-    totalCost: '161200000',
   },
-  7: {
+  {
     level: 7,
     stack: 157,
     count: 60,
     cost: '58640000',
-    totalCost: '213240000',
   },
-  8: {
+  {
     level: 8,
     stack: 217,
     count: 75,
     cost: '65240000',
-    totalCost: '271880000',
   },
-  9: {
+  {
     level: 9,
     stack: 292,
     count: 92,
     cost: '71840000',
-    totalCost: '337120000',
   },
-  10: {
+  {
     level: 10,
     stack: 384,
     count: 111,
     cost: '78440000',
-    totalCost: '408960000',
   },
-  11: {
+  {
     level: 11,
     stack: 495,
     count: 132,
     cost: '85040000',
-    totalCost: '487400000',
   },
-  12: {
+  {
     level: 12,
     stack: 627,
     count: 155,
     cost: '91640000',
-    totalCost: '572440000',
   },
-  13: {
+  {
     level: 13,
     stack: 782,
     count: 180,
     cost: '98240000',
-    totalCost: '664080000',
   },
-  14: {
+  {
     level: 14,
     stack: 962,
     count: 207,
     cost: '104840000',
-    totalCost: '762320000',
   },
-  15: {
+  {
     level: 15,
     stack: 1169,
     count: 236,
     cost: '111440000',
-    totalCost: '867160000',
   },
-  16: {
+  {
     level: 16,
     stack: 1405,
     count: 267,
     cost: '118040000',
-    totalCost: '978600000',
   },
-  17: {
+  {
     level: 17,
     stack: 1672,
     count: 300,
     cost: '124640000',
-    totalCost: '1096640000',
   },
-  18: {
+  {
     level: 18,
     stack: 1972,
     count: 335,
     cost: '131240000',
-    totalCost: '1221280000',
   },
-  19: {
+  {
     level: 19,
     stack: 2307,
     count: 372,
     cost: '137840000',
-    totalCost: '1352520000',
   },
-  20: {
+  {
     level: 20,
     stack: 2679,
     count: 0,
     cost: 0,
-    totalCost: '1490360000',
   },
-}
+]
+
+export default ArcaneSymbol
