@@ -21,8 +21,11 @@ import {
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 // import { Line } from '@ant-design/charts'
 
+/* mapping */
 import ArcMapping from '../src/mapping/arcane'
 import ArcInfo from '../src/mapping/arcane-info'
+import ArcZone from '../src/mapping/arcane-river-zone'
+import RoleMapping from '../src/mapping/role'
 
 import styles from '../styles/Home.module.css'
 
@@ -33,62 +36,6 @@ const { Header, Content, Footer } = Layout
 const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
-// Vanishing Journey
-// ChuChu
-// Lachelein
-// Arcana
-// Morass
-// Esfera
-
-const arcaneLocals = [
-  {
-    name: '消逝的旅途',
-    daily: 8,
-    pquest: { name: '艾爾達斯光譜', count: 6 },
-    key: 'vanishingjourney',
-  },
-  {
-    name: '啾啾愛爾蘭',
-    daily: 4,
-    pquest: { name: '肚子餓的武藤', dailyMax: 15 },
-    key: 'chuchu',
-  },
-  {
-    name: '拉契爾恩',
-    key: 'lachelein',
-    daily: 4,
-    coin: {
-      name: '毀夢者',
-      unit: 30,
-      basic: 24,
-      dailyMax: 500,
-      desc: `毀夢者: 最多可獲得 ${500} 個, ${30} 個可兌換 1 個符文, 已自動計入雕像對話保底 24 個`,
-    },
-  },
-  {
-    name: '阿爾卡納',
-    key: 'arcana',
-    daily: 8,
-    coin: { name: '精靈救援者', unit: 3, basic: 0, dailyMax: 30 },
-  },
-  { name: '魔菈斯', daily: 8, key: 'morass' },
-  { name: '艾斯佩拉', daily: 8, key: 'esfera' },
-]
-
-const roleMapping = [
-  {
-    name: '一般職業',
-    unit: 100,
-  },
-  {
-    name: '傑諾',
-    unit: 39,
-  },
-  {
-    name: '惡復',
-    unit: 1750,
-  },
-]
 
 const arcMatching = (arcane) =>
   Object.values(ArcMapping).find(
@@ -162,7 +109,7 @@ const renderEmptyIfMaxLevel = (text, row) =>
     : text
 
 const ResultTable = ({ getFieldValue }) => {
-  const FinialData = arcaneLocals.map(({ name, key, coin, daily, pquest }) => {
+  const FinialData = ArcZone.map(({ name, key, coin, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
@@ -372,7 +319,7 @@ export default function Home() {
           colon={false}
         >
           <Row gutter={[8, 8]}>
-            {arcaneLocals.map(({ name, key, coin, daily, pquest }) => (
+            {ArcZone.map(({ name, key, coin, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
                 <Card title={name}>
                   <Row gutter={[0, 12]}>
@@ -509,8 +456,8 @@ export default function Home() {
             style={{ marginBottom: 0 }}
           >
             {({ getFieldValue }) => {
-              const statisticData = arcaneLocals
-                .map(({ name, key, coin, daily, pquest }) => {
+              const statisticData = ArcZone.map(
+                ({ name, key, coin, daily, pquest }) => {
                   const {
                     count: currentCount,
                     daily: dailySymbol = 0,
@@ -536,31 +483,28 @@ export default function Home() {
                     completeDate,
                     remainDays,
                   }
-                })
-                .reduce(
-                  (acc, inc) => {
-                    acc.completeDate = acc.completeDate
-                      ? moment(inc.completeDate).isValid() &&
-                        moment(inc.completeDate).isAfter(
-                          acc.completeDate,
-                          'days'
-                        )
-                        ? inc.completeDate
-                        : acc.completeDate
-                      : moment(inc.completeDate).isValid()
+                }
+              ).reduce(
+                (acc, inc) => {
+                  acc.completeDate = acc.completeDate
+                    ? moment(inc.completeDate).isValid() &&
+                      moment(inc.completeDate).isAfter(acc.completeDate, 'days')
                       ? inc.completeDate
-                      : undefined
-                    acc.total += inc.level
-                    acc.holded += inc.level !== 0 ? 1 : 0
-                    acc.remainDays =
-                      inc.remainDays !== Infinity &&
-                      inc.remainDays > acc.remainDays
-                        ? inc.remainDays
-                        : acc.remainDays
-                    return acc
-                  },
-                  { total: 0, holded: 0, remainDays: 0 }
-                )
+                      : acc.completeDate
+                    : moment(inc.completeDate).isValid()
+                    ? inc.completeDate
+                    : undefined
+                  acc.total += inc.level
+                  acc.holded += inc.level !== 0 ? 1 : 0
+                  acc.remainDays =
+                    inc.remainDays !== Infinity &&
+                    inc.remainDays > acc.remainDays
+                      ? inc.remainDays
+                      : acc.remainDays
+                  return acc
+                },
+                { total: 0, holded: 0, remainDays: 0 }
+              )
               return (
                 <Row gutter={[8, 8]}>
                   <Col xs={24} sm={12} md={6}>
@@ -587,7 +531,7 @@ export default function Home() {
                                   value={cashFormat(
                                     (statisticData.total +
                                       statisticData.holded * 2) *
-                                      roleMapping[role].unit
+                                      RoleMapping[role].unit
                                   )}
                                 />
                               )
@@ -597,7 +541,7 @@ export default function Home() {
                         <Col span={12}>
                           <Form.Item name="role" noStyle>
                             <Select>
-                              {roleMapping.map(({ name }, index) => (
+                              {RoleMapping.map(({ name }, index) => (
                                 <Select.Option
                                   value={index}
                                   key={`role-${index}`}
