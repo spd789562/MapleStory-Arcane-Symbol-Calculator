@@ -27,56 +27,19 @@ import ArcInfo from '../src/mapping/arcane-info'
 import ArcZone from '../src/mapping/arcane-river-zone'
 import RoleMapping from '../src/mapping/role'
 
-import styles from '../styles/Home.module.css'
-
+/* utils */
+import symbolMatch from '../src/util/symbol-match'
+import numberFormat from '../src/util/number-format'
+import parserTableData from '../src/util/parser-table-data'
 import moment from 'moment'
+
+import styles from '../styles/Home.module.css'
 
 const { Header, Content, Footer } = Layout
 
 const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
-
-const arcMatching = (arcane) =>
-  Object.values(ArcMapping).find(
-    // get match range of arcane
-    (arc, index, arr) =>
-      arcane >= arc.stack &&
-      arcane < (arr[index + 1] ? arr[index + 1].stack : arc.stack + 1)
-  ) || { level: 0, stack: 0, count: 0 }
-
-const cashFormat = (number) => `${number}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
-const toRowData = ({ key, level, currentCount, dailyTotalCount }) => {
-  const TargetArcane = ArcMapping[level]
-  const currentArcane = arcMatching(currentCount)
-  const remainDays = Math.ceil(
-    (TargetArcane.stack - currentCount) / dailyTotalCount
-  )
-  const totalCost = Object.values(ArcMapping).reduce(
-    (totalCost, { level: arcaneLevel, cost }) => {
-      totalCost +=
-        arcaneLevel >= currentArcane.level && arcaneLevel <= level - 1
-          ? +cost
-          : 0
-      return totalCost
-    },
-    0
-  )
-  const completeDate = moment().add(remainDays, 'days').format('YYYY-MM-DD')
-  return {
-    key,
-    level,
-    completeDate,
-    currentLevel: currentArcane.level,
-    remainDays,
-    completeDateText:
-      moment().add(remainDays, 'days').format('YYYY-MM-DD') +
-      `(${cashFormat(remainDays)}天)`,
-    accumulativeNeed: TargetArcane.stack - currentCount,
-    totalCost: cashFormat(totalCost),
-  }
-}
 
 const renderIfMaxLevel = (text, row) =>
   row.currentLevel === ArcInfo.maxLevel ||
@@ -105,7 +68,7 @@ const renderEmptyIfMaxLevel = (text, row) =>
         },
       }
     : typeof text === 'number'
-    ? cashFormat(text)
+    ? numberFormat(text)
     : text
 
 const ResultTable = ({ getFieldValue }) => {
@@ -124,21 +87,19 @@ const ResultTable = ({ getFieldValue }) => {
       (dailyParty && pquest ? pquest.count || dailyParty : 0)
     const subTableData =
       +!!dailyTotalCount !== 0 && +!!currentCount !== 0
-        ? Object.values(ArcMapping)
-            .filter(({ stack }) => {
-              return currentCount < stack
+        ? ArcMapping.filter(({ stack }) => {
+            return currentCount < stack
+          }).map(({ level }) =>
+            parserTableData({
+              key: `${key}-${level}`,
+              level,
+              currentCount,
+              dailyTotalCount,
             })
-            .map(({ level }) =>
-              toRowData({
-                key: `${key}-${level}`,
-                level,
-                currentCount,
-                dailyTotalCount,
-              })
-            )
+          )
         : []
     return {
-      ...toRowData({
+      ...parserTableData({
         key,
         level: 20,
         currentCount,
@@ -472,14 +433,14 @@ export default function Home() {
                       : 0) +
                     (dailyQuest ? daily : 0) +
                     (dailyParty && pquest ? pquest.count || dailyParty : 0)
-                  const { completeDate, remainDays } = toRowData({
+                  const { completeDate, remainDays } = parserTableData({
                     key,
                     level: 20,
                     currentCount,
                     dailyTotalCount,
                   })
                   return {
-                    level: arcMatching(currentCount).level || 0,
+                    level: symbolMatch(currentCount).level || 0,
                     completeDate,
                     remainDays,
                   }
@@ -511,10 +472,10 @@ export default function Home() {
                     <Card>
                       <Statistic
                         title="Arc"
-                        value={cashFormat(
+                        value={numberFormat(
                           statisticData.total * 10 + statisticData.holded * 20
                         )}
-                        suffix={`/ ${cashFormat(statisticData.holded * 220)}`}
+                        suffix={`/ ${numberFormat(statisticData.holded * 220)}`}
                       />
                     </Card>
                   </Col>
@@ -528,7 +489,7 @@ export default function Home() {
                               return (
                                 <Statistic
                                   title="屬性加成量"
-                                  value={cashFormat(
+                                  value={numberFormat(
                                     (statisticData.total +
                                       statisticData.holded * 2) *
                                       RoleMapping[role].unit
@@ -572,7 +533,7 @@ export default function Home() {
                         }
                         suffix={
                           statisticData.remainDays
-                            ? `(${cashFormat(statisticData.remainDays)}天)`
+                            ? `(${numberFormat(statisticData.remainDays)}天)`
                             : ''
                         }
                       />
