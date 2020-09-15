@@ -51,7 +51,7 @@ const Exp = ({ value: arcane, onChange }) => {
   )
 }
 
-const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
+const ArcaneInputRangeSync = ({ name, value = 0, onChange }) => (
   <Fragment>
     <Tooltip title="符文等級 / 當前經驗值">
       <Form.Item
@@ -75,16 +75,15 @@ const ArcaneInputRangeSync = ({ label, name, value = 0, onChange }) => (
         </Input.Group>
       </Form.Item>
     </Tooltip>
-    <Form.Item name={[name, 'count']} noStyle>
-      <Slider
-        max={2679}
-        value={value}
-        tipFormatter={(value) =>
-          `Lv.${arcMatching(value).level} / ` +
-          `${value - arcMatching(value).stack}`
-        }
-      />
-    </Form.Item>
+    <Slider
+      max={2679}
+      value={value}
+      tipFormatter={(value) =>
+        `Lv.${arcMatching(value).level} / ` +
+        `${value - arcMatching(value).stack}`
+      }
+      onChange={onChange}
+    />
   </Fragment>
 )
 

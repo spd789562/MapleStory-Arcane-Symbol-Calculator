@@ -18,20 +18,21 @@ import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 
 /* mapping */
-import ArcMapping from '../src/mapping/arcane'
-import ArcInfo from '../src/mapping/arcane-info'
 import ArcZone from '../src/mapping/arcane-river-zone'
-import RoleMapping from '../src/mapping/role'
-
-/* utils */
-import symbolMatch from '../src/util/symbol-match'
-import numberFormat from '../src/util/number-format'
-import parserTableData from '../src/util/parser-table-data'
-import moment from 'moment'
 
 import styles from '../styles/Home.module.css'
 
 const { Header, Content, Footer } = Layout
+
+const initialValues = {
+  role: 0,
+  vanishingjourney: {},
+  chuchu: {},
+  lachelein: {},
+  arcana: {},
+  morass: {},
+  esfera: {},
+}
 
 export default function Home() {
   const [form] = Form.useForm()
@@ -44,19 +45,7 @@ export default function Home() {
       </Header>
       <BackTop />
       <Content className={styles.content}>
-        <Form
-          form={form}
-          initialValues={{
-            role: 0,
-            vanishingjourney: {},
-            chuchu: {},
-            lachelein: {},
-            arcana: {},
-            morass: {},
-            esfera: {},
-          }}
-          colon={false}
-        >
+        <Form form={form} initialValues={initialValues} colon={false}>
           <Row gutter={[8, 8]}>
             {ArcZone.map(({ name, key, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
@@ -132,6 +121,7 @@ export default function Home() {
                                 marginBottom: 0,
                               }}
                             >
+                              {/* if party quest has static value, use swtich button */}
                               {pquest.count ? (
                                 <Switch
                                   checkedChildren={pquest.count}
@@ -184,15 +174,7 @@ export default function Home() {
               const fieldsValue = getFieldsValue()
               const data = Object.keys(fieldsValue).length
                 ? fieldsValue
-                : {
-                    vanishingjourney: {},
-                    chuchu: {},
-                    lachelein: {},
-                    arcana: {},
-                    morass: {},
-                    esfera: {},
-                    role: 0,
-                  }
+                : initialValues
               return (
                 <Fragment>
                   <StatisticBoard data={data} />
