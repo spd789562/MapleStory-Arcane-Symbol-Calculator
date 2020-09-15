@@ -19,7 +19,7 @@ const useStatisticData = (data) => {
       quest: dailyQuest,
       party: dailyParty = 0,
     } = data[key]
-    
+
     const dailyQuestCount = dailyQuest ? daily : 0
     // has party quest
     const dailyPartyQuestCount =
@@ -40,26 +40,28 @@ const useStatisticData = (data) => {
       completeDate,
       remainDays,
     }
-  }).reduce(
-    (acc, inc) => {
-      acc.completeDate = acc.completeDate
-        ? moment(inc.completeDate).isValid() &&
-          moment(inc.completeDate).isAfter(acc.completeDate, 'days')
+  })
+    .filter((arcane) => arcane.level)
+    .reduce(
+      (acc, inc) => {
+        acc.completeDate = acc.completeDate
+          ? moment(inc.completeDate).isValid() &&
+            moment(inc.completeDate).isAfter(acc.completeDate, 'days')
+            ? inc.completeDate
+            : acc.completeDate
+          : moment(inc.completeDate).isValid()
           ? inc.completeDate
-          : acc.completeDate
-        : moment(inc.completeDate).isValid()
-        ? inc.completeDate
-        : undefined
-      acc.total += inc.level
-      acc.holded += inc.level !== 0 ? 1 : 0
-      acc.remainDays =
-        inc.remainDays !== Infinity && inc.remainDays > acc.remainDays
-          ? inc.remainDays
-          : acc.remainDays
-      return acc
-    },
-    { total: 0, holded: 0, remainDays: 0 }
-  )
+          : undefined
+        acc.total += inc.level
+        acc.holded += inc.level !== 0 ? 1 : 0
+        acc.remainDays =
+          inc.remainDays !== Infinity && inc.remainDays > acc.remainDays
+            ? inc.remainDays
+            : acc.remainDays
+        return acc
+      },
+      { total: 0, holded: 0, remainDays: 0 }
+    )
 
   const basicLevelUnit = statisticData.total + statisticData.holded * 2
   const currentArcanePower = basicLevelUnit * 10
