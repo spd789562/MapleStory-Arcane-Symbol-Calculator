@@ -128,7 +128,7 @@ const useChartData = (tableData) => {
           : [
               ...Object.entries(inc).map(([date, value]) => ({
                 date,
-                type: '總和',
+                type: 'arc',
                 value,
               })),
               ...acc,
@@ -148,11 +148,13 @@ const useChartData = (tableData) => {
 
   return Object.entries(chartData)
     .map(([date, data]) =>
-      Object.entries(data).map(([type, value]) => ({
-        type,
-        value,
-        date,
-      }))
+      Object.entries(data)
+        .filter(([type]) => type === 'arc')
+        .map(([type, value]) => ({
+          type,
+          value,
+          date,
+        }))
     )
     .reduce((acc, inc) => acc.concat(inc), [])
 
@@ -173,6 +175,7 @@ const useChartData = (tableData) => {
 
 const ResultTable = ({ data }) => {
   const tableData = useTableData(data)
+  const chartData = useChartData(tableData)
   return (
     <Fragment>
       <Table
@@ -222,24 +225,47 @@ const ResultTable = ({ data }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      {/* <Line
+      <Line
         {...{
           title: {
             visible: true,
             text: 'arc 趨勢圖',
           },
           forceFit: true,
-          data: testData,
+          data: chartData,
           padding: 'auto',
           xField: 'date',
           yField: 'value',
           seriesField: 'type',
+          legend: {
+            visible: false,
+          },
           xAxis: {
             type: 'dateTime',
+            grid: {
+              visible: true,
+              style: {
+                stroke: '#e3e8ec',
+                lineWidth: 1,
+                lineDash: [0, 0],
+              },
+            },
           },
-          legend: { position: 'right-top' },
+          yAxis: {
+            visible: true,
+            min: chartData.length ? chartData[0].value : 0,
+            max: 1320,
+          },
+          point: {
+            visible: true,
+            size: 3,
+            style: {
+              stroke: 'transparent',
+            },
+          },
         }}
-      ></Line> */}
+        style={{ backgroundColor: '#fff', marginTop: 8 }}
+      ></Line>
     </Fragment>
   )
 }
