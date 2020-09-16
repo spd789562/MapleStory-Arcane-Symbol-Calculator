@@ -72,6 +72,7 @@ const useTableData = (data) =>
           }).map(({ level }) =>
             parserTableData({
               key: `${key}-${level}`,
+              zone: key,
               level,
               currentCount,
               dailyTotalCount,
@@ -81,6 +82,7 @@ const useTableData = (data) =>
     return {
       ...parserTableData({
         key,
+        zone: key,
         level: 20,
         currentCount,
         dailyTotalCount,
