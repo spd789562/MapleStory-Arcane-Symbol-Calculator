@@ -36,7 +36,6 @@ const parserTableData = ({
   )
   const totalCost = ArcaneSymbolMapping.reduce(
     (totalCost, { level: arcaneLevel, cost, discount }) => {
-      console.log(+discount)
       totalCost +=
         arcaneLevel >= currentArcane.level && arcaneLevel <= level - 1
           ? isDiscountZone(zone)

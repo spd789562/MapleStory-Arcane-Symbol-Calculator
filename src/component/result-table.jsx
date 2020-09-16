@@ -94,8 +94,10 @@ const useTableData = (data) =>
     }
   })
 
-const useChartData = (tableData) => {
+const useChartData = (tableData, data) => {
   const today = moment().format('YYYY-MM-DD')
+  const hyperStatPower = ArcaneSymbol.hyper.formula(data.hyperStat || 0)
+  const guildPower = ArcaneSymbol.guild.formula(data.guildSkill || 0)
   const chartData = Object.values(
     tableData
       .filter(({ currentLevel }) => currentLevel)
@@ -120,7 +122,7 @@ const useChartData = (tableData) => {
           }
           return acc
         },
-        { data: [], total: {} }
+        { data: [], total: { [today]: hyperStatPower + guildPower } }
       )
   )
     .reduce(
@@ -177,7 +179,7 @@ const useChartData = (tableData) => {
 
 const ResultTable = ({ data }) => {
   const tableData = useTableData(data)
-  const chartData = useChartData(tableData)
+  const chartData = useChartData(tableData, data)
   return (
     <Fragment>
       <Table
@@ -256,7 +258,7 @@ const ResultTable = ({ data }) => {
           yAxis: {
             visible: true,
             min: chartData.length ? chartData[0].value : 0,
-            max: 1320,
+            max: 1450,
           },
           point: {
             visible: true,

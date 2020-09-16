@@ -9,8 +9,6 @@ if (typeof require !== 'undefined') {
   require.extensions['.less'] = (file) => {}
 }
 
-console.log(process.env.GOOGlE_AD_ID)
-
 module.exports = {
   ...withCSS({
     cssModules: true,
