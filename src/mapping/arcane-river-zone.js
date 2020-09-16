@@ -22,6 +22,7 @@ const ArcaneRiverZone = [
     daily: 8,
     pquest: { name: '艾爾達斯光譜', type: 'symbol', count: 6 },
     key: 'vanishingjourney',
+    levelupDiscount: true,
   },
   {
     name: '啾啾愛爾蘭',

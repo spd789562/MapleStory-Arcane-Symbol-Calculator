@@ -1,8 +1,18 @@
 import React from 'react'
-import { Form, Select, Row, Col, Statistic, Card } from 'antd'
+import {
+  Form,
+  Select,
+  Row,
+  Col,
+  Statistic,
+  Card,
+  InputNumber,
+  Tooltip,
+} from 'antd'
 
 /* mapping */
 import ArcZone from '../mapping/arcane-river-zone'
+import ArcInfo from '../mapping/arcane-info'
 import RoleMapping from '../mapping/role'
 
 /* utils */
@@ -62,13 +72,17 @@ const useStatisticData = (data) => {
       },
       { total: 0, holded: 0, remainDays: 0 }
     )
-
+  const hyperStatPower = ArcInfo.hyper.formula(data.hyperStat || 0)
+  const guildPower = ArcInfo.guild.formula(data.guildSkill || 0)
+  const additionPower = hyperStatPower + guildPower
   const basicLevelUnit = statisticData.total + statisticData.holded * 2
   const currentArcanePower = basicLevelUnit * 10
   const avaliableArcanePower = statisticData.holded * 220
   return {
-    currentArcanePower,
-    avaliableArcanePower,
+    hyperStatPower,
+    guildPower,
+    currentArcanePower: currentArcanePower + additionPower,
+    avaliableArcanePower: avaliableArcanePower + additionPower,
     statAmount: basicLevelUnit * (RoleMapping[data.role] || { unit: 100 }).unit,
     completeDateText: statisticData.total
       ? statisticData.remainDays === 0
@@ -83,6 +97,8 @@ const useStatisticData = (data) => {
 
 const StatisticBoard = ({ data }) => {
   const {
+    hyperStatPower,
+    guildPower,
     currentArcanePower,
     avaliableArcanePower,
     statAmount,
@@ -91,16 +107,54 @@ const StatisticBoard = ({ data }) => {
   } = useStatisticData(data)
   return (
     <Row gutter={[8, 8]}>
-      <Col xs={24} sm={12} md={6}>
+      <Col xs={24} sm={12} lg={8}>
         <Card>
-          <Statistic
-            title="Arc"
-            value={numberFormat(currentArcanePower)}
-            suffix={`/ ${numberFormat(avaliableArcanePower)}`}
-          />
+          <Row>
+            <Col span={12}>
+              <Statistic
+                title="Arc"
+                value={numberFormat(currentArcanePower)}
+                suffix={`/ ${numberFormat(avaliableArcanePower)}`}
+              />{' '}
+            </Col>
+            <Col span={12}>
+              <Row gutter={[0, 8]} align="middle">
+                <Col span={24}>
+                  <Tooltip title="極限屬性 / ARC 增加量">
+                    <Form.Item name="hyperStat" noStyle>
+                      <InputNumber
+                        size="small"
+                        placeholder="極限屬性"
+                        min={0}
+                        step={1}
+                        max={ArcInfo.hyper.maxLevel}
+                        precision={0}
+                      />
+                    </Form.Item>
+                    &nbsp;/&nbsp;{hyperStatPower}
+                  </Tooltip>
+                </Col>
+                <Col span={24}>
+                  <Tooltip title="公會技能 / ARC 增加量">
+                    <Form.Item name="guildSkill" noStyle>
+                      <InputNumber
+                        size="small"
+                        placeholder="工會技能"
+                        min={0}
+                        step={1}
+                        max={ArcInfo.guild.maxLevel}
+                        precision={0}
+                      />
+                    </Form.Item>
+                    &nbsp;/&nbsp;{guildPower}
+                  </Tooltip>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Card>
       </Col>
-      <Col xs={24} sm={12} md={6}>
+      <Col xs={24} sm={12} lg={8}>
         <Card>
           <Row>
             <Col span={12}>
@@ -120,7 +174,7 @@ const StatisticBoard = ({ data }) => {
           </Row>
         </Card>
       </Col>
-      <Col xs={24} sm={24} md={12}>
+      <Col xs={24} sm={24} lg={8}>
         <Card>
           <Statistic
             title="完成日期(天數)"

@@ -134,6 +134,7 @@ export default function Home() {
                                   max={pquest.dailyMax}
                                   defaultValue={0}
                                   style={{ width: 70 }}
+                                  precision={0}
                                 />
                               )}
                             </Form.Item>
@@ -161,6 +162,7 @@ export default function Home() {
                             min={0}
                             defaultValue={0}
                             style={{ width: 70 }}
+                            precision={0}
                           />
                         </Form.Item>
                       </Tooltip>

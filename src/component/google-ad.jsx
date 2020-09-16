@@ -7,7 +7,6 @@ const GoogleAd = () => {
   useEffect(() => {
     try {
       ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-      console.log(publicRuntimeConfig)
     } catch (err) {
       console.log(err)
     }
