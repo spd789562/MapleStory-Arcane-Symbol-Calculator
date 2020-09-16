@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
+import getConfig from 'next/config'
 
-import { GOOGlE_AD_ID, GOOGlE_AD_SLOT } from '../config'
+const { publicRuntimeConfig } = getConfig()
 
 const GoogleAd = () => {
   useEffect(() => {
     try {
       ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+      console.log(publicRuntimeConfig)
     } catch (err) {
       console.log(err)
     }
@@ -16,9 +18,13 @@ const GoogleAd = () => {
       className="adsbygoogle adbanner-customize"
       style={{
         display: 'block',
+        marginTop: 8,
       }}
-      data-ad-client={GOOGlE_AD_ID}
-      data-ad-slot={GOOGlE_AD_SLOT}
+      data-ad-format="fluid"
+      data-ad-client={`ca-pub-${publicRuntimeConfig.GOOGlE_AD_ID}`}
+      data-ad-slot={publicRuntimeConfig.GOOGlE_AD_SLOT_TEST}
+      data-ad-layout-key={publicRuntimeConfig.GOOGLE_AD_LAYOUT_TEST}
+      data-full-width-responsive
     />
   )
 }

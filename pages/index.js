@@ -16,6 +16,7 @@ import {
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
+import GoogleAD from '../src/component/google-ad'
 
 /* mapping */
 import ArcZone from '../src/mapping/arcane-river-zone'
@@ -184,6 +185,7 @@ export default function Home() {
             }}
           </Form.Item>
         </Form>
+        <GoogleAD />
       </Content>
       <Footer className={styles.footer} style={{ textAlign: 'center' }}>
         Arcane Symble Calculator ©2020 Created by 丫村
