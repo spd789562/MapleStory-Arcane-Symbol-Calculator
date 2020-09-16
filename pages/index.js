@@ -187,9 +187,14 @@ export default function Home() {
             }}
           </Form.Item>
         </Form>
-        <GoogleAD />
+        <div className={styles.info}>
+          <div className={styles['info-text']}>
+            塞一下廣告應該沒關係吧(´・ω・`)
+          </div>
+          <GoogleAD />
+        </div>
       </Content>
-      <Footer className={styles.footer} style={{ textAlign: 'center' }}>
+      <Footer className={styles.footer}>
         Arcane Symble Calculator ©2020 Created by 丫村
       </Footer>
     </Layout>

@@ -12,12 +12,27 @@
 .content {
   padding-top: 0.5rem;
 }
-.header-container,
+/* .header-container,
 .content,
 .footer {
   padding-left: 3rem;
   padding-right: 3rem;
+} */
+
+.info {
+  width: 100%;
+  background-color: #fff;
 }
+.info-text {
+  text-align: center;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.footer {
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
   .header-container,
   .content,
@@ -31,7 +46,7 @@
   .header-container,
   .content {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     margin-right: auto;
     margin-left: auto;
   }

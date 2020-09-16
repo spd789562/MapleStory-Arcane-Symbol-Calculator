@@ -17,7 +17,6 @@ const GoogleAd = () => {
       className="adsbygoogle adbanner-customize"
       style={{
         display: 'block',
-        marginTop: 8,
       }}
       data-ad-format="fluid"
       data-ad-client={`ca-pub-${publicRuntimeConfig.GOOGlE_AD_ID}`}
