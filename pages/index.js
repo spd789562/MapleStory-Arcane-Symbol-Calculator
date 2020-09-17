@@ -45,7 +45,7 @@ function Home({ t, i18n }) {
     <Layout className="layout">
       <Header className={styles.header}>
         <div className={styles['header-container']}>
-          <h2 style={{ marginBottom: 0 }}>
+          <h2 style={{ marginBottom: 0, marginRight: '4rem' }}>
             {t('title')}
             &nbsp;
           </h2>
