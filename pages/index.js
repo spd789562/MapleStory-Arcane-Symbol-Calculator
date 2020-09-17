@@ -45,7 +45,7 @@ function Home({ t, i18n }) {
     <Layout className="layout">
       <Header className={styles.header}>
         <div className={styles['header-container']}>
-          <h2 style={{ marginBottom: 0, marginRight: '4rem' }}>
+          <h2 style={{ marginBottom: 0 }}>
             {t('title')}
             &nbsp;
           </h2>
@@ -54,7 +54,7 @@ function Home({ t, i18n }) {
               i18n.changeLanguage && i18n.changeLanguage(value)
             }
             defaultValue={i18n.language}
-            style={{ marginLeft: 'auto' }}
+            style={{ marginLeft: 'auto', marginRight: '4rem' }}
           >
             <Select.Option value="en">English</Select.Option>
             <Select.Option value="zh_tw">繁體中文</Select.Option>
