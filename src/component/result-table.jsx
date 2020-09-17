@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 
 import { Fragment } from 'react'
 import { Table } from 'antd'
+import { withTranslation } from '../i18n'
 
 /* mapping */
 import ArcaneSymbolMapping from '../mapping/arcane'
@@ -17,23 +18,6 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
 
-const renderIfMaxLevel = (text, row) =>
-  row.currentLevel === ArcaneSymbol.maxLevel ||
-  row.currentLevel === 0 ||
-  row.dailyTotalCount === 0
-    ? {
-        children:
-          row.currentLevel === ArcaneSymbol.maxLevel
-            ? '已滿級'
-            : row.currentLevel === 0
-            ? '未獲得此符文'
-            : `你每天都不拿，就卡在 ${row.currentLevel} 等吧`,
-        props: {
-          colSpan: 4,
-        },
-      }
-    : text
-
 const renderEmptyIfMaxLevel = (text, row) =>
   row.currentLevel === ArcaneSymbol.maxLevel ||
   row.currentLevel === 0 ||
@@ -48,7 +32,7 @@ const renderEmptyIfMaxLevel = (text, row) =>
     ? numberFormat(text)
     : text
 
-const useTableData = (data) =>
+const useTableData = (data, t) =>
   ArcZone.map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
@@ -76,6 +60,7 @@ const useTableData = (data) =>
               level,
               currentCount,
               dailyTotalCount,
+              t,
             })
           )
         : []
@@ -86,6 +71,7 @@ const useTableData = (data) =>
         level: 20,
         currentCount,
         dailyTotalCount,
+        t,
       }),
       dailyTotalCount,
       currentCount,
@@ -94,7 +80,7 @@ const useTableData = (data) =>
     }
   })
 
-const useChartData = (tableData, data) => {
+const useChartData = (tableData, data, t) => {
   const today = moment().format('YYYY-MM-DD')
   const hyperStatPower = ArcaneSymbol.hyper.formula(data.hyperStat || 0)
   const guildPower = ArcaneSymbol.guild.formula(data.guildSkill || 0)
@@ -155,7 +141,7 @@ const useChartData = (tableData, data) => {
       Object.entries(data)
         .filter(([type]) => type === 'ARC')
         .map(([type, value]) => ({
-          type,
+          type: t('arcane_power'),
           value,
           date,
         }))
@@ -177,30 +163,48 @@ const useChartData = (tableData, data) => {
   // }, {})
 }
 
-const ResultTable = ({ data }) => {
-  const tableData = useTableData(data)
-  const chartData = useChartData(tableData, data)
+const ResultTable = ({ data, t }) => {
+  const tableData = useTableData(data, t)
+  const chartData = useChartData(tableData, data, t)
+
+  const renderTextIfMaxLevel = (text, row) =>
+    row.currentLevel === ArcaneSymbol.maxLevel ||
+    row.currentLevel === 0 ||
+    row.dailyTotalCount === 0
+      ? {
+          children:
+            row.currentLevel === ArcaneSymbol.maxLevel
+              ? t('table_symbol_max')
+              : row.currentLevel === 0
+              ? t('table_symbol_none')
+              : t('table_symbol_never', { level: row.currentLevel }),
+          props: {
+            colSpan: 4,
+          },
+        }
+      : text
+
   return (
     <Fragment>
       <Table
         columns={[
           {
-            title: '地區',
+            title: t('table_zone'),
             dataIndex: 'name',
             key: 'name',
             width: 120,
             align: 'center',
           },
           {
-            title: '等級',
+            title: t('table_symbol_level'),
             dataIndex: 'level',
             key: 'level',
             align: 'center',
             width: 60,
-            render: renderIfMaxLevel,
+            render: renderTextIfMaxLevel,
           },
           {
-            title: '達成日期(天數)',
+            title: t('complete_date'),
             dataIndex: 'completeDateText',
             key: 'completeDateText',
             align: 'center',
@@ -208,7 +212,7 @@ const ResultTable = ({ data }) => {
             render: renderEmptyIfMaxLevel,
           },
           {
-            title: '累計符文',
+            title: t('tabel_total_symbol'),
             dataIndex: 'accumulativeNeed',
             key: 'accumulativeNeed',
             align: 'center',
@@ -216,7 +220,7 @@ const ResultTable = ({ data }) => {
             render: renderEmptyIfMaxLevel,
           },
           {
-            title: '累計楓幣',
+            title: t('tabel_total_cost'),
             dataIndex: 'totalCost',
             key: 'totalCost',
             align: 'center',
@@ -224,7 +228,10 @@ const ResultTable = ({ data }) => {
             render: renderEmptyIfMaxLevel,
           },
         ]}
-        dataSource={tableData}
+        dataSource={tableData.map((data) => ({
+          ...data,
+          name: t(data.name),
+        }))}
         pagination={false}
         scroll={{ x: '100%' }}
         sticky
@@ -233,7 +240,7 @@ const ResultTable = ({ data }) => {
         {...{
           title: {
             visible: true,
-            text: 'ARC 趨勢圖',
+            text: t('chart_title'),
           },
           forceFit: true,
           data: chartData,
@@ -274,4 +281,4 @@ const ResultTable = ({ data }) => {
   )
 }
 
-export default ResultTable
+export default withTranslation('index')(ResultTable)
