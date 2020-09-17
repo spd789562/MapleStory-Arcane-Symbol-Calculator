@@ -48,17 +48,17 @@ function Home({ t, i18n }) {
           <h2 style={{ marginBottom: 0 }}>
             {t('title')}
             &nbsp;
-            <Select
-              onChange={(value) =>
-                i18n.changeLanguage && i18n.changeLanguage(value)
-              }
-              defaultValue={i18n.language}
-              style={{ marginLeft: 'auto' }}
-            >
-              <Select.Option value="en">English</Select.Option>
-              <Select.Option value="zh_tw">繁體中文</Select.Option>
-            </Select>
           </h2>
+          <Select
+            onChange={(value) =>
+              i18n.changeLanguage && i18n.changeLanguage(value)
+            }
+            defaultValue={i18n.language}
+            style={{ marginLeft: 'auto' }}
+          >
+            <Select.Option value="en">English</Select.Option>
+            <Select.Option value="zh_tw">繁體中文</Select.Option>
+          </Select>
         </div>
       </Header>
       <BackTop />

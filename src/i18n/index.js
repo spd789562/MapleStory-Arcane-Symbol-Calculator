@@ -7,6 +7,7 @@ module.exports = new NextI18Next({
   otherLanguages: ['en'],
   localeSubpaths: {
     en: 'en',
+    zh_tw: 'zh_tw',
   },
   localePath: path.resolve('./public/static/locales'),
 })

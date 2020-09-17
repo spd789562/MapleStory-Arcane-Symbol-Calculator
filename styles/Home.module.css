@@ -9,6 +9,9 @@
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-origin: content-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .content {
   padding-top: 0.5rem;
