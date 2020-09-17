@@ -28,6 +28,7 @@ const parserTableData = ({
   level,
   currentCount,
   dailyTotalCount,
+  t = (_) => _,
 }) => {
   const TargetArcane = ArcaneSymbolMapping[level]
   const currentArcane = symbolMatch(currentCount)
@@ -55,7 +56,7 @@ const parserTableData = ({
     remainDays,
     completeDateText:
       moment().add(remainDays, 'days').format('YYYY-MM-DD') +
-      `(${numberFormat(remainDays)}天)`,
+      `(${numberFormat(remainDays)}${t('complete_days')})`,
     accumulativeNeed: TargetArcane.stack - currentCount,
     totalCost: numberFormat(totalCost),
   }

@@ -9,6 +9,7 @@ import {
   InputNumber,
   Tooltip,
 } from 'antd'
+import { withTranslation } from '../i18n'
 
 /* mapping */
 import ArcZone from '../mapping/arcane-river-zone'
@@ -21,7 +22,7 @@ import numberFormat from '../util/number-format'
 import parserTableData from '../util/parser-table-data'
 import moment from 'moment'
 
-const useStatisticData = (data) => {
+const useStatisticData = (data, t) => {
   const statisticData = ArcZone.map(({ key, daily, pquest }) => {
     const {
       count: currentCount,
@@ -87,15 +88,15 @@ const useStatisticData = (data) => {
     completeDateText: statisticData.total
       ? statisticData.remainDays === 0
         ? currentArcanePower === avaliableArcanePower
-          ? '已達成當前上限'
-          : '永遠完成不了'
+          ? t('complete_date_complete')
+          : t('complete_date_never')
         : statisticData.completeDate
-      : '無',
+      : t('complete_date_none'),
     remainDays: statisticData.remainDays,
   }
 }
 
-const StatisticBoard = ({ data }) => {
+const StatisticBoard = ({ data, t }) => {
   const {
     hyperStatPower,
     guildPower,
@@ -104,7 +105,7 @@ const StatisticBoard = ({ data }) => {
     statAmount,
     completeDateText,
     remainDays,
-  } = useStatisticData(data)
+  } = useStatisticData(data, t)
   return (
     <Row gutter={[8, 8]}>
       <Col xs={24} sm={12} lg={8}>
@@ -112,19 +113,19 @@ const StatisticBoard = ({ data }) => {
           <Row>
             <Col span={12}>
               <Statistic
-                title="Arc"
+                title={t('arcane_power')}
                 value={numberFormat(currentArcanePower)}
                 suffix={`/ ${numberFormat(avaliableArcanePower)}`}
-              />{' '}
+              />
             </Col>
             <Col span={12}>
               <Row gutter={[0, 8]} align="middle">
                 <Col span={24}>
-                  <Tooltip title="極限屬性 / ARC 增加量">
+                  <Tooltip title={t('hyper_stat_tips')}>
                     <Form.Item name="hyperStat" noStyle>
                       <InputNumber
                         size="small"
-                        placeholder="極限屬性"
+                        placeholder={t('hyper_stat')}
                         min={0}
                         step={1}
                         max={ArcInfo.hyper.maxLevel}
@@ -135,11 +136,11 @@ const StatisticBoard = ({ data }) => {
                   </Tooltip>
                 </Col>
                 <Col span={24}>
-                  <Tooltip title="公會技能 / ARC 增加量">
+                  <Tooltip title={t('guild_skill_tips')}>
                     <Form.Item name="guildSkill" noStyle>
                       <InputNumber
                         size="small"
-                        placeholder="工會技能"
+                        placeholder={t('guild_skill')}
                         min={0}
                         step={1}
                         max={ArcInfo.guild.maxLevel}
@@ -158,14 +159,14 @@ const StatisticBoard = ({ data }) => {
         <Card>
           <Row>
             <Col span={12}>
-              <Statistic title="屬性加成量" value={statAmount} />
+              <Statistic title={t('stat_increase')} value={statAmount} />
             </Col>
             <Col span={12}>
               <Form.Item name="role" noStyle>
                 <Select>
                   {RoleMapping.map(({ name }, index) => (
                     <Select.Option value={index} key={`role-${index}`}>
-                      {name}
+                      {t(name)}
                     </Select.Option>
                   ))}
                 </Select>
@@ -177,9 +178,13 @@ const StatisticBoard = ({ data }) => {
       <Col xs={24} sm={24} lg={8}>
         <Card>
           <Statistic
-            title="完成日期(天數)"
+            title={t('complete_date')}
             value={completeDateText}
-            suffix={remainDays ? `(${numberFormat(remainDays)}天)` : ''}
+            suffix={
+              remainDays
+                ? `(${numberFormat(remainDays)}${t('complete_days')})`
+                : ''
+            }
           />
         </Card>
       </Col>
@@ -187,4 +192,4 @@ const StatisticBoard = ({ data }) => {
   )
 }
 
-export default StatisticBoard
+export default withTranslation('index')(StatisticBoard)

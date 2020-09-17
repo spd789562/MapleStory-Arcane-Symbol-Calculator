@@ -1,6 +1,7 @@
 .header {
   background-color: #c1c8f1;
   padding: 0;
+  height: unset;
 }
 .header-container {
   background-image: url('/harmony_spirit.png');
@@ -8,6 +9,10 @@
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-origin: content-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .content {
   padding-top: 0.5rem;
@@ -33,7 +38,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1199px) {
   .header-container,
   .content,
   .footer {

@@ -10,6 +10,7 @@ import {
   Avatar,
   Tooltip,
   Switch,
+  Select,
 } from 'antd'
 
 /* component */
@@ -20,6 +21,9 @@ import GoogleAD from '../src/component/google-ad'
 
 /* mapping */
 import ArcZone from '../src/mapping/arcane-river-zone'
+
+/* helper */
+import { withTranslation } from '../src/i18n'
 
 import styles from '../styles/Home.module.css'
 
@@ -35,13 +39,26 @@ const initialValues = {
   esfera: {},
 }
 
-export default function Home() {
+function Home({ t, i18n }) {
   const [form] = Form.useForm()
   return (
     <Layout className="layout">
       <Header className={styles.header}>
         <div className={styles['header-container']}>
-          <h2>秘法符文計算機</h2>
+          <h2 style={{ marginBottom: 0 }}>
+            {t('title')}
+            &nbsp;
+          </h2>
+          <Select
+            onChange={(value) =>
+              i18n.changeLanguage && i18n.changeLanguage(value)
+            }
+            defaultValue={i18n.language}
+            style={{ marginLeft: 'auto' }}
+          >
+            <Select.Option value="en">English</Select.Option>
+            <Select.Option value="zh_tw">繁體中文</Select.Option>
+          </Select>
         </div>
       </Header>
       <BackTop />
@@ -50,7 +67,7 @@ export default function Home() {
           <Row gutter={[8, 8]}>
             {ArcZone.map(({ name, key, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
-                <Card title={name}>
+                <Card title={t(name)}>
                   <Row gutter={[0, 12]}>
                     <Col span={24}>
                       <Form.Item
@@ -61,10 +78,10 @@ export default function Home() {
                       </Form.Item>
                     </Col>
                     <Col span={24}>
-                      <h4>每日符文獲取來源:</h4>
+                      <h4>{t('daily_symbol_source')}:</h4>
                     </Col>
                     <Col span={12}>
-                      <Tooltip title={`每日任務: 此地區每日可獲得 ${daily} 個`}>
+                      <Tooltip title={t('daily_quest_tips', { count: daily })}>
                         <Form.Item
                           name={[key, 'quest']}
                           label={
@@ -89,14 +106,17 @@ export default function Home() {
                         <Tooltip
                           title={
                             pquest.desc
-                              ? pquest.desc
-                              : `${pquest.name}: 最多可獲得 ${
-                                  pquest.count || pquest.dailyMax
-                                } 個${
-                                  pquest.unit
-                                    ? `, ${pquest.unit} 個可兌換 1 個符文`
-                                    : ''
-                                }`
+                              ? t(pquest.desc, {
+                                  ...pquest,
+                                  name: t(pquest.name),
+                                })
+                              : t('party_quest_tips', {
+                                  name: t(pquest.name),
+                                  count: pquest.count || pquest.dailyMax,
+                                }) +
+                                (pquest.unit
+                                  ? t('party_quest_tips_exchange', pquest)
+                                  : '')
                           }
                         >
                           <div
@@ -107,7 +127,7 @@ export default function Home() {
                               label={
                                 pquest.type === 'symbol' ? (
                                   <div style={{ cursor: 'pointer' }}>
-                                    組隊任務
+                                    {t('party_quest')}
                                   </div>
                                 ) : (
                                   <Avatar
@@ -146,7 +166,7 @@ export default function Home() {
                       </Col>
                     )}
                     <Col span={12} xl={24}>
-                      <Tooltip title="每日額外獲取數 Ex. 選擇秘法符文">
+                      <Tooltip title={t('extra_symbol')}>
                         <Form.Item
                           name={[key, 'daily']}
                           label={
@@ -189,7 +209,7 @@ export default function Home() {
         </Form>
         <div className={styles.info}>
           <div className={styles['info-text']}>
-            塞一下廣告應該沒關係吧(´・ω・`)
+            {t('just_a_advertisement')}(´・ω・`)
           </div>
           <GoogleAD />
         </div>
@@ -200,3 +220,9 @@ export default function Home() {
     </Layout>
   )
 }
+
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(Home)

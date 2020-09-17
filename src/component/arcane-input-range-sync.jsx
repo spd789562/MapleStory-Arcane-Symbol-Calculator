@@ -2,6 +2,8 @@ import React, { Fragment } from 'react'
 
 import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 
+import { withTranslation } from '../i18n'
+
 import ArcMapping from '../mapping/arcane'
 
 const arcMatching = (arcane) =>
@@ -51,14 +53,14 @@ const Exp = ({ value: arcane, onChange }) => {
   )
 }
 
-const ArcaneInputRangeSync = ({ name, value = 0, onChange }) => (
+const ArcaneInputRangeSync = ({ name, value = 0, onChange, t }) => (
   <Fragment>
-    <Tooltip title="符文等級 / 當前經驗值">
+    <Tooltip title={t('symbol_level_tips')}>
       <Form.Item
         label={
           <Avatar
             src={`/arcane-symbol-${name}.png`}
-            alt="符文等級 / 當前經驗值"
+            alt={t('symbol_level_tips')}
             style={{ cursor: 'pointer' }}
           />
         }
@@ -87,4 +89,4 @@ const ArcaneInputRangeSync = ({ name, value = 0, onChange }) => (
   </Fragment>
 )
 
-export default ArcaneInputRangeSync
+export default withTranslation('index')(ArcaneInputRangeSync)

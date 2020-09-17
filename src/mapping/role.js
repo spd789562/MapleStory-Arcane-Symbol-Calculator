@@ -9,15 +9,15 @@
  */
 const RoleMapping = [
   {
-    name: '一般職業',
+    name: 'general',
     unit: 100,
   },
   {
-    name: '傑諾',
+    name: 'xenon',
     unit: 39,
   },
   {
-    name: '惡復',
+    name: 'demon_avenger',
     unit: 1750,
   },
 ]
