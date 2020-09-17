@@ -1,0 +1,7 @@
+{
+  "title": "秘法符文計算機",
+
+  "page-not-found": "無此頁面",
+  "error-with-status": "A {{statusCode}} error occurred on server",
+  "error-without-status": "An error occurred on the server"
+}

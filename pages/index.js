@@ -17,6 +17,7 @@ import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
+import I18nText from '../src/component/i18n-text'
 
 /* mapping */
 import ArcZone from '../src/mapping/arcane-river-zone'
@@ -35,13 +36,15 @@ const initialValues = {
   esfera: {},
 }
 
-export default function Home() {
+function Home() {
   const [form] = Form.useForm()
   return (
     <Layout className="layout">
       <Header className={styles.header}>
         <div className={styles['header-container']}>
-          <h2>秘法符文計算機</h2>
+          <h2>
+            <I18nText param={{ test: '123' }}>title</I18nText>
+          </h2>
         </div>
       </Header>
       <BackTop />
@@ -200,3 +203,9 @@ export default function Home() {
     </Layout>
   )
 }
+
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default Home
