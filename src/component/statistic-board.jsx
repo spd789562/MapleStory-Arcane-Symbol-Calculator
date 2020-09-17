@@ -88,10 +88,10 @@ const useStatisticData = (data, t) => {
     completeDateText: statisticData.total
       ? statisticData.remainDays === 0
         ? currentArcanePower === avaliableArcanePower
-          ? '已達成當前上限'
-          : '永遠完成不了'
+          ? t('complete_date_complete')
+          : t('complete_date_never')
         : statisticData.completeDate
-      : '無',
+      : t('complete_date_none'),
     remainDays: statisticData.remainDays,
   }
 }
