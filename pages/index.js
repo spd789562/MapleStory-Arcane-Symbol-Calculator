@@ -10,6 +10,7 @@ import {
   Avatar,
   Tooltip,
   Switch,
+  Select,
 } from 'antd'
 
 /* component */
@@ -17,7 +18,6 @@ import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
-import I18nText from '../src/component/i18n-text'
 
 /* mapping */
 import ArcZone from '../src/mapping/arcane-river-zone'
@@ -39,13 +39,26 @@ const initialValues = {
   esfera: {},
 }
 
-function Home({ t }) {
+function Home({ t, i18n }) {
   const [form] = Form.useForm()
   return (
     <Layout className="layout">
       <Header className={styles.header}>
         <div className={styles['header-container']}>
-          <h2>{t('title')}</h2>
+          <h2 style={{ marginBottom: 0 }}>
+            {t('title')}
+            &nbsp;
+            <Select
+              onChange={(value) =>
+                i18n.changeLanguage && i18n.changeLanguage(value)
+              }
+              defaultValue={i18n.language}
+              style={{ marginLeft: 'auto' }}
+            >
+              <Select.Option value="en">English</Select.Option>
+              <Select.Option value="zh_tw">繁體中文</Select.Option>
+            </Select>
+          </h2>
         </div>
       </Header>
       <BackTop />

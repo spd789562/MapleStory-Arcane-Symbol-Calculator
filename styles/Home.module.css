@@ -1,6 +1,7 @@
 .header {
   background-color: #c1c8f1;
   padding: 0;
+  height: unset;
 }
 .header-container {
   background-image: url('/harmony_spirit.png');
