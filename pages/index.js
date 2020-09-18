@@ -58,6 +58,7 @@ function Home({ t, i18n }) {
           >
             <Select.Option value="en">English</Select.Option>
             <Select.Option value="zh_tw">繁體中文</Select.Option>
+            <Select.Option value="zh_cn">简体中文</Select.Option>
           </Select>
         </div>
       </Header>
