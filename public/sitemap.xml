@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>https://maplestory-arcane-symbol-calculator.vercel.app</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app" />
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_tw" />
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app/en" />
+  <priority>0.5</priority>
+  <lastmod>2020-09-18</lastmod>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://maplestory-arcane-symbol-calculator.vercel.app/en</loc>
+  <xhtml:link rel="alternate" hreflang="zh_tw" href="https://maplestory-arcane-symbol-calculator.vercel.app/en" />
+  <xhtml:link rel="alternate" hreflang="zh_tw" href="https://maplestory-arcane-symbol-calculator.vercel.app" />
+  <xhtml:link rel="alternate" hreflang="zh_tw" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_tw" />
+  <priority>0.5</priority>
+  <lastmod>2020-09-18</lastmod>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>https://maplestory-arcane-symbol-calculator.vercel.app/zh_cn</loc>
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_cn" />
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_tw" />
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="https://maplestory-arcane-symbol-calculator.vercel.app" />
+  <xhtml:link rel="alternate" hreflang="zh_cn" href="https://maplestory-arcane-symbol-calculator.vercel.app/en" />
+  <priority>0.5</priority>
+  <lastmod>2020-09-18</lastmod>
+  <changefreq>weekly</changefreq>
+</url>
+</urlset>
