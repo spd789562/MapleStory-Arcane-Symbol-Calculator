@@ -5,7 +5,7 @@ import { appWithTranslation, withTranslation } from '../src/i18n'
 import '../styles/antd.less'
 import '../styles/globals.css'
 
-const NextHead = withTranslation('index')(({ t }) => (
+const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
   <Head>
     <title>{t('title')}</title>
     <meta
@@ -33,6 +33,12 @@ const NextHead = withTranslation('index')(({ t }) => (
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
     />
+    {language === 'zh_cn' && (
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap"
+        rel="stylesheet"
+      />
+    )}
   </Head>
 ))
 
