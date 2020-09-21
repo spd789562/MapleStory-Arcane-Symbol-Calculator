@@ -1,5 +1,6 @@
 {
   "title": "神秘徽章计算机",
+  "comma": "，",
   "daily_symbol_source": "每日徽章获取来源",
   "daily_quest_tips": "每日任务: 此地区每日可获得 {{count}} 个",
   "party_quest_tips": "{{name}}: 最多可获得 {{count}} 个",
@@ -16,6 +17,9 @@
   "complete_date_complete": "已达成当前上限",
   "complete_date_never": "永远完成不了",
   "complete_date_none": "无",
+  "all_complete_date": "全满完成日期(天数)",
+  "complete_date_tips_last": "{{area}}将最后完成",
+  "complete_date_tips": "不计入{{areas}}，因为你不解任务",
   "complete_date": "完成日期(天数)",
   "complete_days": "天",
   "stat_increase": "属性加成量",

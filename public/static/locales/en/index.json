@@ -1,5 +1,6 @@
 {
   "title": "Maplestory Arcane Calculator",
+  "comma": ", ",
   "daily_symbol_source": "Daily Symbol Sources",
   "daily_quest_tips": "Daily Quest: This area can get {{count}} daily",
   "party_quest_tips": "{{name}}: Up to {{count}} daily",
@@ -16,6 +17,9 @@
   "complete_date_complete": "Already Max",
   "complete_date_never": "Never",
   "complete_date_none": "None",
+  "all_complete_date": "All Max Date(Days)",
+  "complete_date_tips_last": "{{area}} will be Last completed",
+  "complete_date_tips": "Excluded {{areas}} because of no any symbol source",
   "complete_date": "Complete Date(Days)",
   "complete_days": "days",
   "stat_increase": "Extra Stats",
