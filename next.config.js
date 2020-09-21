@@ -54,4 +54,7 @@ module.exports = withPWA({
     GOOGlE_ANALYTICS_ID: process.env.GOOGlE_ANALYTICS_ID || '',
     localeSubpaths,
   },
+  pwa: {
+    dest: 'public',
+  },
 })
