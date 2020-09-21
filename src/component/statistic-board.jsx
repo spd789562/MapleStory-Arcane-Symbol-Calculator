@@ -23,7 +23,7 @@ import parserTableData from '../util/parser-table-data'
 import moment from 'moment'
 
 const useStatisticData = (data, t) => {
-  const statisticData = ArcZone.map(({ key, daily, pquest }) => {
+  const statisticData = ArcZone.map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
@@ -47,6 +47,7 @@ const useStatisticData = (data, t) => {
       dailyTotalCount,
     })
     return {
+      name,
       level: symbolMatch(currentCount).level || 0,
       completeDate,
       remainDays,
@@ -55,14 +56,25 @@ const useStatisticData = (data, t) => {
     .filter((arcane) => arcane.level)
     .reduce(
       (acc, inc) => {
-        acc.completeDate = acc.completeDate
-          ? moment(inc.completeDate).isValid() &&
-            moment(inc.completeDate).isAfter(acc.completeDate, 'days')
-            ? inc.completeDate
-            : acc.completeDate
-          : moment(inc.completeDate).isValid()
-          ? inc.completeDate
-          : undefined
+        if (moment(inc.completeDate).isValid()) {
+          if (
+            !acc.completeDate ||
+            moment(inc.completeDate).isSameOrAfter(acc.completeDate, 'days')
+          ) {
+            acc.completeDate = inc.completeDate
+            acc.latestName = inc.name
+          }
+        } else {
+          acc.excludeName.push(inc.name)
+        }
+        // acc.completeDate = acc.completeDate
+        //   ? moment(inc.completeDate).isValid() &&
+        //     moment(inc.completeDate).isAfter(acc.completeDate, 'days')
+        //     ? inc.completeDate
+        //     : acc.completeDate
+        //   : moment(inc.completeDate).isValid()
+        //   ? inc.completeDate
+        //   : undefined
         acc.total += inc.level
         acc.holded += inc.level !== 0 ? 1 : 0
         acc.remainDays =
@@ -71,7 +83,7 @@ const useStatisticData = (data, t) => {
             : acc.remainDays
         return acc
       },
-      { total: 0, holded: 0, remainDays: 0 }
+      { total: 0, holded: 0, remainDays: 0, excludeName: [] }
     )
   const hyperStatPower = ArcInfo.hyper.formula(data.hyperStat || 0)
   const guildPower = ArcInfo.guild.formula(data.guildSkill || 0)
@@ -79,20 +91,30 @@ const useStatisticData = (data, t) => {
   const basicLevelUnit = statisticData.total + statisticData.holded * 2
   const currentArcanePower = basicLevelUnit * 10
   const avaliableArcanePower = statisticData.holded * 220
+  const completeDateText = statisticData.total
+    ? statisticData.remainDays === 0
+      ? currentArcanePower === avaliableArcanePower
+        ? t('complete_date_complete')
+        : t('complete_date_never')
+      : statisticData.completeDate
+    : t('complete_date_none')
+  const excludeTooltips =
+    t('complete_date_tips_last', { area: t(statisticData.latestName) }) +
+    (statisticData.excludeName.length
+      ? t('comma') +
+        t('complete_date_tips', {
+          areas: statisticData.excludeName.map(t).join(', '),
+        })
+      : '')
   return {
     hyperStatPower,
     guildPower,
     currentArcanePower: currentArcanePower + additionPower,
     avaliableArcanePower: avaliableArcanePower + additionPower,
     statAmount: basicLevelUnit * (RoleMapping[data.role] || { unit: 100 }).unit,
-    completeDateText: statisticData.total
-      ? statisticData.remainDays === 0
-        ? currentArcanePower === avaliableArcanePower
-          ? t('complete_date_complete')
-          : t('complete_date_never')
-        : statisticData.completeDate
-      : t('complete_date_none'),
+    completeDateText,
     remainDays: statisticData.remainDays,
+    excludeTooltips,
   }
 }
 
@@ -105,6 +127,7 @@ const StatisticBoard = ({ data, t }) => {
     statAmount,
     completeDateText,
     remainDays,
+    excludeTooltips,
   } = useStatisticData(data, t)
   return (
     <Row gutter={[8, 8]}>
@@ -178,7 +201,11 @@ const StatisticBoard = ({ data, t }) => {
       <Col xs={24} sm={24} lg={8}>
         <Card>
           <Statistic
-            title={t('complete_date')}
+            title={
+              <Tooltip title={remainDays ? excludeTooltips : completeDateText}>
+                {t('all_complete_date')}
+              </Tooltip>
+            }
             value={completeDateText}
             suffix={
               remainDays
