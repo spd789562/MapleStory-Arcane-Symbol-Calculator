@@ -11,6 +11,7 @@ import {
   Tooltip,
   Switch,
   Select,
+  Button,
 } from 'antd'
 
 /* component */
@@ -68,17 +69,27 @@ function Home({ t, i18n }) {
             {t('title')}
             &nbsp;
           </h2>
-          <Select
-            onChange={(value) =>
-              i18n.changeLanguage && i18n.changeLanguage(value)
-            }
-            defaultValue={i18n.language}
-            style={{ marginLeft: 'auto', marginRight: '4rem' }}
-          >
-            <Select.Option value="en">English</Select.Option>
-            <Select.Option value="zh_tw">繁體中文</Select.Option>
-            <Select.Option value="zh_cn">简体中文</Select.Option>
-          </Select>
+          <div style={{ marginLeft: 'auto', marginRight: '4rem' }}>
+            <Button
+              onClick={() => {
+                form.resetFields()
+                handleSaveToStorage({}, initialValues)
+              }}
+              style={{ marginRight: '.5rem' }}
+            >
+              {t('reset')}
+            </Button>
+            <Select
+              onChange={(value) =>
+                i18n.changeLanguage && i18n.changeLanguage(value)
+              }
+              defaultValue={i18n.language}
+            >
+              <Select.Option value="en">English</Select.Option>
+              <Select.Option value="zh_tw">繁體中文</Select.Option>
+              <Select.Option value="zh_cn">简体中文</Select.Option>
+            </Select>
+          </div>
         </div>
       </Header>
       <BackTop />

@@ -1,5 +1,6 @@
 {
   "title": "秘法符文計算機",
+  "reset": "清除資料",
   "comma": "，",
   "daily_symbol_source": "每日符文獲取來源",
   "daily_quest_tips": "每日任務: 此地區每日可獲得 {{count}} 個",

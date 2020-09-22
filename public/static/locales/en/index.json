@@ -1,5 +1,6 @@
 {
   "title": "Maplestory Arcane Symbol Calculator",
+  "reset":"reset",
   "comma": ", ",
   "daily_symbol_source": "Daily Symbol Sources",
   "daily_quest_tips": "Daily Quest: This area can get {{count}} daily",
