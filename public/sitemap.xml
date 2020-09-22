@@ -10,6 +10,15 @@
   <changefreq>weekly</changefreq>
 </url>
 <url>
+  <loc>https://maplestory-arcane-symbol-calculator.vercel.app/zh_tw</loc>
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_tw" />
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app" />
+  <xhtml:link rel="alternate" hreflang="en" href="https://maplestory-arcane-symbol-calculator.vercel.app/zh_cn" />
+  <priority>0.5</priority>
+  <lastmod>2020-09-18</lastmod>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
   <loc>https://maplestory-arcane-symbol-calculator.vercel.app/en</loc>
   <xhtml:link rel="alternate" hreflang="zh_tw" href="https://maplestory-arcane-symbol-calculator.vercel.app/en" />
   <xhtml:link rel="alternate" hreflang="zh_tw" href="https://maplestory-arcane-symbol-calculator.vercel.app" />
