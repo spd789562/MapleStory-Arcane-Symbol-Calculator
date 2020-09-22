@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import {
   Layout,
   Form,
@@ -27,6 +27,8 @@ import { withTranslation } from '../src/i18n'
 
 import styles from '../styles/Home.module.css'
 
+import { debounce } from 'throttle-debounce'
+
 const { Header, Content, Footer } = Layout
 
 const initialValues = {
@@ -39,8 +41,25 @@ const initialValues = {
   esfera: {},
 }
 
+const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
+
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
+  // const { initialData, handleSaveToStorage } = useMemo(useLocalStorage, [])
+  const handleSaveToStorage = useCallback(
+    debounce(1000, (_, AllData) => {
+      process.browser &&
+        window.localStorage.setItem(storageKey, JSON.stringify(AllData))
+    }),
+    []
+  )
+  useEffect(() => {
+    if (process.browser) {
+      form.setFieldsValue(
+        JSON.parse(window.localStorage.getItem(storageKey)) || initialValues
+      )
+    }
+  }, [])
   return (
     <Layout className="layout">
       <Header className={styles.header}>
@@ -64,7 +83,12 @@ function Home({ t, i18n }) {
       </Header>
       <BackTop />
       <Content className={styles.content}>
-        <Form form={form} initialValues={initialValues} colon={false}>
+        <Form
+          form={form}
+          initialValues={initialValues}
+          onValuesChange={handleSaveToStorage}
+          colon={false}
+        >
           <Row gutter={[8, 8]}>
             {ArcZone.map(({ name, key, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
@@ -94,6 +118,7 @@ function Home({ t, i18n }) {
                             />
                           }
                           style={{ display: 'inline-flex', marginBottom: 0 }}
+                          valuePropName="checked"
                         >
                           <Switch
                             checkedChildren={daily}
@@ -142,6 +167,7 @@ function Home({ t, i18n }) {
                                 display: 'inline-flex',
                                 marginBottom: 0,
                               }}
+                              valuePropName={pquest.count ? 'checked' : 'value'}
                             >
                               {/* if party quest has static value, use swtich button */}
                               {pquest.count ? (
