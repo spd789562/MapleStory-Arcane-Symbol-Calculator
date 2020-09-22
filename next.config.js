@@ -5,6 +5,15 @@ const withCSS = require('@zeit/next-css')
 const withPWA = require('next-pwa')
 const path = require('path')
 
+const composeConfig = (...configs) => (defaultConfig) =>
+  configs.reduce(
+    (resultConfig, configFunc) => configFunc(resultConfig),
+    defaultConfig
+  )
+
+const withOtherParam = (configFunc, param) => (config) =>
+  configFunc(Object.assign(config, param))
+
 const isProd = process.env.NODE_ENV === 'production'
 
 const localeSubpaths = {
@@ -18,33 +27,33 @@ if (typeof require !== 'undefined') {
   require.extensions['.less'] = (file) => {}
 }
 
-module.exports = withPWA({
-  ...withCSS({
+module.exports = composeConfig(
+  withSass,
+  withLess,
+  withOtherParam(withCSS, {
     cssModules: true,
     cssLoaderOptions: {
       importLoaders: 1,
       localIdentName: '[local]___[hash:base64:5]',
     },
-    ...withLess(
-      withSass({
-        lessLoaderOptions: {
-          javascriptEnabled: true,
-        },
-        webpack(config, options) {
-          if (!options.isServer && config.mode === 'development') {
-            const { I18NextHMRPlugin } = require('i18next-hmr/plugin')
-            config.plugins.push(
-              new I18NextHMRPlugin({
-                localesDir: path.resolve(__dirname, 'public/static/locales'),
-              })
-            )
-          }
-
-          return config
-        },
-      })
-    ),
   }),
+  withPWA
+)({
+  lessLoaderOptions: {
+    javascriptEnabled: true,
+  },
+  webpack(config, options) {
+    if (!options.isServer && config.mode === 'development') {
+      const { I18NextHMRPlugin } = require('i18next-hmr/plugin')
+      config.plugins.push(
+        new I18NextHMRPlugin({
+          localesDir: path.resolve(__dirname, 'public/static/locales'),
+        })
+      )
+    }
+
+    return config
+  },
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     GOOGlE_AD_ID: process.env.GOOGlE_AD_ID || '',
@@ -56,5 +65,7 @@ module.exports = withPWA({
   },
   pwa: {
     dest: 'public',
+    // avaliable on production
+    disable: !isProd,
   },
 })
