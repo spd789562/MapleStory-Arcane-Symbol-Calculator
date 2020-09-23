@@ -1,6 +1,9 @@
 {
   "title": "Maplestory Arcane Symbol Calculator",
-  "reset":"reset",
+
+  "seo_desc": "Arcane Symbol Calculator for Maplestory, it's will calculating your arcane symbol complete date and cost.",
+  
+  "reset":"Reset",
   "comma": ", ",
   "daily_symbol_source": "Daily Symbol Sources",
   "daily_quest_tips": "Daily Quest: This area can get {{count}} daily",

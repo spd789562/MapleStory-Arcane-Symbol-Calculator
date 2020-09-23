@@ -1,6 +1,9 @@
 {
   "title": "神秘徽章计算机",
-  "reset": "reset",
+
+  "seo_desc": "冒险岛神秘徽章(ARC)计算机，完整计算出每个神秘徽章每级的完成日期及花费",
+
+  "reset": "清除资料",
   "comma": "，",
   "daily_symbol_source": "每日徽章获取来源",
   "daily_quest_tips": "每日任务: 此地区每日可获得 {{count}} 个",
