@@ -1,6 +1,6 @@
 {
   "title": "神秘徽章计算机",
-  "reset": "reset",
+  "reset": "清除资料",
   "comma": "，",
   "daily_symbol_source": "每日徽章获取来源",
   "daily_quest_tips": "每日任务: 此地区每日可获得 {{count}} 个",
