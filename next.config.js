@@ -1,4 +1,8 @@
 const { nextI18NextRewrites } = require('next-i18next/rewrites')
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 const withSass = require('@zeit/next-sass')
 const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
@@ -37,7 +41,8 @@ module.exports = composeConfig(
       localIdentName: '[local]___[hash:base64:5]',
     },
   }),
-  withPWA
+  withPWA,
+  withBundleAnalyzer
 )({
   lessLoaderOptions: {
     javascriptEnabled: true,
@@ -51,6 +56,8 @@ module.exports = composeConfig(
         })
       )
     }
+
+    config.plugins.push(new MomentLocalesPlugin())
 
     return config
   },

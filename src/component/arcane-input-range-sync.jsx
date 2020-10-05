@@ -60,7 +60,7 @@ const ArcaneInputRangeSync = ({ name, value = 0, onChange, t }) => (
         label={
           <Avatar
             src={`/arcane-symbol-${name}.png`}
-            alt={t('symbol_level_tips')}
+            alt={t('alt_symbol', { name: t(name) })}
             style={{ cursor: 'pointer' }}
           />
         }

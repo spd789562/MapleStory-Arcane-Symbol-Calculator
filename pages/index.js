@@ -124,7 +124,7 @@ function Home({ t, i18n }) {
                             <Avatar
                               shape="square"
                               src="/daily.png"
-                              alt="daily"
+                              alt={t('alt_daily', { name: t(name) })}
                               style={{ cursor: 'pointer' }}
                             />
                           }
@@ -169,7 +169,9 @@ function Home({ t, i18n }) {
                                 ) : (
                                   <Avatar
                                     src={`/${key}-coin.png`}
-                                    alt={`${key}-coin`}
+                                    alt={t('alt_coin', {
+                                      name: t(pquest.name),
+                                    })}
                                     style={{ cursor: 'pointer' }}
                                   />
                                 )
@@ -210,7 +212,7 @@ function Home({ t, i18n }) {
                           label={
                             <Avatar
                               src="/selectable.png"
-                              alt="selectable"
+                              alt={t('alt_extra')}
                               style={{ cursor: 'pointer' }}
                             />
                           }
