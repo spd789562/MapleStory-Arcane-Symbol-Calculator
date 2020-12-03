@@ -255,7 +255,14 @@ function Home({ t, i18n }) {
         </div>
       </Content>
       <Footer className={styles.footer}>
-        Arcane Symble Calculator ©2020 Created by 丫村
+        <div>
+          {t('other_tools')}：
+          <a href="https://maplesalon.vercel.app">{t('web_maplesalon')}</a>、
+          <a href="https://maplestory-boss-crystal-calculator.vercel.app">
+            {t('web_boss_crystal_calculator')}
+          </a>
+        </div>
+        {t('title')} ©2020 Created by 丫村
       </Footer>
     </Layout>
   )

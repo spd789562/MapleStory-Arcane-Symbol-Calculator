@@ -57,6 +57,10 @@
   "morass": "Morass",
   "esfera": "Esfera",
 
+  "other_tools": "Other tools",
+  "web_maplesalon": "Maplesalon",
+  "web_boss_crystal_calculator": "Boss Crystal Calculator(Optimal)",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

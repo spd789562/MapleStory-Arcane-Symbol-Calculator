@@ -56,6 +56,10 @@
   "spirit_savior": "精灵救援者",
   "morass": "莫拉斯",
   "esfera": "埃斯佩拉",
+
+  "other_tools": "其他工具",
+  "web_maplesalon": "枫沙龙",
+  "web_boss_crystal_calculator": "力量结晶计算机",
   
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",

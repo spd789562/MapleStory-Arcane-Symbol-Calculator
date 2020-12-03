@@ -56,6 +56,10 @@
   "spirit_savior": "精靈救援者",
   "morass": "魔菈斯",
   "esfera": "艾斯佩拉",
+
+  "other_tools": "其他工具",
+  "web_maplesalon": "楓沙龍",
+  "web_boss_crystal_calculator": "力量結晶計算機",
   
   "page_not_found": "無此頁面",
   "error_with_status": "A {{statusCode}} error occurred on server",
