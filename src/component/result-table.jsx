@@ -238,6 +238,7 @@ const ResultTable = ({ data, t }) => {
       ></Table>
       <Line
         {...{
+          height: 400,
           title: {
             visible: true,
             text: t('chart_title'),
