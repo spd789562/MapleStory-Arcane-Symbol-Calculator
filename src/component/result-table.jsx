@@ -251,7 +251,7 @@ const ResultTable = ({ data, t }) => {
               visible: false,
             },
             xAxis: {
-              type: 'dateTime',
+              type: 'time',
               grid: {
                 visible: true,
                 style: {
