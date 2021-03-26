@@ -13,6 +13,7 @@ import {
   Select,
   Button,
 } from 'antd'
+import { ArrowRightOutlined } from '@ant-design/icons'
 
 /* component */
 import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
@@ -25,6 +26,8 @@ import ArcZone from '../src/mapping/arcane-river-zone'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
+import arcMatching from '../src/util/arc-match'
+import { eqBy, path, not, is } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -43,6 +46,11 @@ const initialValues = {
 }
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
+
+const fieldShouldUpdate = (selector) => (prev, curr) =>
+  is(Array, selector)
+    ? selector.some((s) => not(eqBy(path(s), prev, curr)))
+    : not(eqBy(path(selector), prev, curr))
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
@@ -112,6 +120,102 @@ function Home({ t, i18n }) {
                       >
                         <ArcaneInputRangeSync name={key} />
                       </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Row>
+                        <Col flex="none">
+                          <Tooltip
+                            title={t('extra_symbol')}
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
+                            <Form.Item
+                              name={[key, 'extra']}
+                              label={
+                                <Avatar
+                                  src="/selectable.png"
+                                  alt={t('alt_extra')}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                              }
+                              style={{
+                                display: 'inline-flex',
+                                marginBottom: 0,
+                              }}
+                            >
+                              <InputNumber
+                                min={0}
+                                defaultValue={0}
+                                precision={0}
+                              />
+                            </Form.Item>
+                            <Form.Item
+                              shouldUpdate={fieldShouldUpdate([
+                                [key, 'count'],
+                                [key, 'extra'],
+                              ])}
+                              noStyle
+                            >
+                              {({ getFieldValue }) => {
+                                const areaData = getFieldValue(key)
+                                const total =
+                                  areaData.count + (areaData.extra || 0)
+                                return areaData.extra ? (
+                                  <span
+                                    style={{
+                                      display: 'inline-block',
+                                      paddingTop: 4,
+                                    }}
+                                  >
+                                    <ArrowRightOutlined
+                                      style={{ margin: '0 4px' }}
+                                    />
+                                    {`Lv.${arcMatching(total).level} / ` +
+                                      `${total - arcMatching(total).stack}`}
+                                  </span>
+                                ) : null
+                              }}
+                            </Form.Item>
+                          </Tooltip>
+                        </Col>
+                        <Col
+                          xs={24}
+                          sm={4}
+                          xl={5}
+                          style={{ marginLeft: 'auto' }}
+                        >
+                          <Form.Item
+                            shouldUpdate={fieldShouldUpdate([
+                              [key, 'count'],
+                              [key, 'extra'],
+                            ])}
+                            noStyle
+                          >
+                            {({ getFieldValue, setFieldsValue }) => {
+                              const areaData = getFieldValue(key)
+                              const total =
+                                areaData.count + (areaData.extra || 0)
+                              return (
+                                <Button
+                                  type="primary"
+                                  block
+                                  onClick={() => {
+                                    setFieldsValue({
+                                      [key]: {
+                                        ...areaData,
+                                        count: total,
+                                        extra: 0,
+                                      },
+                                    })
+                                  }}
+                                  disabled={!areaData.extra}
+                                >
+                                  {t('extra_symbol_add')}
+                                </Button>
+                              )
+                            }}
+                          </Form.Item>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col span={24}>
                       <h4>{t('daily_symbol_source')}:</h4>
@@ -205,28 +309,6 @@ function Home({ t, i18n }) {
                         </Tooltip>
                       </Col>
                     )}
-                    <Col span={12} xl={24}>
-                      <Tooltip title={t('extra_symbol')}>
-                        <Form.Item
-                          name={[key, 'daily']}
-                          label={
-                            <Avatar
-                              src="/selectable.png"
-                              alt={t('alt_extra')}
-                              style={{ cursor: 'pointer' }}
-                            />
-                          }
-                          style={{ display: 'inline-flex', marginBottom: 0 }}
-                        >
-                          <InputNumber
-                            min={0}
-                            defaultValue={0}
-                            style={{ width: 70 }}
-                            precision={0}
-                          />
-                        </Form.Item>
-                      </Tooltip>
-                    </Col>
                   </Row>
                 </Card>
               </Col>
