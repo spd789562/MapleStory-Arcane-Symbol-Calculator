@@ -4,15 +4,9 @@ import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 
 import { withTranslation } from '../i18n'
 
-import ArcMapping from '../mapping/arcane'
+import arcMatching from '../util/arc-match'
 
-const arcMatching = (arcane) =>
-  Object.values(ArcMapping).find(
-    // get match range of arcane
-    (arc, index, arr) =>
-      arcane >= arc.stack &&
-      arcane < (arr[index + 1] ? arr[index + 1].stack : arc.stack + 1)
-  ) || { level: 0, stack: 0, count: 0 }
+import ArcMapping from '../mapping/arcane'
 
 const Level = ({ value: arcane, onChange }) => {
   const currentArcane = arcMatching(arcane)
@@ -29,6 +23,7 @@ const Level = ({ value: arcane, onChange }) => {
           value ? arcane - currentArcane.stack + ArcMapping[value].stack : 0
         )
       }}
+      placeholder="Lv."
       defaultValue={0}
     />
   )
@@ -48,6 +43,7 @@ const Exp = ({ value: arcane, onChange }) => {
       value={arcane}
       style={{ width: 70 }}
       onChange={onChange}
+      placeholder="Exp"
       defaultValue={0}
     />
   )
