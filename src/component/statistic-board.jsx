@@ -130,7 +130,7 @@ const StatisticBoard = ({ data, t }) => {
     excludeTooltips,
   } = useStatisticData(data, t)
   return (
-    <Row gutter={[8, 8]}>
+    <Row gutter={[8, 8]} style={{ padding: '8px 0' }}>
       <Col xs={24} sm={12} lg={8}>
         <Card>
           <Row>
