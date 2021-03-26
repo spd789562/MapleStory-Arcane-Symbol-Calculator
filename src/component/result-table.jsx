@@ -238,6 +238,7 @@ const ResultTable = ({ data, t }) => {
       ></Table>
       <Card title={t('chart_title')} style={{ marginTop: 8 }}>
         <Line
+          key={chartData.length + Math.random()}
           {...{
             height: 400,
             forceFit: true,
