@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 
 import { Fragment } from 'react'
-import { Table } from 'antd'
+import { Table, Card } from 'antd'
 import { withTranslation } from '../i18n'
 
 /* mapping */
@@ -236,47 +236,47 @@ const ResultTable = ({ data, t }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      <Line
-        {...{
-          title: {
-            visible: true,
-            text: t('chart_title'),
-          },
-          forceFit: true,
-          data: chartData,
-          padding: 'auto',
-          xField: 'date',
-          yField: 'value',
-          seriesField: 'type',
-          legend: {
-            visible: false,
-          },
-          xAxis: {
-            type: 'dateTime',
-            grid: {
-              visible: true,
-              style: {
-                stroke: '#e3e8ec',
-                lineWidth: 1,
-                lineDash: [0, 0],
+      <Card title={t('chart_title')} style={{ marginTop: 8 }}>
+        <Line
+          {...{
+            height: 400,
+            forceFit: true,
+            data: chartData,
+            padding: 'auto',
+            xField: 'date',
+            yField: 'value',
+            seriesField: 'type',
+            legend: {
+              visible: false,
+            },
+            xAxis: {
+              type: 'dateTime',
+              grid: {
+                visible: true,
+                style: {
+                  stroke: '#e3e8ec',
+                  lineWidth: 1,
+                  lineDash: [0, 0],
+                },
               },
             },
-          },
-          yAxis: {
-            visible: true,
-            min: chartData.length ? chartData[0].value : 0,
-            max: 1450,
-          },
-          point: {
-            visible: true,
-            size: 3,
-            style: {
-              stroke: 'transparent',
+            yAxis: {
+              visible: true,
+              min: chartData.length ? chartData[0].value : 0,
+              max: 1450,
             },
-          },
-        }}
-        style={{ backgroundColor: '#fff', marginTop: 8 }}
-      ></Line>
+            point: {
+              visible: true,
+              size: 3,
+              style: {
+                stroke: 'transparent',
+                fill: '#5b8ff9',
+              },
+            },
+          }}
+          style={{ backgroundColor: '#fff', marginTop: 8 }}
+        />
+      </Card>
     </Fragment>
   )
 }
