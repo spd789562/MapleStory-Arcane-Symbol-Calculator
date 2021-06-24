@@ -12,6 +12,7 @@ import {
   Switch,
   Select,
   Button,
+  Slider,
 } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 
@@ -27,7 +28,7 @@ import ArcZone from '../src/mapping/arcane-river-zone'
 /* helper */
 import { withTranslation } from '../src/i18n'
 import arcMatching from '../src/util/arc-match'
-import { eqBy, path, not, is } from 'ramda'
+import { eqBy, path, not, is, add } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -109,7 +110,7 @@ function Home({ t, i18n }) {
           colon={false}
         >
           <Row gutter={[8, 8]}>
-            {ArcZone.map(({ name, key, daily, pquest }) => (
+            {ArcZone.map(({ name, extraRegion, key, daily, pquest }) => (
               <Col key={key} span={24} md={12} xl={8}>
                 <Card title={t(name)}>
                   <Row gutter={[0, 12]}>
@@ -177,12 +178,7 @@ function Home({ t, i18n }) {
                             </Form.Item>
                           </Tooltip>
                         </Col>
-                        <Col
-                          xs={24}
-                          sm={4}
-                          xl={5}
-                          style={{ marginLeft: 'auto' }}
-                        >
+                        <Col xs={24} sm={5} style={{ marginLeft: 'auto' }}>
                           <Form.Item
                             shouldUpdate={fieldShouldUpdate([
                               [key, 'count'],
@@ -221,7 +217,17 @@ function Home({ t, i18n }) {
                       <h4>{t('daily_symbol_source')}:</h4>
                     </Col>
                     <Col span={12}>
-                      <Tooltip title={t('daily_quest_tips', { count: daily })}>
+                      <Tooltip
+                        title={
+                          t('daily_quest_tips', { count: daily[0] || daily }) +
+                          (extraRegion
+                            ? t('daily_quest_tips_extra', {
+                                region: t(extraRegion),
+                                count: daily[0],
+                              })
+                            : '')
+                        }
+                      >
                         <Form.Item
                           name={[key, 'quest']}
                           label={
@@ -232,13 +238,31 @@ function Home({ t, i18n }) {
                               style={{ cursor: 'pointer' }}
                             />
                           }
-                          style={{ display: 'inline-flex', marginBottom: 0 }}
+                          style={{
+                            display: 'flex',
+                            marginBottom: 0,
+                            paddingRight: 8,
+                          }}
                           valuePropName="checked"
                         >
-                          <Switch
-                            checkedChildren={daily}
-                            unCheckedChildren="0"
-                          />
+                          {extraRegion ? (
+                            <Slider
+                              step={daily[0]}
+                              marks={{
+                                0: 0,
+                                1: daily[0],
+                                2: daily[1],
+                              }}
+                              min={0}
+                              max={daily.length}
+                              tooltipVisible={false}
+                            />
+                          ) : (
+                            <Switch
+                              checkedChildren={daily}
+                              unCheckedChildren="0"
+                            />
+                          )}
                         </Form.Item>
                       </Tooltip>
                     </Col>

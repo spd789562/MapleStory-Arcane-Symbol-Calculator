@@ -19,14 +19,16 @@
 const ArcaneRiverZone = [
   {
     name: 'vanishing_journey',
-    daily: 8,
+    extraRegion: 'reverse_city',
+    daily: [8, 16],
     pquest: { name: 'edra_spectrum', type: 'symbol', count: 6 },
     key: 'vanishingjourney',
     levelupDiscount: true,
   },
   {
     name: 'chu_chu_island',
-    daily: 4,
+    extraRegion: 'yum_yum_island',
+    daily: [4, 8],
     pquest: { name: 'hungry_muto', type: 'symbol', dailyMax: 15 },
     key: 'chuchu',
   },

@@ -5,6 +5,7 @@ import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 import { withTranslation } from '../i18n'
 
 import arcMatching from '../util/arc-match'
+import {pipe, indexBy, map, prop} from 'ramda'
 
 import ArcMapping from '../mapping/arcane'
 
@@ -81,6 +82,7 @@ const ArcaneInputRangeSync = ({ name, value = 0, onChange, t }) => (
         `${value - arcMatching(value).stack}`
       }
       onChange={onChange}
+      marks={pipe(indexBy(prop('stack')), map(() => ''))(ArcMapping)}
     />
   </Fragment>
 )

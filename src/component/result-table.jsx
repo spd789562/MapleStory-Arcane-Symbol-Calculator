@@ -40,7 +40,7 @@ const useTableData = (data, t) =>
       quest: dailyQuest = 0,
       party: dailyParty = 0,
     } = data[key]
-    const dailyQuestCount = dailyQuest ? daily : 0
+    const dailyQuestCount = dailyQuest ? daily[dailyQuest-1] || daily : 0
     // has party quest
     const dailyPartyQuestCount =
       dailyParty && pquest

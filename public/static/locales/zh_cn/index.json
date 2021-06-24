@@ -12,6 +12,7 @@
   "comma": "，",
   "daily_symbol_source": "每日徽章获取来源",
   "daily_quest_tips": "每日任务: 此地区每日可获得 {{count}} 个",
+  "daily_quest_tips_extra": "，到达{{region}}后可额外获得{{count}}个",
   "party_quest_tips": "{{name}}: 最多可获得 {{count}} 个",
   "party_quest_tips_exchange": ", {{unit}} 个可兑换 1 个徽章",
   "party_quest_tips_exchange_basic": "{{name}}: 最多可获得 {{dailyMax}} 个, {{unit}} 个可兑换 1 个徽章, 已自动计入雕像对话保底 {{basic}} 个",
@@ -49,7 +50,9 @@
   
   "vanishing_journey": "消亡旅途",
   "edra_spectrum": "艾尔达光谱",
+  "reverse_city": "反转城",
   "chu_chu_island": "啾啾村",
+  "yum_yum_island": "真香岛",
   "hungry_muto": "饥饿的穆托",
   "lachelein": "拉克兰",
   "dream_defender": "碎梦塔",

@@ -12,6 +12,7 @@
   "comma": ", ",
   "daily_symbol_source": "Daily Symbol Sources",
   "daily_quest_tips": "Daily Quest: This area can get {{count}} daily",
+  "daily_quest_tips_extra": ", after reach {{region}} will able to get {{count}} more",
   "party_quest_tips": "{{name}}: Up to {{count}} daily",
   "party_quest_tips_exchange": ", {{unit}} coins to exchange one symbol",
   "party_quest_tips_exchange_basic": "{{name}}: Up to {{dailyMax}} daily, {{unit}} coins to exchange one symbol, already counting with talk ranking NPCs {{basic}} basic coin reward",
@@ -49,7 +50,9 @@
 
   "vanishing_journey": "Vanishing Journey",
   "edra_spectrum": "Edra Spectrum",
+  "reverse_city": "Reverse City",
   "chu_chu_island": "Chu Chu Island",
+  "yum_yum_island": "Yum Yum Island",
   "hungry_muto": "Hungry Muto",
   "lachelein": "Lachelein",
   "dream_defender": "Dream Defender",

@@ -12,6 +12,7 @@
   "comma": "，",
   "daily_symbol_source": "每日符文獲取來源",
   "daily_quest_tips": "每日任務: 此地區每日可獲得 {{count}} 個",
+  "daily_quest_tips_extra": "，到達{{region}}後可額外獲得{{count}}個",
   "party_quest_tips": "{{name}}: 最多可獲得 {{count}} 個",
   "party_quest_tips_exchange": ", {{unit}} 個可兌換 1 個符文",
   "party_quest_tips_exchange_basic": "{{name}}: 最多可獲得 {{dailyMax}} 個, {{unit}} 個可兌換 1 個符文, 已自動計入雕像對話保底 {{basic}} 個",
@@ -49,7 +50,9 @@
   
   "vanishing_journey": "消逝的旅途",
   "edra_spectrum": "艾爾達斯光譜",
+  "reverse_city": "反轉城市",
   "chu_chu_island": "啾啾愛爾蘭",
+  "yum_yum_island": "嚼嚼愛爾蘭",
   "hungry_muto": "肚子餓的武藤",
   "lachelein": "拉契爾恩",
   "dream_defender": "毀夢者",
