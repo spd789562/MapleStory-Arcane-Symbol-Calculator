@@ -1,0 +1,26 @@
+import React from 'react'
+
+import { Form, InputNumber, Avatar } from 'antd'
+
+import { withTranslation } from '../../i18n'
+
+const SelectableInput = ({ t, regionKey: key }) => (
+  <Form.Item
+    name={[key, 'extra']}
+    label={
+      <Avatar
+        src="/selectable.png"
+        alt={t('alt_extra')}
+        style={{ cursor: 'pointer' }}
+      />
+    }
+    style={{
+      display: 'inline-flex',
+      marginBottom: 0,
+    }}
+  >
+    <InputNumber min={0} defaultValue={0} precision={0} />
+  </Form.Item>
+)
+
+export default withTranslation('index')(SelectableInput)

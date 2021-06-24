@@ -1,23 +1,8 @@
 import React, { Fragment, useCallback, useEffect } from 'react'
-import {
-  Layout,
-  Form,
-  InputNumber,
-  Row,
-  Col,
-  BackTop,
-  Card,
-  Avatar,
-  Tooltip,
-  Switch,
-  Select,
-  Button,
-  Slider,
-} from 'antd'
-import { ArrowRightOutlined } from '@ant-design/icons'
+import { Layout, Form, Row, Col, BackTop, Select, Button } from 'antd'
 
 /* component */
-import ArcaneInputRangeSync from '../src/component/arcane-input-range-sync'
+import ArcaneRegionCard from '../src/component/arcane-region-card'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
@@ -27,8 +12,7 @@ import ArcZone from '../src/mapping/arcane-river-zone'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
-import arcMatching from '../src/util/arc-match'
-import { eqBy, path, not, is, add } from 'ramda'
+import { eqBy, path, not, is, splitAt } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -110,231 +94,9 @@ function Home({ t, i18n }) {
           colon={false}
         >
           <Row gutter={[8, 8]}>
-            {ArcZone.map(({ name, extraRegion, key, daily, pquest }) => (
+            {ArcZone.map(({ key }, index) => (
               <Col key={key} span={24} md={12} xl={8}>
-                <Card title={t(name)}>
-                  <Row gutter={[0, 12]}>
-                    <Col span={24}>
-                      <Form.Item
-                        name={[key, 'count']}
-                        style={{ marginBottom: 0 }}
-                      >
-                        <ArcaneInputRangeSync name={key} />
-                      </Form.Item>
-                    </Col>
-                    <Col span={24}>
-                      <Row>
-                        <Col flex="none">
-                          <Tooltip
-                            title={t('extra_symbol')}
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
-                            <Form.Item
-                              name={[key, 'extra']}
-                              label={
-                                <Avatar
-                                  src="/selectable.png"
-                                  alt={t('alt_extra')}
-                                  style={{ cursor: 'pointer' }}
-                                />
-                              }
-                              style={{
-                                display: 'inline-flex',
-                                marginBottom: 0,
-                              }}
-                            >
-                              <InputNumber
-                                min={0}
-                                defaultValue={0}
-                                precision={0}
-                              />
-                            </Form.Item>
-                            <Form.Item
-                              shouldUpdate={fieldShouldUpdate([
-                                [key, 'count'],
-                                [key, 'extra'],
-                              ])}
-                              noStyle
-                            >
-                              {({ getFieldValue }) => {
-                                const areaData = getFieldValue(key)
-                                const total =
-                                  areaData.count + (areaData.extra || 0)
-                                return areaData.extra ? (
-                                  <span
-                                    style={{
-                                      display: 'inline-block',
-                                      paddingTop: 4,
-                                    }}
-                                  >
-                                    <ArrowRightOutlined
-                                      style={{ margin: '0 4px' }}
-                                    />
-                                    {`Lv.${arcMatching(total).level} / ` +
-                                      `${total - arcMatching(total).stack}`}
-                                  </span>
-                                ) : null
-                              }}
-                            </Form.Item>
-                          </Tooltip>
-                        </Col>
-                        <Col xs={24} sm={5} style={{ marginLeft: 'auto' }}>
-                          <Form.Item
-                            shouldUpdate={fieldShouldUpdate([
-                              [key, 'count'],
-                              [key, 'extra'],
-                            ])}
-                            noStyle
-                          >
-                            {({ getFieldValue, setFieldsValue }) => {
-                              const areaData = getFieldValue(key)
-                              const total =
-                                areaData.count + (areaData.extra || 0)
-                              return (
-                                <Button
-                                  type="primary"
-                                  block
-                                  onClick={() => {
-                                    setFieldsValue({
-                                      [key]: {
-                                        ...areaData,
-                                        count: total,
-                                        extra: 0,
-                                      },
-                                    })
-                                  }}
-                                  disabled={!areaData.extra}
-                                >
-                                  {t('extra_symbol_add')}
-                                </Button>
-                              )
-                            }}
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span={24}>
-                      <h4>{t('daily_symbol_source')}:</h4>
-                    </Col>
-                    <Col span={12}>
-                      <Tooltip
-                        title={
-                          t('daily_quest_tips', { count: daily[0] || daily }) +
-                          (extraRegion
-                            ? t('daily_quest_tips_extra', {
-                                region: t(extraRegion),
-                                count: daily[0],
-                              })
-                            : '')
-                        }
-                      >
-                        <Form.Item
-                          name={[key, 'quest']}
-                          label={
-                            <Avatar
-                              shape="square"
-                              src="/daily.png"
-                              alt={t('alt_daily', { name: t(name) })}
-                              style={{ cursor: 'pointer' }}
-                            />
-                          }
-                          style={{
-                            display: 'flex',
-                            marginBottom: 0,
-                            paddingRight: 8,
-                          }}
-                          valuePropName="checked"
-                        >
-                          {extraRegion ? (
-                            <Slider
-                              step={daily[0]}
-                              marks={{
-                                0: 0,
-                                1: daily[0],
-                                2: daily[1],
-                              }}
-                              min={0}
-                              max={daily.length}
-                              tooltipVisible={false}
-                            />
-                          ) : (
-                            <Switch
-                              checkedChildren={daily}
-                              unCheckedChildren="0"
-                            />
-                          )}
-                        </Form.Item>
-                      </Tooltip>
-                    </Col>
-                    {pquest && (
-                      <Col span={12}>
-                        <Tooltip
-                          title={
-                            pquest.desc
-                              ? t(pquest.desc, {
-                                  ...pquest,
-                                  name: t(pquest.name),
-                                })
-                              : t('party_quest_tips', {
-                                  name: t(pquest.name),
-                                  count: pquest.count || pquest.dailyMax,
-                                }) +
-                                (pquest.unit
-                                  ? t('party_quest_tips_exchange', pquest)
-                                  : '')
-                          }
-                        >
-                          <div
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
-                            <Form.Item
-                              name={[key, 'party']}
-                              label={
-                                pquest.type === 'symbol' ? (
-                                  <div style={{ cursor: 'pointer' }}>
-                                    {t('party_quest')}
-                                  </div>
-                                ) : (
-                                  <Avatar
-                                    src={`/${key}-coin.png`}
-                                    alt={t('alt_coin', {
-                                      name: t(pquest.name),
-                                    })}
-                                    style={{ cursor: 'pointer' }}
-                                  />
-                                )
-                              }
-                              style={{
-                                display: 'inline-flex',
-                                marginBottom: 0,
-                              }}
-                              valuePropName={pquest.count ? 'checked' : 'value'}
-                            >
-                              {/* if party quest has static value, use swtich button */}
-                              {pquest.count ? (
-                                <Switch
-                                  checkedChildren={pquest.count}
-                                  unCheckedChildren="0"
-                                />
-                              ) : (
-                                <InputNumber
-                                  min={0}
-                                  max={pquest.dailyMax}
-                                  defaultValue={0}
-                                  style={{ width: 70 }}
-                                  precision={0}
-                                />
-                              )}
-                            </Form.Item>
-                            {pquest.unit && (
-                              <span>&nbsp;/&nbsp;{pquest.unit}</span>
-                            )}
-                          </div>
-                        </Tooltip>
-                      </Col>
-                    )}
-                  </Row>
-                </Card>
+                <ArcaneRegionCard regionIndex={index} />
               </Col>
             ))}
           </Row>
