@@ -17,7 +17,7 @@
   "party_quest_tips_exchange": ", {{unit}} coins to exchange one symbol",
   "party_quest_tips_exchange_basic": "{{name}}: Up to {{dailyMax}} daily, {{unit}} coins to exchange one symbol, already counting with talk ranking NPCs {{basic}} basic coin reward",
   "party_quest": "Party Quest",
-  "extra_symbol": "Arcane Symbol Selector, preview and apply",
+  "extra_symbol": "Symbol Selector, preview and apply",
   "extra_symbol_add": "Apply",
   "just_a_advertisement": "Just a advertisement woundn't hurt",
   "symbol_level_tips": "Symbol Level / Exp",
@@ -48,6 +48,8 @@
   "xenon": "Xenon",
   "demon_avenger": "Demon Avenger",
 
+  "arcane_river": "Arcane River",
+  "grandis": "Grandis",
   "vanishing_journey": "Vanishing Journey",
   "edra_spectrum": "Edra Spectrum",
   "reverse_city": "Reverse City",
@@ -60,6 +62,9 @@
   "spirit_savior": "Spirit Savior",
   "morass": "Morass",
   "esfera": "Esfera",
+  "cernium": "Cernium",
+  "burning_cernium": "Burning Cernium",
+  "hotel_arcs": "Hotel Arcs",
 
   "other_tools": "Other tools",
   "web_maplesalon": "Maplesalon",
