@@ -12,8 +12,9 @@ import {
 import { withTranslation } from '../i18n'
 
 /* mapping */
-import ArcZone from '../mapping/arcane-river-zone'
+import SymbolRegion from '../mapping/region'
 import ArcInfo from '../mapping/arcane-info'
+import SymbolInfo from '../mapping/force'
 import RoleMapping from '../mapping/role'
 
 /* utils */
@@ -23,36 +24,42 @@ import parserTableData from '../util/parser-table-data'
 import moment from 'moment'
 
 const useStatisticData = (data, t) => {
-  const statisticData = ArcZone.map(({ name, key, daily, pquest }) => {
-    const {
-      count: currentCount,
-      daily: dailySymbol = 0,
-      quest: dailyQuest,
-      party: dailyParty = 0,
-    } = data[key]
+  const statisticData = SymbolRegion[data.region]
+    .map(({ name, key, daily, pquest }) => {
+      const {
+        count: currentCount,
+        daily: dailySymbol = 0,
+        quest: dailyQuest,
+        party: dailyParty = 0,
+      } = data[key] || {}
 
-    const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
-    // has party quest
-    const dailyPartyQuestCount =
-      dailyParty && pquest
-        ? pquest.count ||
-          // if not a static value then calculating
-          (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
-        : 0
-    const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
-    const { completeDate, remainDays } = parserTableData({
-      key,
-      level: 20,
-      currentCount,
-      dailyTotalCount,
+      const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
+      // has party quest
+      const dailyPartyQuestCount =
+        dailyParty && pquest
+          ? pquest.count ||
+            // if not a static value then calculating
+            (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
+          : 0
+      const dailyTotalCount =
+        dailySymbol + dailyQuestCount + dailyPartyQuestCount
+      const { completeDate, remainDays } = parserTableData({
+        region: data.region,
+        key,
+        zone: key,
+        level: SymbolInfo[data.region].maxLevel,
+        currentCount,
+        dailyTotalCount,
+      })
+      return {
+        name,
+        level:
+          symbolMatch({ region: data.region, zone: key }, currentCount).level ||
+          0,
+        completeDate,
+        remainDays,
+      }
     })
-    return {
-      name,
-      level: symbolMatch(currentCount).level || 0,
-      completeDate,
-      remainDays,
-    }
-  })
     .filter((arcane) => arcane.level)
     .reduce(
       (acc, inc) => {

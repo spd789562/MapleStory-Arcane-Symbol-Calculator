@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  Form,
-  Row,
-  Col,
-  Card,
-  Tooltip,
-} from 'antd'
+import { Form, Row, Col, Card, Tooltip } from 'antd'
 
 /* component */
 import ArcaneInputRangeSync from './arcane-input-range-sync'
@@ -16,19 +10,20 @@ import DailyQuest from './daily-quest'
 import PartyQuest from './party-quest'
 
 /* mapping */
-import ArcZone from '../../mapping/arcane-river-zone'
+import SymbolRegion from '../../mapping/region'
 
 /* helper */
 import { withTranslation } from '../../i18n'
 
-const ArcaneRegionCard = ({ t, regionIndex }) => {
-  const { name, extraRegion, key, daily, pquest } = ArcZone[regionIndex]
+const ArcaneRegionCard = ({ t, region, regionIndex }) => {
+  const { name, extraRegion, key, daily, pquest } =
+    SymbolRegion[region][regionIndex]
   return (
     <Card title={t(name)}>
       <Row gutter={[0, 12]}>
         <Col span={24}>
           <Form.Item name={[key, 'count']} style={{ marginBottom: 0 }}>
-            <ArcaneInputRangeSync name={key} />
+            <ArcaneInputRangeSync region={region} zone={key} name={key} />
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -38,8 +33,8 @@ const ArcaneRegionCard = ({ t, regionIndex }) => {
                 title={t('extra_symbol')}
                 style={{ display: 'flex', alignItems: 'center' }}
               >
-                <SelectableInput regionKey={key} />
-                <SelectablePreview regionKey={key} />
+                <SelectableInput region={region} regionKey={key} />
+                <SelectablePreview region={region} regionKey={key} />
               </Tooltip>
             </Col>
             <Col xs={24} sm={5} style={{ marginLeft: 'auto' }}>
@@ -51,45 +46,18 @@ const ArcaneRegionCard = ({ t, regionIndex }) => {
           <h4>{t('daily_symbol_source')}:</h4>
         </Col>
         <Col span={12}>
-          <Tooltip
-            title={
-              t('daily_quest_tips', { count: daily[0] || daily }) +
-              (extraRegion
-                ? t('daily_quest_tips_extra', {
-                    region: t(extraRegion),
-                    count: daily[0],
-                  })
-                : '')
-            }
-          >
-            <DailyQuest
-              {...{
-                regionKey: key,
-                name,
-                daily,
-                extraRegion,
-              }}
-            />
-          </Tooltip>
+          <DailyQuest
+            {...{
+              regionKey: key,
+              name,
+              daily,
+              extraRegion,
+            }}
+          />
         </Col>
         {pquest && (
           <Col span={12}>
-            <Tooltip
-              title={
-                pquest.desc
-                  ? t(pquest.desc, {
-                      ...pquest,
-                      name: t(pquest.name),
-                    })
-                  : t('party_quest_tips', {
-                      name: t(pquest.name),
-                      count: pquest.count || pquest.dailyMax,
-                    }) +
-                    (pquest.unit ? t('party_quest_tips_exchange', pquest) : '')
-              }
-            >
-              <PartyQuest regionKey={key} pquest={pquest} />
-            </Tooltip>
+            <PartyQuest regionKey={key} pquest={pquest} />
           </Col>
         )}
       </Row>

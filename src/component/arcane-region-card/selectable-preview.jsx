@@ -6,7 +6,7 @@ import { ArrowRightOutlined } from '@ant-design/icons'
 import fieldShouldUpdate from '../../util/antd-field-should-update'
 import arcMatching from '../../util/arc-match'
 
-const SelectablePreview = ({ regionKey: key }) => (
+const SelectablePreview = ({ regionKey: key, region }) => (
   <Form.Item
     shouldUpdate={fieldShouldUpdate([
       [key, 'count'],
@@ -17,6 +17,10 @@ const SelectablePreview = ({ regionKey: key }) => (
     {({ getFieldValue }) => {
       const areaData = getFieldValue(key)
       const total = areaData.count + (areaData.extra || 0)
+      const regionData = {
+        region,
+        zone: key
+      }
       return areaData.extra ? (
         <span
           style={{
@@ -25,8 +29,8 @@ const SelectablePreview = ({ regionKey: key }) => (
           }}
         >
           <ArrowRightOutlined style={{ margin: '0 4px' }} />
-          {`Lv.${arcMatching(total).level} / ` +
-            `${total - arcMatching(total).stack}`}
+          {`Lv.${arcMatching(regionData, total).level} / ` +
+            `${total - arcMatching(regionData, total).stack}`}
         </span>
       ) : null
     }}

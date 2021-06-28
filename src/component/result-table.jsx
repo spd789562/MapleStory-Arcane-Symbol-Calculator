@@ -7,6 +7,10 @@ import { withTranslation } from '../i18n'
 /* mapping */
 import ArcaneSymbolMapping from '../mapping/arcane'
 import ArcaneSymbol from '../mapping/arcane-info'
+import SymbolRegion from '../mapping/region'
+import SymbolMapping from '../mapping/symbol'
+import SymbolInfo from '../mapping/force'
+
 import ArcZone from '../mapping/arcane-river-zone'
 
 /* utils */
@@ -18,8 +22,8 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
 
-const renderEmptyIfMaxLevel = (text, row) =>
-  row.currentLevel === ArcaneSymbol.maxLevel ||
+const renderEmptyIfMaxLevel = (region) => (text, row) =>
+  row.currentLevel === SymbolInfo[region].maxLevel ||
   row.currentLevel === 0 ||
   row.dailyTotalCount === 0
     ? {
@@ -33,14 +37,14 @@ const renderEmptyIfMaxLevel = (text, row) =>
     : text
 
 const useTableData = (data, t) =>
-  ArcZone.map(({ name, key, daily, pquest }) => {
+  SymbolRegion[data.region].map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
       quest: dailyQuest = 0,
       party: dailyParty = 0,
-    } = data[key]
-    const dailyQuestCount = dailyQuest ? daily[dailyQuest-1] || daily : 0
+    } = data[key] || {}
+    const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
     // has party quest
     const dailyPartyQuestCount =
       dailyParty && pquest
@@ -49,12 +53,15 @@ const useTableData = (data, t) =>
           (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
         : 0
     const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
+    const CurrentSymbolMapping =
+      SymbolMapping[data.region][key] || SymbolMapping[data.region]
     const subTableData =
       !!dailyTotalCount && !!currentCount
-        ? ArcaneSymbolMapping.filter(({ stack }) => {
+        ? CurrentSymbolMapping.filter(({ stack }) => {
             return currentCount < stack
           }).map(({ level }) =>
             parserTableData({
+              region: data.region,
               key: `${key}-${level}`,
               zone: key,
               level,
@@ -66,9 +73,10 @@ const useTableData = (data, t) =>
         : []
     return {
       ...parserTableData({
+        region: data.region,
         key,
         zone: key,
-        level: 20,
+        level: SymbolInfo[data.region].maxLevel,
         currentCount,
         dailyTotalCount,
         t,
@@ -167,13 +175,13 @@ const ResultTable = ({ data, t }) => {
   const tableData = useTableData(data, t)
   const chartData = useChartData(tableData, data, t)
 
-  const renderTextIfMaxLevel = (text, row) =>
-    row.currentLevel === ArcaneSymbol.maxLevel ||
+  const renderTextIfMaxLevel = region => (text, row) =>
+    row.currentLevel === SymbolInfo[region].maxLevel ||
     row.currentLevel === 0 ||
     row.dailyTotalCount === 0
       ? {
           children:
-            row.currentLevel === ArcaneSymbol.maxLevel
+            row.currentLevel === SymbolInfo[region].maxLevel
               ? t('table_symbol_max')
               : row.currentLevel === 0
               ? t('table_symbol_none')
@@ -201,7 +209,7 @@ const ResultTable = ({ data, t }) => {
             key: 'level',
             align: 'center',
             width: 60,
-            render: renderTextIfMaxLevel,
+            render: renderTextIfMaxLevel(data.region),
           },
           {
             title: t('complete_date'),
@@ -209,7 +217,7 @@ const ResultTable = ({ data, t }) => {
             key: 'completeDateText',
             align: 'center',
             width: 190,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
           {
             title: t('tabel_total_symbol'),
@@ -217,7 +225,7 @@ const ResultTable = ({ data, t }) => {
             key: 'accumulativeNeed',
             align: 'center',
             width: 100,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
           {
             title: t('tabel_total_cost'),
@@ -225,7 +233,7 @@ const ResultTable = ({ data, t }) => {
             key: 'totalCost',
             align: 'center',
             width: 120,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
         ]}
         dataSource={tableData.map((data) => ({
