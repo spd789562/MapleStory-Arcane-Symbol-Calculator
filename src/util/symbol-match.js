@@ -1,23 +1,26 @@
-import ArcaneSymbolMapping from '../mapping/arcane'
-
+import SymbolMapping from '../mapping/symbol'
+import { curry } from 'ramda'
 /**
  * symbolMatch
  * @description find exp corresponding level
  * @param {number} currentExp
+ * @param {string} region symbol region
  * @example
  *  symbolMatch(6) // -> { level: 1 ...}
  *  symbolMatch(24) // -> { level: 2 ...}
  */
-const symbolMatch = function symbolMatch(currentExp) {
+const symbolMatch = function symbolMatch({ region, zone }, currentExp) {
+  const RegionSymbolMapping =
+    SymbolMapping[region][zone] || SymbolMapping[region]
   return (
-    ArcaneSymbolMapping.find(
+    RegionSymbolMapping.find(
       // get match range of arcane
       (symbol, index, arr) =>
         // greater then this level need and less then next level need
         currentExp >= symbol.stack &&
         currentExp < (arr[index + 1] ? arr[index + 1].stack : symbol.stack + 1)
-    ) || ArcaneSymbolMapping[0]
+    ) || RegionSymbolMapping[0]
   )
 }
 
-export default symbolMatch
+export default curry(symbolMatch)

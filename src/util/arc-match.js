@@ -1,7 +1,7 @@
-import ArcMapping from '../mapping/arcane'
+import SymbolMapping from '../mapping/symbol'
 
-const arcMatching = (arcane) =>
-  Object.values(ArcMapping).find(
+const arcMatching = ({ region, zone }, arcane) =>
+  Object.values(SymbolMapping[region][zone] || SymbolMapping[region]).find(
     // get match range of arcane
     (arc, index, arr) =>
       arcane >= arc.stack &&

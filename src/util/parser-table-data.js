@@ -1,14 +1,14 @@
-import ArcaneSymbolMapping from '../mapping/arcane'
-import ArcaneRiverZone from '../mapping/arcane-river-zone'
+import SymbolMapping from '../mapping/symbol'
+import SymbolRegion from '../mapping/region'
 
 import symbolMatch from './symbol-match'
 import numberFormat from './number-format'
 
 import moment from 'moment'
 
-const discountZone = ArcaneRiverZone.filter(
-  ({ levelupDiscount }) => levelupDiscount
-).map(({ key }) => key)
+const discountZone = SymbolRegion['arcane']
+  .filter(({ levelupDiscount }) => levelupDiscount)
+  .map(({ key }) => key)
 
 const isDiscountZone = (zone) => discountZone.indexOf(zone) !== -1
 
@@ -23,6 +23,7 @@ const isDiscountZone = (zone) => discountZone.indexOf(zone) !== -1
  * @param {string} param.dailyTotalCount - current arcane daily able to reward count
  */
 const parserTableData = ({
+  region,
   key,
   zone,
   level,
@@ -30,12 +31,14 @@ const parserTableData = ({
   dailyTotalCount,
   t = (_) => _,
 }) => {
-  const TargetArcane = ArcaneSymbolMapping[level]
-  const currentArcane = symbolMatch(currentCount)
+  const RegionSymbolMapping =
+    SymbolMapping[region][zone] || SymbolMapping[region]
+  const TargetArcane = RegionSymbolMapping[level]
+  const currentArcane = symbolMatch({ region, zone }, currentCount)
   const remainDays = Math.ceil(
     (TargetArcane.stack - currentCount) / dailyTotalCount
   )
-  const totalCost = ArcaneSymbolMapping.reduce(
+  const totalCost = RegionSymbolMapping.reduce(
     (totalCost, { level: arcaneLevel, cost, discount }) => {
       totalCost +=
         arcaneLevel >= currentArcane.level && arcaneLevel <= level - 1

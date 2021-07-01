@@ -4,12 +4,12 @@ import { Form, InputNumber, Avatar } from 'antd'
 
 import { withTranslation } from '../../i18n'
 
-const SelectableInput = ({ t, regionKey: key }) => (
+const SelectableInput = ({ t, region, regionKey: key }) => (
   <Form.Item
     name={[key, 'extra']}
     label={
       <Avatar
-        src="/selectable.png"
+        src={`/${region === 'arcane' ? 'arc':'aut'}-selectable.png`}
         alt={t('alt_extra')}
         style={{ cursor: 'pointer' }}
       />

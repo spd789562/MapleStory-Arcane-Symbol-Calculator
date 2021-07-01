@@ -1,7 +1,7 @@
 {
   "title": "神秘徽章计算机",
 
-  "seo_desc": "冒险岛神秘徽章(ARC)计算机，方便的输入神秘徽章每日可获得数量、是否完成组队任务，並完整计算出每个神秘徽章每级的完成日期及花费",
+  "seo_desc": "冒险岛神秘徽章(ARC)计算机，支援真實徽章(AUT)，方便的输入神秘徽章每日可获得数量、是否完成组队任务，並完整计算出每个神秘徽章每级的完成日期及花费",
 
   "alt_symbol": "{{name}}徽章等级",
   "alt_daily": "{{name}}每日任务",
@@ -17,7 +17,7 @@
   "party_quest_tips_exchange": ", {{unit}} 个可兑换 1 个徽章",
   "party_quest_tips_exchange_basic": "{{name}}: 最多可获得 {{dailyMax}} 个, {{unit}} 个可兑换 1 个徽章, 已自动计入雕像对话保底 {{basic}} 个",
   "party_quest": "组队任务",
-  "extra_symbol": "选择神秘徽章，预览套用后数量",
+  "extra_symbol": "选择徽章，预览套用后数量",
   "extra_symbol_add": "套用",
   "just_a_advertisement": "塞一下广告应该没关系吧",
   "symbol_level_tips": "徽章等级 / 当前经验值",
@@ -34,7 +34,8 @@
   "complete_date": "完成日期(天数)",
   "complete_days": "天",
   "stat_increase": "属性加成量",
-  "arcane_power": "ARC",
+  "arcane_force": "ARC",
+  "authentic_force": "AUT",
   "table_symbol_max": "已满级",
   "table_symbol_none": "未获得此徽章",
   "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
@@ -42,12 +43,14 @@
   "table_symbol_level": "等级",
   "tabel_total_symbol": "累计徽章",
   "tabel_total_cost": "累计金币",
-  "chart_title": "ARC 趋势图",
+  "chart_title": "趋势图",
   
   "general": "一般职业",
   "xenon": "尖兵",
   "demon_avenger": "恶复",
   
+  "arcane_river": "奥术之河",
+  "grandis": "格兰蒂斯",
   "vanishing_journey": "消亡旅途",
   "edra_spectrum": "艾尔达光谱",
   "reverse_city": "反转城",
@@ -60,6 +63,9 @@
   "spirit_savior": "精灵救援者",
   "morass": "莫拉斯",
   "esfera": "埃斯佩拉",
+  "cernium": "赛尔尼温",
+  "burning_cernium": "燃烧的赛尔尼温",
+  "hotel_arcs": "阿尔克斯",
 
   "other_tools": "其他工具",
   "web_maplesalon": "枫沙龙",

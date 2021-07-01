@@ -1,7 +1,7 @@
 {
   "title": "秘法符文計算機",
 
-  "seo_desc": "楓之谷秘法符文(ARC)計算機，方便的輸入符文每日可獲得數量、是否完成組隊任务，並完整計算出每個秘法符文每級的完成日期及花費",
+  "seo_desc": "楓之谷秘法符文(ARC)計算機，支援真實符文(AUT)，方便的輸入符文每日可獲得數量、是否完成組隊任务，並完整計算出每個符文每級的完成日期及花費",
   
   "alt_symbol": "{{name}}符文等級",
   "alt_daily": "{{name}}每日任務",
@@ -17,7 +17,7 @@
   "party_quest_tips_exchange": ", {{unit}} 個可兌換 1 個符文",
   "party_quest_tips_exchange_basic": "{{name}}: 最多可獲得 {{dailyMax}} 個, {{unit}} 個可兌換 1 個符文, 已自動計入雕像對話保底 {{basic}} 個",
   "party_quest": "組隊任務",
-  "extra_symbol": "選擇秘法符文，預覽套用後數量",
+  "extra_symbol": "選擇符文，預覽套用後數量",
   "extra_symbol_add": "套用",
   "just_a_advertisement": "塞一下廣告應該沒關係吧",
   "symbol_level_tips": "符文等級 / 當前成長值",
@@ -34,7 +34,8 @@
   "complete_date": "完成日期(天數)",
   "complete_days": "天",
   "stat_increase": "屬性加成量",
-  "arcane_power": "ARC",
+  "arcane_force": "ARC",
+  "authentic_force": "AUT",
   "table_symbol_max": "已滿級",
   "table_symbol_none": "未獲得此符文",
   "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
@@ -42,12 +43,14 @@
   "table_symbol_level": "等級",
   "tabel_total_symbol": "累計符文",
   "tabel_total_cost": "累計楓幣",
-  "chart_title": "ARC 趨勢圖",
+  "chart_title": "趨勢圖",
   
   "general": "一般職業",
   "xenon": "傑諾",
   "demon_avenger": "惡復",
   
+  "arcane_river": "奧術之河",
+  "grandis": "格蘭蒂斯",
   "vanishing_journey": "消逝的旅途",
   "edra_spectrum": "艾爾達斯光譜",
   "reverse_city": "反轉城市",
@@ -60,6 +63,9 @@
   "spirit_savior": "精靈救援者",
   "morass": "魔菈斯",
   "esfera": "艾斯佩拉",
+  "cernium": "賽爾尼溫",
+  "burning_cernium": "燃燒的賽爾尼溫",
+  "hotel_arcs": "阿爾克斯",
 
   "other_tools": "其他工具",
   "web_maplesalon": "楓沙龍",

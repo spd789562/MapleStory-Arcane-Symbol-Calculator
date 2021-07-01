@@ -7,6 +7,10 @@ import { withTranslation } from '../i18n'
 /* mapping */
 import ArcaneSymbolMapping from '../mapping/arcane'
 import ArcaneSymbol from '../mapping/arcane-info'
+import SymbolRegion from '../mapping/region'
+import SymbolMapping from '../mapping/symbol'
+import SymbolInfo from '../mapping/force'
+
 import ArcZone from '../mapping/arcane-river-zone'
 
 /* utils */
@@ -18,8 +22,8 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
   ssr: false,
 })
 
-const renderEmptyIfMaxLevel = (text, row) =>
-  row.currentLevel === ArcaneSymbol.maxLevel ||
+const renderEmptyIfMaxLevel = (region) => (text, row) =>
+  row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
   row.currentLevel === 0 ||
   row.dailyTotalCount === 0
     ? {
@@ -33,14 +37,14 @@ const renderEmptyIfMaxLevel = (text, row) =>
     : text
 
 const useTableData = (data, t) =>
-  ArcZone.map(({ name, key, daily, pquest }) => {
+  SymbolRegion[data.region].map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
       quest: dailyQuest = 0,
       party: dailyParty = 0,
-    } = data[key]
-    const dailyQuestCount = dailyQuest ? daily[dailyQuest-1] || daily : 0
+    } = data[key] || {}
+    const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
     // has party quest
     const dailyPartyQuestCount =
       dailyParty && pquest
@@ -49,12 +53,15 @@ const useTableData = (data, t) =>
           (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
         : 0
     const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
+    const CurrentSymbolMapping =
+      SymbolMapping[data.region][key] || SymbolMapping[data.region]
     const subTableData =
       !!dailyTotalCount && !!currentCount
-        ? ArcaneSymbolMapping.filter(({ stack }) => {
+        ? CurrentSymbolMapping.filter(({ stack }) => {
             return currentCount < stack
           }).map(({ level }) =>
             parserTableData({
+              region: data.region,
               key: `${key}-${level}`,
               zone: key,
               level,
@@ -66,9 +73,10 @@ const useTableData = (data, t) =>
         : []
     return {
       ...parserTableData({
+        region: data.region,
         key,
         zone: key,
-        level: 20,
+        level: SymbolInfo[data.region].symbol.maxLevel,
         currentCount,
         dailyTotalCount,
         t,
@@ -82,8 +90,10 @@ const useTableData = (data, t) =>
 
 const useChartData = (tableData, data, t) => {
   const today = moment().format('YYYY-MM-DD')
-  const hyperStatPower = ArcaneSymbol.hyper.formula(data.hyperStat || 0)
-  const guildPower = ArcaneSymbol.guild.formula(data.guildSkill || 0)
+  const { symbol, hyper, guild } = SymbolInfo[data.region]
+  const hyperStatPower = hyper?.formula(data.hyperStat || 0) || 0
+  const guildPower = guild?.formula(data.guildSkill || 0) || 0
+  
   const chartData = Object.values(
     tableData
       .filter(({ currentLevel }) => currentLevel)
@@ -92,18 +102,22 @@ const useChartData = (tableData, data, t) => {
           acc.data.push({
             date: today,
             type: inc.key,
-            value: (inc.currentLevel + 2) * 10,
+            value:
+              (inc.currentLevel + symbol.forceBasic / symbol.forceUnit) *
+              symbol.forceUnit,
           })
           acc.total[today] =
-            (acc.total[today] || 0) + (inc.currentLevel + 2) * 10
+            (acc.total[today] || 0) +
+            (inc.currentLevel + symbol.forceBasic / symbol.forceUnit) *
+              symbol.forceUnit
           if (inc.children) {
             inc.children.forEach(({ completeDate }) => {
               acc.data.push({
                 date: completeDate,
                 type: inc.key,
-                value: 10,
+                value: symbol.forceUnit,
               })
-              acc.total[completeDate] = (acc.total[completeDate] || 0) + 10
+              acc.total[completeDate] = (acc.total[completeDate] || 0) + symbol.forceUnit
             })
           }
           return acc
@@ -135,13 +149,13 @@ const useChartData = (tableData, data, t) => {
       },
       { data: {}, stack: {} }
     ).data
-
+  const forceText = data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
   return Object.entries(chartData)
     .map(([date, data]) =>
       Object.entries(data)
         .filter(([type]) => type === 'ARC')
         .map(([type, value]) => ({
-          type: t('arcane_power'),
+          type: t(forceText),
           value,
           date,
         }))
@@ -166,14 +180,16 @@ const useChartData = (tableData, data, t) => {
 const ResultTable = ({ data, t }) => {
   const tableData = useTableData(data, t)
   const chartData = useChartData(tableData, data, t)
+  const forceText =
+    data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
 
-  const renderTextIfMaxLevel = (text, row) =>
-    row.currentLevel === ArcaneSymbol.maxLevel ||
+  const renderTextIfMaxLevel = region => (text, row) =>
+    row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
     row.currentLevel === 0 ||
     row.dailyTotalCount === 0
       ? {
           children:
-            row.currentLevel === ArcaneSymbol.maxLevel
+            row.currentLevel === SymbolInfo[region].symbol.maxLevel
               ? t('table_symbol_max')
               : row.currentLevel === 0
               ? t('table_symbol_none')
@@ -201,7 +217,7 @@ const ResultTable = ({ data, t }) => {
             key: 'level',
             align: 'center',
             width: 60,
-            render: renderTextIfMaxLevel,
+            render: renderTextIfMaxLevel(data.region),
           },
           {
             title: t('complete_date'),
@@ -209,7 +225,7 @@ const ResultTable = ({ data, t }) => {
             key: 'completeDateText',
             align: 'center',
             width: 190,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
           {
             title: t('tabel_total_symbol'),
@@ -217,7 +233,7 @@ const ResultTable = ({ data, t }) => {
             key: 'accumulativeNeed',
             align: 'center',
             width: 100,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
           {
             title: t('tabel_total_cost'),
@@ -225,7 +241,7 @@ const ResultTable = ({ data, t }) => {
             key: 'totalCost',
             align: 'center',
             width: 120,
-            render: renderEmptyIfMaxLevel,
+            render: renderEmptyIfMaxLevel(data.region),
           },
         ]}
         dataSource={tableData.map((data) => ({
@@ -236,7 +252,10 @@ const ResultTable = ({ data, t }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      <Card title={t('chart_title')} style={{ marginTop: 8 }}>
+      <Card
+        title={`${t(forceText)} ${t('chart_title')}`}
+        style={{ marginTop: 8 }}
+      >
         <Line
           key={chartData.length + Math.random()}
           {...{

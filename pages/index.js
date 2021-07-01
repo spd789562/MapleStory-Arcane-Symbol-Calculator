@@ -1,5 +1,15 @@
 import React, { Fragment, useCallback, useEffect } from 'react'
-import { Layout, Form, Row, Col, BackTop, Select, Button } from 'antd'
+import {
+  Layout,
+  Form,
+  Row,
+  Col,
+  BackTop,
+  Select,
+  Button,
+  Card,
+  Tabs,
+} from 'antd'
 
 /* component */
 import ArcaneRegionCard from '../src/component/arcane-region-card'
@@ -8,11 +18,12 @@ import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
 
 /* mapping */
+import SymbolRegion from '../src/mapping/region'
 import ArcZone from '../src/mapping/arcane-river-zone'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
-import { eqBy, path, not, is, splitAt } from 'ramda'
+import { values, toPairs } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -21,21 +32,21 @@ import { debounce } from 'throttle-debounce'
 const { Header, Content, Footer } = Layout
 
 const initialValues = {
+  region: 'arcane',
   role: 0,
+  /* arc */
   vanishingjourney: {},
   chuchu: {},
   lachelein: {},
   arcana: {},
   morass: {},
   esfera: {},
+  /* aut */
+  cernium: {},
+  hotelarcs: {},
 }
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
-
-const fieldShouldUpdate = (selector) => (prev, curr) =>
-  is(Array, selector)
-    ? selector.some((s) => not(eqBy(path(s), prev, curr)))
-    : not(eqBy(path(selector), prev, curr))
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
@@ -93,12 +104,35 @@ function Home({ t, i18n }) {
           onValuesChange={handleSaveToStorage}
           colon={false}
         >
+          <Card style={{ marginBottom: 8 }}>
+            <Form.Item name="region" valuePropName="activeKey" noStyle>
+              <Tabs>
+                <Tabs.TabPane tab={t('arcane_river')} key="arcane" />
+                <Tabs.TabPane tab={t('grandis')} key="grandis" />
+              </Tabs>
+            </Form.Item>
+          </Card>
           <Row gutter={[8, 8]}>
-            {ArcZone.map(({ key }, index) => (
-              <Col key={key} span={24} md={12} xl={8}>
-                <ArcaneRegionCard regionIndex={index} />
-              </Col>
-            ))}
+            <Form.Item shouldUpdate noStyle>
+              {({ getFieldValue }) =>
+                toPairs(SymbolRegion).map(([region, areas]) =>
+                  areas.map(({ key }, index) => (
+                    <Col
+                      key={key}
+                      span={24}
+                      md={12}
+                      xl={8}
+                      style={{
+                        display:
+                          region === getFieldValue('region') ? 'block' : 'none',
+                      }}
+                    >
+                      <ArcaneRegionCard region={region} regionIndex={index} />
+                    </Col>
+                  ))
+                )
+              }
+            </Form.Item>
           </Row>
           <Form.Item shouldUpdate wrapperCol={{ xs: 24, sm: 24 }}>
             {({ getFieldsValue }) => {

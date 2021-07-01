@@ -12,8 +12,9 @@ import {
 import { withTranslation } from '../i18n'
 
 /* mapping */
-import ArcZone from '../mapping/arcane-river-zone'
+import SymbolRegion from '../mapping/region'
 import ArcInfo from '../mapping/arcane-info'
+import SymbolInfo from '../mapping/force'
 import RoleMapping from '../mapping/role'
 
 /* utils */
@@ -23,36 +24,42 @@ import parserTableData from '../util/parser-table-data'
 import moment from 'moment'
 
 const useStatisticData = (data, t) => {
-  const statisticData = ArcZone.map(({ name, key, daily, pquest }) => {
-    const {
-      count: currentCount,
-      daily: dailySymbol = 0,
-      quest: dailyQuest,
-      party: dailyParty = 0,
-    } = data[key]
+  const statisticData = SymbolRegion[data.region]
+    .map(({ name, key, daily, pquest }) => {
+      const {
+        count: currentCount,
+        daily: dailySymbol = 0,
+        quest: dailyQuest,
+        party: dailyParty = 0,
+      } = data[key] || {}
 
-    const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
-    // has party quest
-    const dailyPartyQuestCount =
-      dailyParty && pquest
-        ? pquest.count ||
-          // if not a static value then calculating
-          (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
-        : 0
-    const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
-    const { completeDate, remainDays } = parserTableData({
-      key,
-      level: 20,
-      currentCount,
-      dailyTotalCount,
+      const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
+      // has party quest
+      const dailyPartyQuestCount =
+        dailyParty && pquest
+          ? pquest.count ||
+            // if not a static value then calculating
+            (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
+          : 0
+      const dailyTotalCount =
+        dailySymbol + dailyQuestCount + dailyPartyQuestCount
+      const { completeDate, remainDays } = parserTableData({
+        region: data.region,
+        key,
+        zone: key,
+        level: SymbolInfo[data.region].symbol.maxLevel,
+        currentCount,
+        dailyTotalCount,
+      })
+      return {
+        name,
+        level:
+          symbolMatch({ region: data.region, zone: key }, currentCount).level ||
+          0,
+        completeDate,
+        remainDays,
+      }
     })
-    return {
-      name,
-      level: symbolMatch(currentCount).level || 0,
-      completeDate,
-      remainDays,
-    }
-  })
     .filter((arcane) => arcane.level)
     .reduce(
       (acc, inc) => {
@@ -85,12 +92,26 @@ const useStatisticData = (data, t) => {
       },
       { total: 0, holded: 0, remainDays: 0, excludeName: [] }
     )
-  const hyperStatPower = ArcInfo.hyper.formula(data.hyperStat || 0)
-  const guildPower = ArcInfo.guild.formula(data.guildSkill || 0)
+  const currentSymbolInfo = SymbolInfo[data.region]
+  const hyperStatPower =
+    currentSymbolInfo.hyper?.formula(data.hyperStat || 0) || 0
+  const guildPower = currentSymbolInfo.guild?.formula(data.guildSkill || 0) || 0
   const additionPower = hyperStatPower + guildPower
-  const basicLevelUnit = statisticData.total + statisticData.holded * 2
-  const currentArcanePower = basicLevelUnit * 10
-  const avaliableArcanePower = statisticData.holded * 220
+
+  const stateUnit =
+    (RoleMapping[data.role] || { unit: 100 }).unit *
+    (currentSymbolInfo.symbol.stateMultiple || 1)
+  const stateBasic = currentSymbolInfo.symbol.getStateBasic(stateUnit)
+  const statAmount =
+    statisticData.total * stateUnit + statisticData.holded * stateBasic
+  const currentArcanePower =
+    statisticData.total * currentSymbolInfo.symbol.forceUnit +
+    statisticData.holded * currentSymbolInfo.symbol.forceBasic
+  const symbolMaxPower =
+    currentSymbolInfo.symbol.maxLevel * currentSymbolInfo.symbol.forceUnit +
+    currentSymbolInfo.symbol.forceBasic
+  const avaliableArcanePower = statisticData.holded * symbolMaxPower
+
   const completeDateText = statisticData.total
     ? statisticData.remainDays === 0
       ? currentArcanePower === avaliableArcanePower
@@ -111,7 +132,7 @@ const useStatisticData = (data, t) => {
     guildPower,
     currentArcanePower: currentArcanePower + additionPower,
     avaliableArcanePower: avaliableArcanePower + additionPower,
-    statAmount: basicLevelUnit * (RoleMapping[data.role] || { unit: 100 }).unit,
+    statAmount,
     completeDateText,
     remainDays: statisticData.remainDays,
     excludeTooltips,
@@ -129,6 +150,9 @@ const StatisticBoard = ({ data, t }) => {
     remainDays,
     excludeTooltips,
   } = useStatisticData(data, t)
+  const currentSymbolInfo = SymbolInfo[data.region]
+  const forceText =
+    data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
   return (
     <Row gutter={[8, 8]} style={{ padding: '8px 0' }}>
       <Col xs={24} sm={12} lg={8}>
@@ -136,14 +160,19 @@ const StatisticBoard = ({ data, t }) => {
           <Row>
             <Col span={12}>
               <Statistic
-                title={t('arcane_power')}
+                title={t(forceText)}
                 value={numberFormat(currentArcanePower)}
                 suffix={`/ ${numberFormat(avaliableArcanePower)}`}
               />
             </Col>
             <Col span={12}>
               <Row gutter={[0, 8]} align="middle">
-                <Col span={24}>
+                <Col
+                  span={24}
+                  style={{
+                    display: currentSymbolInfo.hyper ? 'block' : 'none',
+                  }}
+                >
                   <Tooltip title={t('hyper_stat_tips')}>
                     <Form.Item name="hyperStat" noStyle>
                       <InputNumber
@@ -158,7 +187,12 @@ const StatisticBoard = ({ data, t }) => {
                     &nbsp;/&nbsp;{hyperStatPower}
                   </Tooltip>
                 </Col>
-                <Col span={24}>
+                <Col
+                  span={24}
+                  style={{
+                    display: currentSymbolInfo.guild ? 'block' : 'none',
+                  }}
+                >
                   <Tooltip title={t('guild_skill_tips')}>
                     <Form.Item name="guildSkill" noStyle>
                       <InputNumber
