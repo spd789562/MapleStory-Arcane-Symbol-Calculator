@@ -91,7 +91,7 @@ const ArcaneInputRangeSync = ({
         </Form.Item>
       </Tooltip>
       <Slider
-        max={SymbolInfo[region].maxExp}
+        max={SymbolInfo[region].symbol.maxExp}
         value={value}
         tipFormatter={(value) =>
           `Lv.${arcMatching(regionData, value).level} / ` +

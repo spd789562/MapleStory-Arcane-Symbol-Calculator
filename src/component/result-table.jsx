@@ -23,7 +23,7 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
 })
 
 const renderEmptyIfMaxLevel = (region) => (text, row) =>
-  row.currentLevel === SymbolInfo[region].maxLevel ||
+  row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
   row.currentLevel === 0 ||
   row.dailyTotalCount === 0
     ? {
@@ -76,7 +76,7 @@ const useTableData = (data, t) =>
         region: data.region,
         key,
         zone: key,
-        level: SymbolInfo[data.region].maxLevel,
+        level: SymbolInfo[data.region].symbol.maxLevel,
         currentCount,
         dailyTotalCount,
         t,
@@ -90,8 +90,10 @@ const useTableData = (data, t) =>
 
 const useChartData = (tableData, data, t) => {
   const today = moment().format('YYYY-MM-DD')
-  const hyperStatPower = ArcaneSymbol.hyper.formula(data.hyperStat || 0)
-  const guildPower = ArcaneSymbol.guild.formula(data.guildSkill || 0)
+  const { symbol, hyper, guild } = SymbolInfo[data.region]
+  const hyperStatPower = hyper?.formula(data.hyperStat || 0) || 0
+  const guildPower = guild?.formula(data.guildSkill || 0) || 0
+  
   const chartData = Object.values(
     tableData
       .filter(({ currentLevel }) => currentLevel)
@@ -100,18 +102,22 @@ const useChartData = (tableData, data, t) => {
           acc.data.push({
             date: today,
             type: inc.key,
-            value: (inc.currentLevel + 2) * 10,
+            value:
+              (inc.currentLevel + symbol.forceBasic / symbol.forceUnit) *
+              symbol.forceUnit,
           })
           acc.total[today] =
-            (acc.total[today] || 0) + (inc.currentLevel + 2) * 10
+            (acc.total[today] || 0) +
+            (inc.currentLevel + symbol.forceBasic / symbol.forceUnit) *
+              symbol.forceUnit
           if (inc.children) {
             inc.children.forEach(({ completeDate }) => {
               acc.data.push({
                 date: completeDate,
                 type: inc.key,
-                value: 10,
+                value: symbol.forceUnit,
               })
-              acc.total[completeDate] = (acc.total[completeDate] || 0) + 10
+              acc.total[completeDate] = (acc.total[completeDate] || 0) + symbol.forceUnit
             })
           }
           return acc
@@ -176,12 +182,12 @@ const ResultTable = ({ data, t }) => {
   const chartData = useChartData(tableData, data, t)
 
   const renderTextIfMaxLevel = region => (text, row) =>
-    row.currentLevel === SymbolInfo[region].maxLevel ||
+    row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
     row.currentLevel === 0 ||
     row.dailyTotalCount === 0
       ? {
           children:
-            row.currentLevel === SymbolInfo[region].maxLevel
+            row.currentLevel === SymbolInfo[region].symbol.maxLevel
               ? t('table_symbol_max')
               : row.currentLevel === 0
               ? t('table_symbol_none')

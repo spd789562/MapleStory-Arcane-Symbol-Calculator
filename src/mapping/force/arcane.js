@@ -2,8 +2,13 @@ const preventOverflowNumber = ({ number, max, min = 0 }) =>
   number > max ? max : number < min ? min : number
 
 export default {
-  maxLevel: 20,
-  maxExp: 2679,
+  symbol: {
+    maxLevel: 20,
+    maxExp: 2679,
+    forceBasic: 20,
+    forceUnit: 10,
+    getStateBasic: (unit) => unit * 2,
+  },
   hyper: {
     maxLevel: 15,
     maxPower: 100,
