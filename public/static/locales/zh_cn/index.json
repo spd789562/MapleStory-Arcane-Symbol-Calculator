@@ -34,7 +34,8 @@
   "complete_date": "完成日期(天数)",
   "complete_days": "天",
   "stat_increase": "属性加成量",
-  "arcane_power": "ARC",
+  "arcane_force": "ARC",
+  "authentic_force": "AUT",
   "table_symbol_max": "已满级",
   "table_symbol_none": "未获得此徽章",
   "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
@@ -42,7 +43,7 @@
   "table_symbol_level": "等级",
   "tabel_total_symbol": "累计徽章",
   "tabel_total_cost": "累计金币",
-  "chart_title": "ARC 趋势图",
+  "chart_title": "趋势图",
   
   "general": "一般职业",
   "xenon": "尖兵",

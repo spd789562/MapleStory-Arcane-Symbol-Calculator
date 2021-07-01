@@ -149,13 +149,13 @@ const useChartData = (tableData, data, t) => {
       },
       { data: {}, stack: {} }
     ).data
-
+  const forceText = data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
   return Object.entries(chartData)
     .map(([date, data]) =>
       Object.entries(data)
         .filter(([type]) => type === 'ARC')
         .map(([type, value]) => ({
-          type: t('arcane_power'),
+          type: t(forceText),
           value,
           date,
         }))
@@ -180,6 +180,8 @@ const useChartData = (tableData, data, t) => {
 const ResultTable = ({ data, t }) => {
   const tableData = useTableData(data, t)
   const chartData = useChartData(tableData, data, t)
+  const forceText =
+    data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
 
   const renderTextIfMaxLevel = region => (text, row) =>
     row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
@@ -250,7 +252,10 @@ const ResultTable = ({ data, t }) => {
         scroll={{ x: '100%' }}
         sticky
       ></Table>
-      <Card title={t('chart_title')} style={{ marginTop: 8 }}>
+      <Card
+        title={`${t(forceText)} ${t('chart_title')}`}
+        style={{ marginTop: 8 }}
+      >
         <Line
           key={chartData.length + Math.random()}
           {...{

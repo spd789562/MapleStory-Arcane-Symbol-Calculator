@@ -34,7 +34,8 @@
   "complete_date": "完成日期(天數)",
   "complete_days": "天",
   "stat_increase": "屬性加成量",
-  "arcane_power": "ARC",
+  "arcane_force": "ARC",
+  "authentic_force": "AUT",
   "table_symbol_max": "已滿級",
   "table_symbol_none": "未獲得此符文",
   "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
@@ -42,7 +43,7 @@
   "table_symbol_level": "等級",
   "tabel_total_symbol": "累計符文",
   "tabel_total_cost": "累計楓幣",
-  "chart_title": "ARC 趨勢圖",
+  "chart_title": "趨勢圖",
   
   "general": "一般職業",
   "xenon": "傑諾",

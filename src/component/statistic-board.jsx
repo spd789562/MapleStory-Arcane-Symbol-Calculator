@@ -151,6 +151,8 @@ const StatisticBoard = ({ data, t }) => {
     excludeTooltips,
   } = useStatisticData(data, t)
   const currentSymbolInfo = SymbolInfo[data.region]
+  const forceText =
+    data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
   return (
     <Row gutter={[8, 8]} style={{ padding: '8px 0' }}>
       <Col xs={24} sm={12} lg={8}>
@@ -158,7 +160,7 @@ const StatisticBoard = ({ data, t }) => {
           <Row>
             <Col span={12}>
               <Statistic
-                title={t('arcane_power')}
+                title={t(forceText)}
                 value={numberFormat(currentArcanePower)}
                 suffix={`/ ${numberFormat(avaliableArcanePower)}`}
               />
