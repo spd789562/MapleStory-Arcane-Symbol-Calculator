@@ -5,12 +5,12 @@ import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 import { withTranslation } from '../../i18n'
 
 import arcMatching from '../../util/arc-match'
-import {pipe, indexBy, map, prop} from 'ramda'
+import { pipe, indexBy, map, prop } from 'ramda'
 
 import SymbolInfo from '../../mapping/force'
 import SymbolMapping from '../../mapping/symbol'
 
-const Level = ({ value: arcane, onChange, region }) => {
+export const Level = ({ value: arcane, onChange, region, disabled }) => {
   const currentArcane = arcMatching(region, arcane)
   const CurrentSymbolMapping =
     SymbolMapping[region.region][region.zone] || SymbolMapping[region.region]
@@ -19,7 +19,6 @@ const Level = ({ value: arcane, onChange, region }) => {
       precision={0}
       min={0}
       max={20}
-      step={arcMatching.count}
       value={currentArcane.level}
       style={{ width: 60 }}
       onChange={(value) => {
@@ -31,11 +30,12 @@ const Level = ({ value: arcane, onChange, region }) => {
       }}
       placeholder="Lv."
       defaultValue={0}
+      disabled={disabled}
     />
   )
 }
 
-const Exp = ({ value: arcane, onChange, region }) => {
+export const Exp = ({ value: arcane, onChange, region, disabled }) => {
   const currentArcane = arcMatching(region, arcane)
   return (
     <InputNumber
@@ -51,6 +51,7 @@ const Exp = ({ value: arcane, onChange, region }) => {
       onChange={onChange}
       placeholder="Exp"
       defaultValue={0}
+      disabled={disabled}
     />
   )
 }
@@ -62,6 +63,8 @@ const ArcaneInputRangeSync = ({
   value = 0,
   onChange,
   t,
+  disabled = false,
+  defaultAvatar,
 }) => {
   const regionData = { region, zone }
   const CurrentSymbolMapping =
@@ -72,7 +75,7 @@ const ArcaneInputRangeSync = ({
         <Form.Item
           label={
             <Avatar
-              src={`/${region}-symbol-${name}.png`}
+              src={`/${region}-symbol-${defaultAvatar ? 'default' : name}.png`}
               alt={t('alt_symbol', { name: t(name) })}
               style={{ cursor: 'pointer' }}
             />
@@ -81,11 +84,26 @@ const ArcaneInputRangeSync = ({
         >
           <Input.Group>
             <Form.Item noStyle>
-              <Level value={value} onChange={onChange} region={regionData} />
+              <Level
+                value={value}
+                onChange={onChange}
+                region={regionData}
+                disabled={disabled}
+              />
             </Form.Item>
             &nbsp;&nbsp;/&nbsp;&nbsp;
             <Form.Item noStyle>
-              <Exp value={value} onChange={onChange} region={regionData} />
+              <Exp
+                value={value}
+                onChange={onChange}
+                region={regionData}
+                disabled={disabled}
+              />
+            </Form.Item>
+            <Form.Item noStyle>
+              <span style={{ fontSize: 12, color: '#dedede' }}>
+                &nbsp;&nbsp; ( {value} / {SymbolInfo[region].symbol.maxExp} )
+              </span>
             </Form.Item>
           </Input.Group>
         </Form.Item>
@@ -102,8 +120,10 @@ const ArcaneInputRangeSync = ({
           indexBy(prop('stack')),
           map(() => '')
         )(CurrentSymbolMapping)}
+        disabled={disabled}
       />
     </Fragment>
-  )}
+  )
+}
 
 export default withTranslation('index')(ArcaneInputRangeSync)
