@@ -109,7 +109,7 @@ function Home({ t, i18n }) {
               <Tabs>
                 <Tabs.TabPane tab={t('arcane_river')} key="arcane" />
                 <Tabs.TabPane tab={t('grandis')} key="grandis" />
-                <Tabs.TabPane tab={t('other')} key="other" />
+                <Tabs.TabPane tab={t('other_tools')} key="other" />
               </Tabs>
             </Form.Item>
           </Card>

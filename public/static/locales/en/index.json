@@ -67,6 +67,11 @@
   "burning_cernium": "Burning Cernium",
   "hotel_arcs": "Hotel Arcs",
 
+  "option_custom": "Custom",
+  "symbol_catalyst": "Symbol Catalyst",
+  "symbol_discount": "Discount",
+  "catalyst_upgrade_cost": "Upgrade Cost",
+
   "other_tools": "Other tools",
   "web_maplesalon": "Maplesalon",
   "web_boss_crystal_calculator": "Boss Crystal Calculator(Optimal)",
