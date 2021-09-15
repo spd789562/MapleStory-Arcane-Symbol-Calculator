@@ -67,6 +67,20 @@
   "burning_cernium": "燃燒的賽爾尼溫",
   "hotel_arcs": "阿爾克斯",
 
+  "option_current": "當前",
+  "option_custom": "自訂",
+  "symbol_catalyst": "秘法觸媒",
+  "symbol_discount": "升級折扣",
+  "catalyst_upgrade_cost": "升級所需花費",
+
+  "force_effect": "力量影響",
+  "mob_force": "怪物",
+  "current_force": "當前",
+  "force_effect_current": "當前",
+  "force_effect_req": "所需",
+  "force_effect_damage": "終傷",
+  "force_effect_encounter": "被擊傷害",
+
   "other_tools": "其他工具",
   "web_maplesalon": "楓沙龍",
   "web_boss_crystal_calculator": "力量結晶計算機",

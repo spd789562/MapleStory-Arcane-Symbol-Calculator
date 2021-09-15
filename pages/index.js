@@ -13,13 +13,14 @@ import {
 
 /* component */
 import ArcaneRegionCard from '../src/component/arcane-region-card'
+import SymbolCatalyst from '../src/component/symbol-catalyst'
+import ForceEffect from '../src/component/force-effect'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
 
 /* mapping */
 import SymbolRegion from '../src/mapping/region'
-import ArcZone from '../src/mapping/arcane-river-zone'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
@@ -109,29 +110,44 @@ function Home({ t, i18n }) {
               <Tabs>
                 <Tabs.TabPane tab={t('arcane_river')} key="arcane" />
                 <Tabs.TabPane tab={t('grandis')} key="grandis" />
+                <Tabs.TabPane tab={t('other_tools')} key="other" />
               </Tabs>
             </Form.Item>
           </Card>
           <Row gutter={[8, 8]}>
             <Form.Item shouldUpdate noStyle>
-              {({ getFieldValue }) =>
-                toPairs(SymbolRegion).map(([region, areas]) =>
-                  areas.map(({ key }, index) => (
-                    <Col
-                      key={key}
-                      span={24}
-                      md={12}
-                      xl={8}
-                      style={{
-                        display:
-                          region === getFieldValue('region') ? 'block' : 'none',
-                      }}
-                    >
-                      <ArcaneRegionCard region={region} regionIndex={index} />
-                    </Col>
-                  ))
-                )
-              }
+              {({ getFieldValue }) => (
+                <>
+                  {toPairs(SymbolRegion).map(([region, areas]) =>
+                    areas.map(({ key }, index) => (
+                      <Col
+                        key={key}
+                        span={24}
+                        md={12}
+                        xl={8}
+                        style={{
+                          display:
+                            region === getFieldValue('region')
+                              ? 'block'
+                              : 'none',
+                        }}
+                      >
+                        <ArcaneRegionCard region={region} regionIndex={index} />
+                      </Col>
+                    ))
+                  )}
+                  {getFieldValue('region') === 'other' && (
+                    <>
+                      <Col span={24} md={12} xl={8}>
+                        <SymbolCatalyst getFieldValue={getFieldValue} />
+                      </Col>
+                      <Col span={24} md={12} xl={16}>
+                        <ForceEffect getFieldValue={getFieldValue} />
+                      </Col>
+                    </>
+                  )}
+                </>
+              )}
             </Form.Item>
           </Row>
           <Form.Item shouldUpdate wrapperCol={{ xs: 24, sm: 24 }}>
@@ -140,11 +156,14 @@ function Home({ t, i18n }) {
               const data = Object.keys(fieldsValue).length
                 ? fieldsValue
                 : initialValues
+              const region = data.region
               return (
-                <Fragment>
-                  <StatisticBoard data={data} />
-                  <ResultTable data={data} />
-                </Fragment>
+                region !== 'other' && (
+                  <Fragment>
+                    <StatisticBoard data={data} />
+                    <ResultTable data={data} />
+                  </Fragment>
+                )
               )
             }}
           </Form.Item>
