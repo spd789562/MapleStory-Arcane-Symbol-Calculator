@@ -53,6 +53,7 @@ const columns = [
     dataIndex: 'req',
     key: 'req',
     align: 'center',
+    // render: (_, record) => `${record.first ? '<=' : '>='}${record.req}`,
   },
   {
     title: 'force_effect_damage',
@@ -93,9 +94,12 @@ const ForceEffect = ({ t, getFieldValue }) => {
     )
     const paired = basic.map((item, index) => {
       const nextItem = basic[index + 1]
+      if (index === 0) {
+        item.first = true
+      }
       if (
-        currentForce >= item.req &&
-        (!nextItem || currentForce < nextItem.req)
+        (index === 0 && currentForce <= item.req) ||
+        (currentForce >= item.req && (!nextItem || currentForce < nextItem.req))
       ) {
         item.current = true
         item.recommend = true
