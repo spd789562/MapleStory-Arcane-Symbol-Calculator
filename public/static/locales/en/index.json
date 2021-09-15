@@ -67,10 +67,19 @@
   "burning_cernium": "Burning Cernium",
   "hotel_arcs": "Hotel Arcs",
 
+  "option_current": "Current",
   "option_custom": "Custom",
   "symbol_catalyst": "Symbol Catalyst",
   "symbol_discount": "Discount",
   "catalyst_upgrade_cost": "Upgrade Cost",
+
+  "force_effect": "Force Effect",
+  "mob_force": "Map Force",
+  "current_force": "Current Force",
+  "force_effect_current": "Current",
+  "force_effect_req": "Require",
+  "force_effect_damage": "Final Damage",
+  "force_effect_encounter": "Encounter Damage",
 
   "other_tools": "Other tools",
   "web_maplesalon": "Maplesalon",

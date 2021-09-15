@@ -14,6 +14,7 @@ import {
 /* component */
 import ArcaneRegionCard from '../src/component/arcane-region-card'
 import SymbolCatalyst from '../src/component/symbol-catalyst'
+import ForceEffect from '../src/component/force-effect'
 import ResultTable from '../src/component/result-table'
 import StatisticBoard from '../src/component/statistic-board'
 import GoogleAD from '../src/component/google-ad'
@@ -139,6 +140,9 @@ function Home({ t, i18n }) {
                     <>
                       <Col span={24} md={12} xl={8}>
                         <SymbolCatalyst getFieldValue={getFieldValue} />
+                      </Col>
+                      <Col span={24} md={12} xl={16}>
+                        <ForceEffect getFieldValue={getFieldValue} />
                       </Col>
                     </>
                   )}
