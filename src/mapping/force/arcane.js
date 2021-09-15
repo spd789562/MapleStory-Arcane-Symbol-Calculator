@@ -2,6 +2,20 @@ const preventOverflowNumber = ({ number, max, min = 0 }) =>
   number > max ? max : number < min ? min : number
 
 export default {
+  force: {
+    reqType: 'multiple',
+    effects: [
+      { req: 0, damage: 0.1, encounter: 2.8 },
+      { req: 0.1, damage: 0.3, encounter: 2.4 },
+      { req: 0.3, damage: 0.6, encounter: 1.8 },
+      { req: 0.5, damage: 0.7, encounter: 1.6 },
+      { req: 0.7, damage: 0.8, encounter: 1.4 },
+      { req: 1, damage: 1, encounter: 1, recommend: true },
+      { req: 1.1, damage: 1.1, encounter: 0.8 },
+      { req: 1.3, damage: 1.3, encounter: 0.4, recommend: true },
+      { req: 1.5, damage: 1.5, encounter: 0, recommend: true },
+    ],
+  },
   symbol: {
     maxLevel: 20,
     maxExp: 2679,
