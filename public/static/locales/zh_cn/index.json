@@ -76,6 +76,7 @@
   "force_effect": "力量影响",
   "mob_force": "怪物",
   "current_force": "当前",
+  "use_force": "使用当前数值",
   "force_effect_current": "当前",
   "force_effect_req": "所需",
   "force_effect_damage": "终伤",
