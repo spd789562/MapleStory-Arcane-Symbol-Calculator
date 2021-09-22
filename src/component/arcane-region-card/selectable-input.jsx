@@ -2,14 +2,14 @@ import React from 'react'
 
 import { Form, InputNumber, Avatar } from 'antd'
 
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '@i18n'
 
 const SelectableInput = ({ t, region, regionKey: key }) => (
   <Form.Item
     name={[key, 'extra']}
     label={
       <Avatar
-        src={`/${region === 'arcane' ? 'arc':'aut'}-selectable.png`}
+        src={`/${region === 'arcane' ? 'arc' : 'aut'}-selectable.png`}
         alt={t('alt_extra')}
         style={{ cursor: 'pointer' }}
       />

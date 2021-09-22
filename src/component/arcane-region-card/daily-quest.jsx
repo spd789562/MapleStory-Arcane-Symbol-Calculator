@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form, Slider, Switch, Avatar, Tooltip } from 'antd'
 
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '@i18n'
 
 const DailyQuest = ({ t, regionKey: key, name, daily, extraRegion }) => (
   <Tooltip

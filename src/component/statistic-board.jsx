@@ -9,7 +9,7 @@ import {
   InputNumber,
   Tooltip,
 } from 'antd'
-import { withTranslation } from '../i18n'
+import { withTranslation } from '@i18n'
 
 /* mapping */
 import SymbolRegion from '../mapping/region'

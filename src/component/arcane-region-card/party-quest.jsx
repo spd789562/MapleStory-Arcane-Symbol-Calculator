@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Form, Switch, InputNumber, Avatar, Tooltip } from 'antd'
 
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '@i18n'
 
 const PartyQuest = ({ t, regionKey: key, pquest }) => (
   <Tooltip
