@@ -13,7 +13,7 @@ import PartyQuest from './party-quest'
 import SymbolRegion from '../../mapping/region'
 
 /* helper */
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '@i18n'
 
 const ArcaneRegionCard = ({ t, region, regionIndex }) => {
   const { name, extraRegion, key, daily, pquest } =

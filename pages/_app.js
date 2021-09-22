@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import App from 'next/app'
 import Head from 'next/head'
-import { appWithTranslation, withTranslation } from '../src/i18n'
-import '../styles/antd.less'
-import '../styles/globals.css'
+import { appWithTranslation, withTranslation } from '@i18n'
+import '@styles/antd.less'
+import '@styles/globals.css'
 
 const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
   <Head>

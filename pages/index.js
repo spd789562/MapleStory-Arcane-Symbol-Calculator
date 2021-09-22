@@ -23,7 +23,7 @@ import GoogleAD from '../src/component/google-ad'
 import SymbolRegion from '../src/mapping/region'
 
 /* helper */
-import { withTranslation } from '../src/i18n'
+import { withTranslation } from '@i18n'
 import { values, toPairs } from 'ramda'
 
 import styles from '../styles/Home.module.css'

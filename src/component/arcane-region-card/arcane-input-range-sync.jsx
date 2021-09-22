@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import { Form, Input, InputNumber, Slider, Avatar, Tooltip } from 'antd'
 
-import { withTranslation } from '../../i18n'
+import { withTranslation } from '@i18n'
 
 import arcMatching from '../../util/arc-match'
 import { pipe, indexBy, map, prop } from 'ramda'

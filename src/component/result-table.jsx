@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 
 import { Fragment } from 'react'
 import { Table, Card } from 'antd'
-import { withTranslation } from '../i18n'
+import { withTranslation } from '@i18n'
 
 /* mapping */
 import ArcaneSymbolMapping from '../mapping/arcane'
@@ -93,7 +93,7 @@ const useChartData = (tableData, data, t) => {
   const { symbol, hyper, guild } = SymbolInfo[data.region]
   const hyperStatPower = hyper?.formula(data.hyperStat || 0) || 0
   const guildPower = guild?.formula(data.guildSkill || 0) || 0
-  
+
   const chartData = Object.values(
     tableData
       .filter(({ currentLevel }) => currentLevel)
@@ -117,7 +117,8 @@ const useChartData = (tableData, data, t) => {
                 type: inc.key,
                 value: symbol.forceUnit,
               })
-              acc.total[completeDate] = (acc.total[completeDate] || 0) + symbol.forceUnit
+              acc.total[completeDate] =
+                (acc.total[completeDate] || 0) + symbol.forceUnit
             })
           }
           return acc
@@ -149,7 +150,8 @@ const useChartData = (tableData, data, t) => {
       },
       { data: {}, stack: {} }
     ).data
-  const forceText = data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
+  const forceText =
+    data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
   return Object.entries(chartData)
     .map(([date, data]) =>
       Object.entries(data)
@@ -183,7 +185,7 @@ const ResultTable = ({ data, t }) => {
   const forceText =
     data.region === 'arcane' ? 'arcane_force' : 'authentic_force'
 
-  const renderTextIfMaxLevel = region => (text, row) =>
+  const renderTextIfMaxLevel = (region) => (text, row) =>
     row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
     row.currentLevel === 0 ||
     row.dailyTotalCount === 0

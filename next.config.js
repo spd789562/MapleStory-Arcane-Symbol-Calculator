@@ -4,7 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 const withSass = require('@zeit/next-sass')
-const withLess = require('next-with-less')
+const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
 const withPWA = require('next-pwa')
 const path = require('path')
@@ -34,21 +34,21 @@ if (typeof require !== 'undefined') {
 }
 
 module.exports = composeConfig(
-  // withSass,
+  withSass,
   withLess,
-  // withOtherParam(withCSS, {
-  //   cssModules: true,
-  //   cssLoaderOptions: {
-  //     importLoaders: 1,
-  //     localIdentName: '[local]___[hash:base64:5]',
-  //   },
-  // }),
+  withOtherParam(withCSS, {
+    cssModules: true,
+    cssLoaderOptions: {
+      importLoaders: 1,
+      localIdentName: '[local]___[hash:base64:5]',
+    },
+  }),
   withPWA,
   withBundleAnalyzer
 )({
-  // lessLoaderOptions: {
-  //   javascriptEnabled: true,
-  // },
+  lessLoaderOptions: {
+    javascriptEnabled: true,
+  },
   webpack(config, options) {
     if (!options.isServer && config.mode === 'development') {
       const { I18NextHMRPlugin } = require('i18next-hmr/plugin')
@@ -60,6 +60,7 @@ module.exports = composeConfig(
     }
 
     config.plugins.push(new MomentLocalesPlugin())
+    config.resolve.modules.push(path.resolve('./'))
 
     return config
   },

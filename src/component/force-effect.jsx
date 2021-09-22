@@ -20,7 +20,7 @@ import SymbolRegion from '../mapping/region'
 import SymbolInfo from '../mapping/force'
 
 /* helper */
-import { withTranslation } from '../i18n'
+import { withTranslation } from '@i18n'
 import { keys, prop, evolve, identity, multiply, add, pipe } from 'ramda'
 import getSymbolForceTotal from '../util/get-symbol-force-total'
 
@@ -60,7 +60,7 @@ const columns = [
     dataIndex: 'damage',
     key: 'damage',
     align: 'center',
-    render: (_, record) => `${~~(record.damage * 100)}%`,
+    render: (_, record) => `${Math.ceil(record.damage * 100)}%`,
   },
   {
     title: 'force_effect_encounter',

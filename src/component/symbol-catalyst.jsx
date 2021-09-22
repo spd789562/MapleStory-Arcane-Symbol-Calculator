@@ -8,7 +8,7 @@ import { ForwardOutlined } from '@ant-design/icons'
 import SymbolRegion from '../mapping/region'
 
 /* helper */
-import { withTranslation } from '../i18n'
+import { withTranslation } from '@i18n'
 import { prop, evolve, identity } from 'ramda'
 import getSymbolMesosTotal from '../util/get-symbol-mesos-total'
 
