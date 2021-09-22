@@ -76,6 +76,7 @@
   "force_effect": "Force Effect",
   "mob_force": "Map Force",
   "current_force": "Current Force",
+  "use_force": "Use Current Force",
   "force_effect_current": "Current",
   "force_effect_req": "Require",
   "force_effect_damage": "Final Damage",

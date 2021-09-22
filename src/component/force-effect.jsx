@@ -32,7 +32,7 @@ const RegionOptions = keys(SymbolInfo).map((region) => ({
 const CustomOptions = [
   {
     value: 'false',
-    label: 'option_current',
+    label: 'use_force',
   },
   {
     value: 'true',
