@@ -35,7 +35,7 @@ const ArcaneRiverZone = [
   {
     name: 'lachelein',
     key: 'lachelein',
-    daily: 4,
+    daily: 8,
     pquest: {
       name: 'dream_defender',
       type: 'coin',
@@ -57,8 +57,18 @@ const ArcaneRiverZone = [
       dailyMax: 30,
     },
   },
-  { name: 'morass', daily: 8, key: 'morass' },
-  { name: 'esfera', daily: 8, key: 'esfera' },
+  {
+    name: 'morass',
+    daily: 8,
+    pquest: { name: 'ranheim_defense', type: 'symbol', count: 6 },
+    key: 'morass',
+  },
+  {
+    name: 'esfera',
+    daily: 8,
+    pquest: { name: 'esfera_guardian', type: 'symbol', count: 6 },
+    key: 'esfera',
+  },
 ]
 
 export default ArcaneRiverZone
