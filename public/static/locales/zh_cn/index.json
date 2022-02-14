@@ -1,7 +1,7 @@
 {
-  "title": "神秘徽章计算机",
+  "title": "神秘徽章计算器",
 
-  "seo_desc": "冒险岛神秘徽章(ARC)计算机，支援真實徽章(AUT)，方便的输入神秘徽章每日可获得数量、是否完成组队任务，並完整计算出每个神秘徽章每级的完成日期及花费",
+  "seo_desc": "冒险岛神秘徽章(神秘力量)计算器，支援原初徽章(原初之力)，方便的输入神秘徽章每日可获得数量、是否完成组队任务，并完整计算出每个神秘徽章每级的完成日期及花费",
 
   "alt_symbol": "{{name}}徽章等级",
   "alt_daily": "{{name}}每日任务",
@@ -22,9 +22,9 @@
   "just_a_advertisement": "塞一下广告应该没关系吧",
   "symbol_level_tips": "徽章等级 / 当前经验值",
   "hyper_stat": "极限属性",
-  "hyper_stat_tips":"极限属性 / ARC 增加量",
+  "hyper_stat_tips":"极限属性 / 神秘力量增加量",
   "guild_skill": "公会技能",
-  "guild_skill_tips":"公会技能 / ARC 增加量",
+  "guild_skill_tips":"公会技能 / 神秘力量增加量",
   "complete_date_complete": "已达成当前上限",
   "complete_date_never": "永远完成不了",
   "complete_date_none": "无",
@@ -34,8 +34,8 @@
   "complete_date": "完成日期(天数)",
   "complete_days": "天",
   "stat_increase": "属性加成量",
-  "arcane_force": "ARC",
-  "authentic_force": "AUT",
+  "arcane_force": "神秘力量",
+  "authentic_force": "原初之力",
   "table_symbol_max": "已满级",
   "table_symbol_none": "未获得此徽章",
   "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
@@ -47,9 +47,9 @@
   
   "general": "一般职业",
   "xenon": "尖兵",
-  "demon_avenger": "恶复",
+  "demon_avenger": "恶魔复仇者",
   
-  "arcane_river": "奥术之河",
+  "arcane_river": "神秘河",
   "grandis": "格兰蒂斯",
   "vanishing_journey": "消亡旅途",
   "edra_spectrum": "艾尔达光谱",
@@ -58,20 +58,20 @@
   "yum_yum_island": "真香岛",
   "hungry_muto": "饥饿的穆托",
   "lachelein": "拉克兰",
-  "dream_defender": "碎梦塔",
+  "dream_defender": "碎梦者",
   "arcana": "阿尔卡那",
-  "spirit_savior": "精灵救援者",
+  "spirit_savior": "精灵拯救者",
   "morass": "莫拉斯",
-  "ranheim_defense": "安哈林防卫战",
+  "ranheim_defense": "安哈因防御",
   "esfera": "埃斯佩拉",
-  "esfera_guardian": "守护埃斯佩拉",
-  "cernium": "赛尔尼温",
-  "burning_cernium": "燃烧的赛尔尼温",
-  "hotel_arcs": "阿尔克斯",
+  "esfera_guardian": "保护埃斯佩拉",
+  "cernium": "塞尔提乌",
+  "burning_cernium": "燃烧的塞尔提乌",
+  "hotel_arcs": "亚克斯旅馆",
 
   "option_current": "当前",
-  "option_custom": "自订",
-  "symbol_catalyst": "秘法触媒",
+  "option_custom": "自定义",
+  "symbol_catalyst": "神秘催化剂",
   "symbol_discount": "升级折扣",
   "catalyst_upgrade_cost": "升级所需花费",
 
@@ -81,16 +81,16 @@
   "use_force": "使用当前数值",
   "force_effect_current": "当前",
   "force_effect_req": "所需",
-  "force_effect_damage": "终伤",
+  "force_effect_damage": "最终伤害",
   "force_effect_encounter": "被击伤害",
 
   "other_tools": "其他工具",
   "web_maplesalon": "枫沙龙",
-  "web_boss_crystal_calculator": "力量结晶计算机",
+  "web_boss_crystal_calculator": "强力结晶计算器",
   
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
-  "error_without_status": "An error occurred on the server"
+  "error_without_status": "服务器本身发生了错误"
 }
 
 
