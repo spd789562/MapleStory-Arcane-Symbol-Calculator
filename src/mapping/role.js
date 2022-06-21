@@ -14,11 +14,11 @@ const RoleMapping = [
   },
   {
     name: 'xenon',
-    unit: 39,
+    unit: 48,
   },
   {
     name: 'demon_avenger',
-    unit: 1750,
+    unit: 2100,
   },
 ]
 
