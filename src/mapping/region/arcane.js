@@ -1,3 +1,29 @@
+import ForceMapping from '../force/arcane'
+
+const vanishingJourney = {
+  base: 3110000,
+  increment: 3960000,
+}
+const chuchu = {
+  base: 6220000,
+  increment: 4620000,
+}
+const lachelein = {
+  base: 9330000,
+  increment: 5280000,
+}
+const other = {
+  base: 11196000,
+  increment: 5940000,
+}
+
+const baseCostFormula = (base, increment) => (level) => {
+  if (level < 1 || level > ForceMapping.symbol.maxLevel) {
+    return 0
+  }
+  return base + level * increment
+}
+
 /**
  * ArcaneRiverZone
  * @description arcane river zone data
@@ -24,6 +50,10 @@ const ArcaneRiverZone = [
     pquest: { name: 'edra_spectrum', type: 'symbol', count: 6 },
     key: 'vanishingjourney',
     levelupDiscount: true,
+    costFormula: baseCostFormula(
+      vanishingJourney.base,
+      vanishingJourney.increment
+    ),
   },
   {
     name: 'chu_chu_island',
@@ -31,6 +61,7 @@ const ArcaneRiverZone = [
     daily: [4, 8],
     pquest: { name: 'hungry_muto', type: 'symbol', dailyMax: 15 },
     key: 'chuchu',
+    costFormula: baseCostFormula(chuchu.base, chuchu.increment),
   },
   {
     name: 'lachelein',
@@ -44,6 +75,7 @@ const ArcaneRiverZone = [
       dailyMax: 500,
       desc: 'party_quest_tips_exchange_basic',
     },
+    costFormula: baseCostFormula(lachelein.base, lachelein.increment),
   },
   {
     name: 'arcana',
@@ -56,18 +88,21 @@ const ArcaneRiverZone = [
       basic: 0,
       dailyMax: 30,
     },
+    costFormula: baseCostFormula(other.base, other.increment),
   },
   {
     name: 'morass',
     daily: 8,
     pquest: { name: 'ranheim_defense', type: 'symbol', count: 6 },
     key: 'morass',
+    costFormula: baseCostFormula(other.base, other.increment),
   },
   {
     name: 'esfera',
     daily: 8,
     pquest: { name: 'esfera_guardian', type: 'symbol', count: 6 },
     key: 'esfera',
+    costFormula: baseCostFormula(other.base, other.increment),
   },
 ]
 
