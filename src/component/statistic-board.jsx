@@ -13,7 +13,6 @@ import { withTranslation } from '@i18n'
 
 /* mapping */
 import SymbolRegion from '../mapping/region'
-import ArcInfo from '../mapping/arcane-info'
 import SymbolInfo from '../mapping/force'
 import RoleMapping from '../mapping/role'
 
@@ -180,7 +179,7 @@ const StatisticBoard = ({ data, t }) => {
                         placeholder={t('hyper_stat')}
                         min={0}
                         step={1}
-                        max={ArcInfo.hyper.maxLevel}
+                        max={currentSymbolInfo.hyper?.maxLevel}
                         precision={0}
                       />
                     </Form.Item>
@@ -200,7 +199,7 @@ const StatisticBoard = ({ data, t }) => {
                         placeholder={t('guild_skill')}
                         min={0}
                         step={1}
-                        max={ArcInfo.guild.maxLevel}
+                        max={currentSymbolInfo.guild?.maxLevel}
                         precision={0}
                       />
                     </Form.Item>

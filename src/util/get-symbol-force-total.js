@@ -1,10 +1,6 @@
 import SymbolInfo from '../mapping/force'
 
 import symbolMatch from './symbol-match'
-import numberFormat from './number-format'
-import { propEq } from 'ramda'
-import isDiscountZone from './is-discount-zone'
-
 /**
  * getSymbolForceTotal
  * @desc get this symbol mesos consume
