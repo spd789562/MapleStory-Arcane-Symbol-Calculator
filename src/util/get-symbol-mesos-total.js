@@ -1,9 +1,8 @@
-import SymbolMapping from '../mapping/symbol'
+import RegionMapping from '../mapping/region'
 
 import symbolMatch from './symbol-match'
 import numberFormat from './number-format'
-import { propEq } from 'ramda'
-import isDiscountZone from './is-discount-zone'
+import { propEq, times } from 'ramda'
 
 /**
  * getSymbolMesosTotal
@@ -14,21 +13,15 @@ import isDiscountZone from './is-discount-zone'
  * @param {string} param.count - current arcane count
  */
 const getSymbolMesosTotal = ({ region, zone, count }) => {
-  const RegionSymbolMapping =
-    SymbolMapping[region][zone] || SymbolMapping[region]
-  const currentArcane = symbolMatch({ region, zone }, count)
-  const _isDiscountZone = isDiscountZone(zone)
-  const currentLevelIndex = RegionSymbolMapping.findIndex(
-    propEq('level', currentArcane.level)
-  )
+  const SymbolRegion = RegionMapping[region]
+  const currenSymbol = symbolMatch({ region, zone }, count)
+  const costFormula = SymbolRegion.find(propEq('key', zone)).costFormula
 
-  const totalCost = RegionSymbolMapping.slice(0, currentLevelIndex).reduce(
-    (totalCost, { cost, discount }) => {
-      totalCost += _isDiscountZone ? +cost - +discount : +cost
-      return totalCost
-    },
+  const totalCost = times((n) => n + 1, currenSymbol.level).reduce(
+    (acc, level) => acc + costFormula(level),
     0
   )
+
   return numberFormat(totalCost)
 }
 

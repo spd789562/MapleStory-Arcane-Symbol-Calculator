@@ -1,3 +1,17 @@
+import ForceMapping from '../force/grandis'
+
+const autBase = (level) => Math.floor(970.2 + 884.4 * level)
+
+const cerniumFormula = (level) => 100000 * autBase(level)
+const hotelFormula = (level) => 100000 * Math.floor(1.1 * autBase(level))
+
+const baseCostFormula = (formula) => (level) => {
+  if (level < 1 || level > ForceMapping.symbol.maxLevel) {
+    return 0
+  }
+  return formula(level)
+}
+
 /**
  * GrandisZone
  * @description grandis zone data
@@ -15,11 +29,13 @@ const GrandisZone = [
     extraRegion: 'burning_cernium',
     daily: [5, 10],
     key: 'cernium',
+    costFormula: baseCostFormula(cerniumFormula),
   },
   {
     name: 'hotel_arcs',
     daily: 5,
     key: 'hotelarcs',
+    costFormula: baseCostFormula(hotelFormula),
   },
 ]
 

@@ -5,13 +5,7 @@ import symbolMatch from './symbol-match'
 import numberFormat from './number-format'
 
 import moment from 'moment'
-
-const discountZone = SymbolRegion['arcane']
-  .filter(({ levelupDiscount }) => levelupDiscount)
-  .map(({ key }) => key)
-
-const isDiscountZone = (zone) => discountZone.indexOf(zone) !== -1
-
+import { propEq } from 'ramda'
 /**
  * parserTableData
  * @desc parser data for table
@@ -33,18 +27,18 @@ const parserTableData = ({
 }) => {
   const RegionSymbolMapping =
     SymbolMapping[region][zone] || SymbolMapping[region]
+  const CurrentRegionMapping = SymbolRegion[region]
   const TargetArcane = RegionSymbolMapping[level]
   const currentArcane = symbolMatch({ region, zone }, currentCount)
   const remainDays = Math.ceil(
     (TargetArcane.stack - currentCount) / dailyTotalCount
   )
+  const costFormula = CurrentRegionMapping.find(propEq('key', zone)).costFormula
   const totalCost = RegionSymbolMapping.reduce(
-    (totalCost, { level: arcaneLevel, cost, discount }) => {
+    (totalCost, { level: arcaneLevel }) => {
       totalCost +=
         arcaneLevel >= currentArcane.level && arcaneLevel <= level - 1
-          ? isDiscountZone(zone)
-            ? +cost - +discount
-            : +cost
+          ? costFormula(arcaneLevel)
           : 0
       return totalCost
     },

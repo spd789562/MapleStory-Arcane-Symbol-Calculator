@@ -5,13 +5,9 @@ import { Table, Card } from 'antd'
 import { withTranslation } from '@i18n'
 
 /* mapping */
-import ArcaneSymbolMapping from '../mapping/arcane'
-import ArcaneSymbol from '../mapping/arcane-info'
 import SymbolRegion from '../mapping/region'
 import SymbolMapping from '../mapping/symbol'
 import SymbolInfo from '../mapping/force'
-
-import ArcZone from '../mapping/arcane-river-zone'
 
 /* utils */
 import numberFormat from '../util/number-format'
