@@ -7,6 +7,8 @@ const CERNIUM_BASIC = 96900000
 const CERNIUM_INCREMENT = 88500000
 const HOTEL_ARCS_BASIC = 106600000
 const HOTEL_ARCS_INCREMENT = 97300000
+const ODIUM_BASIC = 117400000
+const ODIUM_INCREMENT = 107100000
 
 const getAUTUpgradeCount = memoizeWith(identity, (level) => {
   const count = 9 * level * level + 20 * level
@@ -227,7 +229,94 @@ const HotelArcsSymbol = [
     stack: 4565,
   },
 ]
+/**
+ * AuthenticSymbol - Odium
+ * @description Odium symbol data
+ * @type {Array<ArcaneSymbolData>}
+ *
+ * @typedef {Object} ArcaneSymbolData
+ * @property {string} level - symbol level
+ * @property {string} stack - symbol current level need symbol
+ * @property {number} count - symbol current level need symbol to upgrade
+ * @property {number} cost - symbol current level upgrade cost
+ */
+// const OdiumSymbol = calcSymbol(getOdiumMesos)
+const OdiumSymbol = [
+  {
+    cost: 0,
+    count: 1,
+    level: 0,
+    stack: 0,
+  },
+  {
+    cost: 224500000,
+    count: 28,
+    level: 1,
+    stack: 1,
+  },
+  {
+    cost: 331600000,
+    count: 76,
+    level: 2,
+    stack: 29,
+  },
+  {
+    cost: 438700000,
+    count: 141,
+    level: 3,
+    stack: 105,
+  },
+  {
+    cost: 545800000,
+    count: 224,
+    level: 4,
+    stack: 246,
+  },
+  {
+    cost: 652900000,
+    count: 325,
+    level: 5,
+    stack: 470,
+  },
+  {
+    cost: 760000000,
+    count: 444,
+    level: 6,
+    stack: 795,
+  },
+  {
+    cost: 867100000,
+    count: 581,
+    level: 7,
+    stack: 1239,
+  },
+  {
+    cost: 974200000,
+    count: 736,
+    level: 8,
+    stack: 1820,
+  },
+  {
+    cost: 1081300000,
+    count: 909,
+    level: 9,
+    stack: 2556,
+  },
+  {
+    cost: 1188400000,
+    count: 1100,
+    level: 10,
+    stack: 3465,
+  },
+  {
+    cost: 0,
+    count: 0,
+    level: 11,
+    stack: 4565,
+  },
+]
 export default {
   cernium: CerniumSymbol,
   hotelarcs: HotelArcsSymbol,
+  odium: OdiumSymbol,
 }
