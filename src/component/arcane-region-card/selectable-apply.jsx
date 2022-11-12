@@ -15,7 +15,7 @@ const SelectableApply = ({ t, regionKey: key }) => (
     noStyle
   >
     {({ getFieldValue, setFieldsValue }) => {
-      const areaData = getFieldValue(key)
+      const areaData = getFieldValue(key) || {}
       const total = areaData.count + (areaData.extra || 0)
       return (
         <Button
