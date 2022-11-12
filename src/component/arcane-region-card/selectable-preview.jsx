@@ -5,6 +5,7 @@ import { ArrowRightOutlined } from '@ant-design/icons'
 
 import fieldShouldUpdate from '../../util/antd-field-should-update'
 import arcMatching from '../../util/arc-match'
+import { composeP } from 'ramda'
 
 const SelectablePreview = ({ regionKey: key, region }) => (
   <Form.Item
@@ -15,11 +16,11 @@ const SelectablePreview = ({ regionKey: key, region }) => (
     noStyle
   >
     {({ getFieldValue }) => {
-      const areaData = getFieldValue(key)
+      const areaData = getFieldValue(key) || {}
       const total = areaData.count + (areaData.extra || 0)
       const regionData = {
         region,
-        zone: key
+        zone: key,
       }
       return areaData.extra ? (
         <span

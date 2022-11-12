@@ -14,6 +14,7 @@ import SymbolRegion from '../../mapping/region'
 
 /* helper */
 import { withTranslation } from '@i18n'
+import { composeP } from 'ramda'
 
 const ArcaneRegionCard = ({ t, region, regionIndex }) => {
   const { name, extraRegion, key, daily, pquest } =
