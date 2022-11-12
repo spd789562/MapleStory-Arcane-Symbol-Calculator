@@ -4,6 +4,7 @@ const autBase = (level) => Math.floor(970.2 + 884.4 * level)
 
 const cerniumFormula = (level) => 100000 * autBase(level)
 const hotelFormula = (level) => 100000 * Math.floor(1.1 * autBase(level))
+const odiumFormula = (level) => 100000 * Math.floor(1.1 * autBase(level))
 
 const baseCostFormula = (formula) => (level) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
@@ -36,6 +37,12 @@ const GrandisZone = [
     daily: 5,
     key: 'hotelarcs',
     costFormula: baseCostFormula(hotelFormula),
+  },
+  {
+    name: 'odium',
+    daily: 5,
+    key: 'odium',
+    costFormula: baseCostFormula(odiumFormula),
   },
 ]
 
