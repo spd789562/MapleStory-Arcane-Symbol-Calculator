@@ -54,6 +54,8 @@ const initialValues = {
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
 
+const link = 'maplestory-arcane-symbol-calculator.vercel.app'
+
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
   // const { initialData, handleSaveToStorage } = useMemo(useLocalStorage, [])
@@ -104,6 +106,11 @@ function Home({ t, i18n }) {
       </Header>
       <BackTop />
       <Content className={styles.content}>
+        <Col span={24} style={{ marginBottom: 8 }}>
+          <Button href={link} target="_blank">
+            {t('web_daily_party_version')}&nbsp;&gt;
+          </Button>
+        </Col>
         <Form
           form={form}
           initialValues={initialValues}
