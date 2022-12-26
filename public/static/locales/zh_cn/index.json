@@ -88,7 +88,10 @@
   "other_tools": "其他工具",
   "web_maplesalon": "枫沙龙",
   "web_boss_crystal_calculator": "强力结晶计算器",
-  
+
+  "web_daily_party_version": "每日组队任务版本",
+  "web_weekly_party_version": "每周组队任务版本 ( Savior 改动后)",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "服务器本身发生了错误"

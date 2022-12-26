@@ -89,6 +89,9 @@
   "web_maplesalon": "Maplesalon",
   "web_boss_crystal_calculator": "Boss Crystal Calculator (Optimal)",
 
+  "web_daily_party_version": "Daily Party Quest Version",
+  "web_weekly_party_version": "Weekly Party Quest Version (After Savior Update)",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"
