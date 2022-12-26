@@ -35,11 +35,16 @@ const useStatisticData = (data, t) => {
       const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
       // has party quest
       const dailyPartyQuestCount =
-        dailyParty && pquest
+        dailyParty && pquest && pquest.doneType === 'daily'
           ? pquest.count ||
             // if not a static value then calculating
             (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
           : 0
+      const weeklyPartyQuestCount =
+        dailyParty && pquest && pquest.doneType === 'weekly'
+          ? pquest.count || dailyParty
+          : 0
+
       const dailyTotalCount =
         dailySymbol + dailyQuestCount + dailyPartyQuestCount
       const { completeDate, remainDays } = parserTableData({
@@ -49,6 +54,7 @@ const useStatisticData = (data, t) => {
         level: SymbolInfo[data.region].symbol.maxLevel,
         currentCount,
         dailyTotalCount,
+        weeklyCount: weeklyPartyQuestCount,
       })
       return {
         name,
