@@ -46,7 +46,7 @@ const ArcaneRegionCard = ({ t, region, regionIndex }) => {
         <Col span={24}>
           <h4>{t('daily_symbol_source')}:</h4>
         </Col>
-        <Col span={12}>
+        <Col span={extraRegion ? 24 : 12} sm={12}>
           <DailyQuest
             {...{
               regionKey: key,

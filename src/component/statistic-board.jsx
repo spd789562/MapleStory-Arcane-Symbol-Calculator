@@ -23,6 +23,7 @@ import parserTableData from '../util/parser-table-data'
 import moment from 'moment'
 
 const useStatisticData = (data, t) => {
+  const { resetDay, currentWeekIsDone, region } = data
   const statisticData = SymbolRegion[data.region]
     .map(({ name, key, daily, pquest }) => {
       const {
@@ -48,19 +49,19 @@ const useStatisticData = (data, t) => {
       const dailyTotalCount =
         dailySymbol + dailyQuestCount + dailyPartyQuestCount
       const { completeDate, remainDays } = parserTableData({
-        region: data.region,
+        region,
+        resetDay,
+        currentWeekIsDone,
         key,
         zone: key,
-        level: SymbolInfo[data.region].symbol.maxLevel,
+        level: SymbolInfo[region].symbol.maxLevel,
         currentCount,
         dailyTotalCount,
         weeklyCount: weeklyPartyQuestCount,
       })
       return {
         name,
-        level:
-          symbolMatch({ region: data.region, zone: key }, currentCount).level ||
-          0,
+        level: symbolMatch({ region, zone: key }, currentCount).level || 0,
         completeDate,
         remainDays,
       }

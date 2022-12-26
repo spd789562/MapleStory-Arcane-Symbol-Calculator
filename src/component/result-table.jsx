@@ -32,8 +32,9 @@ const renderEmptyIfMaxLevel = (region) => (text, row) =>
     ? numberFormat(text)
     : text
 
-const useTableData = (data, t) =>
-  SymbolRegion[data.region].map(({ name, key, daily, pquest }) => {
+const useTableData = (data, t) => {
+  const { resetDay, currentWeekIsDone, region } = data
+  return SymbolRegion[region].map(({ name, key, daily, pquest }) => {
     const {
       count: currentCount,
       daily: dailySymbol = 0,
@@ -43,38 +44,48 @@ const useTableData = (data, t) =>
     const dailyQuestCount = dailyQuest ? daily[dailyQuest - 1] || daily : 0
     // has party quest
     const dailyPartyQuestCount =
-      dailyParty && pquest
+      dailyParty && pquest && pquest.doneType === 'daily'
         ? pquest.count ||
           // if not a static value then calculating
           (dailyParty + (pquest.basic || 0)) / (pquest.unit || 1)
         : 0
+    const weeklyPartyQuestCount =
+      dailyParty && pquest && pquest.doneType === 'weekly'
+        ? pquest.count || dailyParty
+        : 0
     const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
     const CurrentSymbolMapping =
-      SymbolMapping[data.region][key] || SymbolMapping[data.region]
+      SymbolMapping[region][key] || SymbolMapping[region]
     const subTableData =
       !!dailyTotalCount && !!currentCount
         ? CurrentSymbolMapping.filter(({ stack }) => {
             return currentCount < stack
           }).map(({ level }) =>
             parserTableData({
-              region: data.region,
+              region,
+              resetDay,
+              currentWeekIsDone,
               key: `${key}-${level}`,
               zone: key,
               level,
               currentCount,
               dailyTotalCount,
+              weeklyCount: weeklyPartyQuestCount,
               t,
             })
           )
         : []
     return {
       ...parserTableData({
-        region: data.region,
+        region,
+        resetDay,
+        currentWeekIsDone,
         key,
         zone: key,
-        level: SymbolInfo[data.region].symbol.maxLevel,
+        level: SymbolInfo[region].symbol.maxLevel,
         currentCount,
         dailyTotalCount,
+        weeklyCount: weeklyPartyQuestCount,
         t,
       }),
       dailyTotalCount,
@@ -83,6 +94,7 @@ const useTableData = (data, t) =>
       ...(subTableData.length ? { children: subTableData } : {}),
     }
   })
+}
 
 const useChartData = (tableData, data, t) => {
   const today = moment().format('YYYY-MM-DD')

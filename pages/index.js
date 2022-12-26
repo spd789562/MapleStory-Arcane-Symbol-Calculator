@@ -9,9 +9,11 @@ import {
   Button,
   Card,
   Tabs,
+  Switch,
 } from 'antd'
 
 /* component */
+import Setting from '../src/component/setting'
 import ArcaneRegionCard from '../src/component/arcane-region-card'
 import SymbolCatalyst from '../src/component/symbol-catalyst'
 import ForceEffect from '../src/component/force-effect'
@@ -24,7 +26,7 @@ import SymbolRegion from '../src/mapping/region'
 
 /* helper */
 import { withTranslation } from '@i18n'
-import { values, toPairs } from 'ramda'
+import { times, toPairs } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -35,6 +37,8 @@ const { Header, Content, Footer } = Layout
 const initialValues = {
   region: 'arcane',
   role: 0,
+  resetDay: 3,
+  currentWeekIsDone: false,
   /* arc */
   vanishingjourney: {},
   chuchu: {},
@@ -45,6 +49,7 @@ const initialValues = {
   /* aut */
   cernium: {},
   hotelarcs: {},
+  odium: {},
 }
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
@@ -105,6 +110,7 @@ function Home({ t, i18n }) {
           onValuesChange={handleSaveToStorage}
           colon={false}
         >
+          <Setting />
           <Card style={{ marginBottom: 8 }}>
             <Form.Item name="region" valuePropName="activeKey" noStyle>
               <Tabs>

@@ -27,10 +27,12 @@ const DailyQuest = ({ t, regionKey: key, name, daily, extraRegion }) => (
       }
       style={{
         display: 'flex',
+        width: '100%',
         marginBottom: 0,
         paddingRight: 8,
       }}
       valuePropName={extraRegion ? 'value' : 'checked'}
+      wrapperCol={extraRegion ? { flex: 1 } : {}}
     >
       {extraRegion ? (
         <Slider
