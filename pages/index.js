@@ -54,7 +54,7 @@ const initialValues = {
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
 
-const link = 'maplestory-arcane-symbol-calculator.vercel.app'
+const link = 'https://maplestory-arcane-symbol-calculator.vercel.app'
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
