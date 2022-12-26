@@ -1,19 +1,35 @@
 {
   "title": "秘法符文計算機",
 
-  "seo_desc": "楓之谷秘法符文(ARC)計算機，支援真實符文(AUT)，方便的輸入符文每日可獲得數量、是否完成組隊任务，並完整計算出每個符文每級的完成日期及花費",
+  "seo_desc": "楓之谷秘法符文(ARC)計算機，支援真實符文(AUT)，方便的輸入符文每日可獲得數量、是否完成組隊任務，並完整計算出每個符文每級的完成日期及花費",
   
   "alt_symbol": "{{name}}符文等級",
   "alt_daily": "{{name}}每日任務",
   "alt_coin": "{{name}}硬幣數",
   "alt_extra": "每日額外獲取數",
 
+  "setting_yes": "是",
+  "setting_no": "否",
+  "setting_day_1": "禮拜一",
+  "setting_day_2": "禮拜二",
+  "setting_day_3": "禮拜三",
+  "setting_day_4": "禮拜四",
+  "setting_day_5": "禮拜五",
+  "setting_day_6": "禮拜六",
+  "setting_day_7": "禮拜日",
+
+  "setting_reset_day_tips": "周任務重製日",
+  "setting_reset_day_title": "重製日",
+  "setting_weeklyIsDone_tips": "是否完成本周的周任務，若已完成，至下次重製日之前的日期將不會計算周任務所獲得的符文",
+  "setting_weeklyIsDone_title": "本周周任務已完成",
+
   "reset": "清除資料",
   "comma": "，",
   "daily_symbol_source": "每日符文獲取來源",
   "daily_quest_tips": "每日任務: 此地區每日可獲得 {{count}} 個",
   "daily_quest_tips_extra": "，到達{{region}}後可額外獲得{{count}}個",
-  "party_quest_tips": "{{name}}: 最多可獲得 {{count}} 個",
+  "party_quest_tips": "{{name}}: 最多每日可獲得 {{count}} 個",
+  "party_quest_weekly_tips": "{{name}}: 最多每周可獲得 {{count}} 個",
   "party_quest_tips_exchange": ", {{unit}} 個可兌換 1 個符文",
   "party_quest_tips_exchange_basic": "{{name}}: 最多可獲得 {{dailyMax}} 個, {{unit}} 個可兌換 1 個符文, 已自動計入雕像對話保底 {{basic}} 個",
   "party_quest": "組隊任務",

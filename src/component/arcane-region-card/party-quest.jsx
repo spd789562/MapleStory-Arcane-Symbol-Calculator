@@ -12,10 +12,15 @@ const PartyQuest = ({ t, regionKey: key, pquest }) => (
             ...pquest,
             name: t(pquest.name),
           })
-        : t('party_quest_tips', {
-            name: t(pquest.name),
-            count: pquest.count || pquest.dailyMax,
-          }) + (pquest.unit ? t('party_quest_tips_exchange', pquest) : '')
+        : t(
+            pquest.doneType === 'weekly'
+              ? 'party_quest_weekly_tips'
+              : 'party_quest_tips',
+            {
+              name: t(pquest.name),
+              count: pquest.count || pquest.dailyMax,
+            }
+          ) + (pquest.unit ? t('party_quest_tips_exchange', pquest) : '')
     }
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
