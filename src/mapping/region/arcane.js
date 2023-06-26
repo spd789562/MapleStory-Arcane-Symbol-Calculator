@@ -68,7 +68,7 @@ const ArcaneRiverZone = [
     pquest: {
       name: 'hungry_muto',
       type: 'symbol',
-      dailyMax: 45, // 15*3
+      count: 45, // 15*3
       doneType: 'weekly',
     },
     key: 'chuchu',
@@ -82,7 +82,7 @@ const ArcaneRiverZone = [
       name: 'dream_defender',
       type: 'symbol',
       dailyMax: 45, // 15*3
-      doneType: 'weekly',
+      count: 'weekly',
     },
     costFormula: baseCostFormula(lachelein.base, lachelein.increment),
   },
@@ -93,7 +93,7 @@ const ArcaneRiverZone = [
     pquest: {
       name: 'spirit_savior',
       type: 'symbol',
-      dailyMax: 45, // 15*3
+      count: 45, // 15*3
       doneType: 'weekly',
     },
     costFormula: baseCostFormula(other.base, other.increment),
