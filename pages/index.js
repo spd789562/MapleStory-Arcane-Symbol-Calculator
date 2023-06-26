@@ -9,9 +9,11 @@ import {
   Button,
   Card,
   Tabs,
+  Switch,
 } from 'antd'
 
 /* component */
+import Setting from '../src/component/setting'
 import ArcaneRegionCard from '../src/component/arcane-region-card'
 import SymbolCatalyst from '../src/component/symbol-catalyst'
 import ForceEffect from '../src/component/force-effect'
@@ -24,7 +26,7 @@ import SymbolRegion from '../src/mapping/region'
 
 /* helper */
 import { withTranslation } from '@i18n'
-import { values, toPairs } from 'ramda'
+import { times, toPairs } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -35,6 +37,8 @@ const { Header, Content, Footer } = Layout
 const initialValues = {
   region: 'arcane',
   role: 0,
+  resetDay: 3,
+  currentWeekIsDone: false,
   /* arc */
   vanishingjourney: {},
   chuchu: {},
@@ -50,8 +54,7 @@ const initialValues = {
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
 
-const link =
-  'https://maplestory-arcane-symbol-calculator-git-featur-6059ee-spd789562.vercel.app'
+const link = 'https://maplestory-arcane-symbol-calculator-git-reserv-35cbad-spd789562.vercel.app'
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
@@ -105,7 +108,7 @@ function Home({ t, i18n }) {
       <Content className={styles.content}>
         <Col span={24} style={{ marginBottom: 8 }}>
           <Button href={link} target="_blank">
-            Preview {t('web_weekly_party_version')}&nbsp;&gt;
+            {t('web_daily_party_version')}&nbsp;&gt;
           </Button>
         </Col>
         <Form
@@ -114,6 +117,7 @@ function Home({ t, i18n }) {
           onValuesChange={handleSaveToStorage}
           colon={false}
         >
+          <Setting />
           <Card style={{ marginBottom: 8 }}>
             <Form.Item name="region" valuePropName="activeKey" noStyle>
               <Tabs>
