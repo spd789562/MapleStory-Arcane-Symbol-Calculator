@@ -28,13 +28,13 @@ const GrandisZone = [
   {
     name: 'cernium',
     extraRegion: 'burning_cernium',
-    daily: [5, 10],
+    daily: [10, 15],
     key: 'cernium',
     costFormula: baseCostFormula(cerniumFormula),
   },
   {
     name: 'hotel_arcs',
-    daily: 5,
+    daily: 10,
     key: 'hotelarcs',
     costFormula: baseCostFormula(hotelFormula),
   },
