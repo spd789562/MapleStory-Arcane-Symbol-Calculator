@@ -108,6 +108,9 @@
   "web_daily_party_version": "每日組隊任務版本 ( Savior 改版前)",
   "web_weekly_party_version": "每周組隊任務版本",
   
+  "web_daily_party_version": "每日組隊任務版本",
+  "web_weekly_party_version": "每周組隊任務版本 ( Savior 改版後)",
+
   "page_not_found": "無此頁面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"
