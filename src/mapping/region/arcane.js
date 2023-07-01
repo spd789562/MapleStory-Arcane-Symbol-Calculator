@@ -81,8 +81,8 @@ const ArcaneRiverZone = [
     pquest: {
       name: 'dream_defender',
       type: 'symbol',
-      dailyMax: 45, // 15*3
-      count: 'weekly',
+      count: 45, // 15*3
+      doneType: 'weekly',
     },
     costFormula: baseCostFormula(lachelein.base, lachelein.increment),
   },
