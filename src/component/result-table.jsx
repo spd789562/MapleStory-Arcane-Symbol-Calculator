@@ -57,7 +57,7 @@ const useTableData = (data, t) => {
     const CurrentSymbolMapping =
       SymbolMapping[region][key] || SymbolMapping[region]
     const subTableData =
-      !!dailyTotalCount && !!currentCount
+      (dailyTotalCount > 0 || weeklyPartyQuestCount > 0) && currentCount > 0
         ? CurrentSymbolMapping.filter(({ stack }) => {
             return currentCount < stack
           }).map(({ level }) =>
