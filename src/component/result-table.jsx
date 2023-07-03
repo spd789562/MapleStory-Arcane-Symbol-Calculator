@@ -21,7 +21,8 @@ const Line = dynamic(() => import('@ant-design/charts/es/line'), {
 const renderEmptyIfMaxLevel = (region) => (text, row) =>
   row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
   row.currentLevel === 0 ||
-  row.dailyTotalCount === 0
+  row.dailyTotalCount === 0 ||
+  row.weeklyCount === 0
     ? {
         children: text,
         props: {
@@ -89,6 +90,7 @@ const useTableData = (data, t) => {
         t,
       }),
       dailyTotalCount,
+      weeklyCount: weeklyPartyQuestCount,
       currentCount,
       name,
       ...(subTableData.length ? { children: subTableData } : {}),
@@ -196,7 +198,8 @@ const ResultTable = ({ data, t }) => {
   const renderTextIfMaxLevel = (region) => (text, row) =>
     row.currentLevel === SymbolInfo[region].symbol.maxLevel ||
     row.currentLevel === 0 ||
-    row.dailyTotalCount === 0
+    row.dailyTotalCount === 0 ||
+    row.weeklyCount === 0
       ? {
           children:
             row.currentLevel === SymbolInfo[region].symbol.maxLevel
