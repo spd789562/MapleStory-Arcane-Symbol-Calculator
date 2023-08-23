@@ -33,7 +33,7 @@ const GrandisZone = [
   {
     name: 'cernium',
     extraRegion: 'burning_cernium',
-    daily: [10, 15],
+    daily: 20,
     key: 'cernium',
     costFormula: baseCostFormula(IncrementMap.cernium),
   },
@@ -45,9 +45,21 @@ const GrandisZone = [
   },
   {
     name: 'odium',
-    daily: 5,
+    daily: 10,
     key: 'odium',
     costFormula: baseCostFormula(IncrementMap.odium),
+  },
+  {
+    name: 'shangri_la',
+    daily: 10,
+    key: 'shangrila',
+    costFormula: baseCostFormula(IncrementMap.shangrila),
+  },
+  {
+    name: 'arteria',
+    daily: 10,
+    key: 'arteria',
+    costFormula: baseCostFormula(IncrementMap.arteria),
   },
 ]
 

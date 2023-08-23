@@ -54,7 +54,9 @@ const initialValues = {
 
 const storageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA'
 
-const link = 'https://maplestory-arcane-symbol-calculator-git-reserv-35cbad-spd789562.vercel.app'
+const link_daily =
+  'https://maplestory-arcane-symbol-calculator-git-reserv-35cbad-spd789562.vercel.app'
+const link_before = 'https://maplestory-arcane-symbol-calculator.vercel.app'
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
@@ -107,8 +109,11 @@ function Home({ t, i18n }) {
       <BackTop />
       <Content className={styles.content}>
         <Col span={24} style={{ marginBottom: 8 }}>
-          <Button href={link} target="_blank">
+          <Button href={link_daily} target="_blank">
             {t('web_daily_party_version')}&nbsp;&gt;
+          </Button>
+          <Button href={link_before} target="_blank">
+            {t('web_weekly_party_version')}&nbsp;&gt;
           </Button>
         </Col>
         <Form

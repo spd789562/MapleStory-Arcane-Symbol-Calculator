@@ -41,7 +41,7 @@ const ArcaneRiverZone = [
   {
     name: 'vanishing_journey',
     extraRegion: 'reverse_city',
-    daily: [9, 18],
+    daily: [10, 20],
     pquest: {
       name: 'edra_spectrum',
       type: 'symbol',
@@ -55,7 +55,7 @@ const ArcaneRiverZone = [
   {
     name: 'chu_chu_island',
     extraRegion: 'yum_yum_island',
-    daily: [8, 16],
+    daily: [10, 20],
     pquest: {
       name: 'hungry_muto',
       type: 'symbol',
@@ -68,7 +68,7 @@ const ArcaneRiverZone = [
   {
     name: 'lachelein',
     key: 'lachelein',
-    daily: 11,
+    daily: 20,
     pquest: {
       name: 'dream_defender',
       type: 'symbol',
@@ -80,7 +80,7 @@ const ArcaneRiverZone = [
   {
     name: 'arcana',
     key: 'arcana',
-    daily: 9,
+    daily: 20,
     pquest: {
       name: 'spirit_savior',
       type: 'symbol',
@@ -91,7 +91,7 @@ const ArcaneRiverZone = [
   },
   {
     name: 'morass',
-    daily: 8,
+    daily: 20,
     pquest: {
       name: 'ranheim_defense',
       type: 'symbol',
@@ -103,7 +103,7 @@ const ArcaneRiverZone = [
   },
   {
     name: 'esfera',
-    daily: 8,
+    daily: 20,
     pquest: {
       name: 'esfera_guardian',
       type: 'symbol',
