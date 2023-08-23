@@ -1,3 +1,4 @@
+/* level^2 + 11 */
 /**
  * ArcaneSymbol
  * @description arcane river zone data

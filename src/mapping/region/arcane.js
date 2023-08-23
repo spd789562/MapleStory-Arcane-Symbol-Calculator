@@ -1,27 +1,19 @@
 import ForceMapping from '../force/arcane'
 
-const vanishingJourney = {
-  base: 3110000,
-  increment: 3960000,
-}
-const chuchu = {
-  base: 6220000,
-  increment: 4620000,
-}
-const lachelein = {
-  base: 9330000,
-  increment: 5280000,
-}
-const other = {
-  base: 11196000,
-  increment: 5940000,
+const IncrementMap = {
+  vanishingJourney: 8,
+  chuchu: 10,
+  lachelein: 12,
+  arcana: 14,
+  morass: 16,
+  esfera: 18,
 }
 
-const baseCostFormula = (base, increment) => (level) => {
+const baseCostFormula = (increment) => (level) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0
   }
-  return base + level * increment
+  return 10000 * Math.floor((level * level + 11) * (increment + 0.1 * level))
 }
 
 /**
@@ -56,10 +48,7 @@ const ArcaneRiverZone = [
     },
     key: 'vanishingjourney',
     levelupDiscount: true,
-    costFormula: baseCostFormula(
-      vanishingJourney.base,
-      vanishingJourney.increment
-    ),
+    costFormula: baseCostFormula(IncrementMap.vanishingJourney),
   },
   {
     name: 'chu_chu_island',
@@ -72,7 +61,7 @@ const ArcaneRiverZone = [
       doneType: 'weekly',
     },
     key: 'chuchu',
-    costFormula: baseCostFormula(chuchu.base, chuchu.increment),
+    costFormula: baseCostFormula(IncrementMap.chuchu),
   },
   {
     name: 'lachelein',
@@ -84,7 +73,7 @@ const ArcaneRiverZone = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    costFormula: baseCostFormula(lachelein.base, lachelein.increment),
+    costFormula: baseCostFormula(IncrementMap.lachelein),
   },
   {
     name: 'arcana',
@@ -96,7 +85,7 @@ const ArcaneRiverZone = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    costFormula: baseCostFormula(other.base, other.increment),
+    costFormula: baseCostFormula(IncrementMap.arcana),
   },
   {
     name: 'morass',
@@ -108,7 +97,7 @@ const ArcaneRiverZone = [
       doneType: 'weekly',
     },
     key: 'morass',
-    costFormula: baseCostFormula(other.base, other.increment),
+    costFormula: baseCostFormula(IncrementMap.morass),
   },
   {
     name: 'esfera',
@@ -120,7 +109,7 @@ const ArcaneRiverZone = [
       doneType: 'weekly',
     },
     key: 'esfera',
-    costFormula: baseCostFormula(other.base, other.increment),
+    costFormula: baseCostFormula(IncrementMap.esfera),
   },
 ]
 

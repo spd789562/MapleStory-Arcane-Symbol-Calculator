@@ -1,16 +1,21 @@
 import ForceMapping from '../force/grandis'
 
-const autBase = (level) => Math.floor(970.2 + 884.4 * level)
-
-const cerniumFormula = (level) => 100000 * autBase(level)
-const hotelFormula = (level) => 100000 * Math.floor(1.1 * autBase(level))
-const odiumFormula = (level) => 100000 * Math.floor(1.1 * autBase(level))
-
-const baseCostFormula = (formula) => (level) => {
+const IncrementMap = {
+  cernium: 13.2,
+  hotelarcs: 15,
+  odium: 16.8,
+  shangrila: 18.6,
+  arteria: 20.4,
+  carcion: 22.2,
+}
+const baseCostFormula = (increment) => (level) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0
   }
-  return formula(level)
+  return (
+    100000 *
+    Math.floor((9 * Math.pow(level, 2) + 20 * level) * increment - 0.6 * level)
+  )
 }
 
 /**
@@ -30,19 +35,19 @@ const GrandisZone = [
     extraRegion: 'burning_cernium',
     daily: [10, 15],
     key: 'cernium',
-    costFormula: baseCostFormula(cerniumFormula),
+    costFormula: baseCostFormula(IncrementMap.cernium),
   },
   {
     name: 'hotel_arcs',
     daily: 10,
     key: 'hotelarcs',
-    costFormula: baseCostFormula(hotelFormula),
+    costFormula: baseCostFormula(IncrementMap.hotelarcs),
   },
   {
     name: 'odium',
     daily: 5,
     key: 'odium',
-    costFormula: baseCostFormula(odiumFormula),
+    costFormula: baseCostFormula(IncrementMap.odium),
   },
 ]
 
