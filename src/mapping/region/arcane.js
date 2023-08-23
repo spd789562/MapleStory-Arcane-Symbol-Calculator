@@ -13,7 +13,9 @@ const baseCostFormula = (increment) => (level) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0
   }
-  return 10000 * Math.floor((level * level + 11) * (increment + 0.1 * level))
+  const floatResult = (level * level + 11) * (increment + 0.1 * level)
+  const precisionResult = parseFloat(floatResult).toPrecision(12)
+  return 10000 * Math.floor(+precisionResult)
 }
 
 /**
