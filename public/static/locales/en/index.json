@@ -85,6 +85,11 @@
   "burning_cernium": "Burning Cernium",
   "hotel_arcs": "Hotel Arcus",
   "odium": "Odium",
+  "shangri_la": "Shangri-La",
+  "arteria": "Arteria",
+  "carcion": "Carcion",
+
+  "is_estimated": "(Estimated)",
   
   "option_current": "Current",
   "option_custom": "Custom",
@@ -103,6 +108,7 @@
 
   "other_tools": "Other tools",
   "web_maplesalon": "Maplesalon",
+  "web_my_home": "My Home Simulator",
   "web_boss_crystal_calculator": "Boss Crystal Calculator (Optimal)",
 
   "web_daily_party_version": "Daily Party Quest Version (Before Savior Update)",

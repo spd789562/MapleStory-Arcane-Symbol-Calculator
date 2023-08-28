@@ -85,6 +85,11 @@
   "burning_cernium": "燃燒的賽爾尼溫",
   "hotel_arcs": "阿爾克斯",
   "odium": "奧迪溫",
+  "shangri_la": "香格里拉(暫譯)",
+  "arteria": "阿爾泰利亞(暫譯)",
+  "carcion": "卡爾西溫(暫譯)",
+
+  "is_estimated": "(預估值)",
   
   "option_current": "當前",
   "option_custom": "自訂",
@@ -103,6 +108,7 @@
 
   "other_tools": "其他工具",
   "web_maplesalon": "楓沙龍",
+  "web_my_home": "我的小屋模擬器",
   "web_boss_crystal_calculator": "力量結晶計算機",
 
   "web_daily_party_version": "每日組隊任務版本 ( Savior 改版前)",

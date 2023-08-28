@@ -112,7 +112,7 @@ function Home({ t, i18n }) {
           <Button href={link_daily} target="_blank">
             {t('web_daily_party_version')}&nbsp;&gt;
           </Button>
-          <Button href={link_before} target="_blank">
+          <Button href={link_before} target="_blank" style={{ marginLeft: 8 }}>
             {t('web_weekly_party_version')}&nbsp;&gt;
           </Button>
         </Col>
@@ -197,6 +197,7 @@ function Home({ t, i18n }) {
         <div>
           {t('other_tools')}：
           <a href="https://maplesalon.vercel.app">{t('web_maplesalon')}</a>、
+          <a href="https://maplestory-home-simulator.vercel.app">{t('web_my_home')}</a>、
           <a href="https://maplestory-boss-crystal-calculator.vercel.app">
             {t('web_boss_crystal_calculator')}
           </a>

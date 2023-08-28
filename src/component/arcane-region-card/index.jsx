@@ -14,13 +14,23 @@ import SymbolRegion from '../../mapping/region'
 
 /* helper */
 import { withTranslation } from '@i18n'
-import { composeP } from 'ramda'
 
 const ArcaneRegionCard = ({ t, region, regionIndex }) => {
-  const { name, extraRegion, key, daily, pquest } =
+  const { name, extraRegion, key, daily, pquest, isEstimate } =
     SymbolRegion[region][regionIndex]
   return (
-    <Card title={t(name)}>
+    <Card
+      title={
+        <>
+          {t(name)}
+          {isEstimate && (
+            <span style={{ fontSize: '.8em', color: '#999' }}>
+              {t('is_estimated')}
+            </span>
+          )}
+        </>
+      }
+    >
       <Row gutter={[0, 12]}>
         <Col span={24}>
           <Form.Item name={[key, 'count']} style={{ marginBottom: 0 }}>

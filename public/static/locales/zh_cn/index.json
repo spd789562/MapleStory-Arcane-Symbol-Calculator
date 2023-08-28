@@ -85,6 +85,11 @@
   "burning_cernium": "燃烧的塞尔提乌",
   "hotel_arcs": "亚克斯旅馆",
   "odium": "奥迪乌姆",
+  "shangri_la": "香格里拉(暂译)",
+  "arteria": "阿尔泰利亚(暂译)",
+  "carcion": "卡尔西温(暂译)",
+
+  "is_estimated": "(预估值)",
 
   "option_current": "当前",
   "option_custom": "自定义",
@@ -103,6 +108,7 @@
 
   "other_tools": "其他工具",
   "web_maplesalon": "枫沙龙",
+  "web_my_home": "我的小屋模拟器",
   "web_boss_crystal_calculator": "强力结晶计算器",
 
   "web_daily_party_version": "每日组队任务版本 ( Savior 改动前)",
