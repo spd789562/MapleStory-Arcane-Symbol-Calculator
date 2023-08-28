@@ -28,11 +28,11 @@ const baseCostFormula = (increment) => (level) => {
  * @property {string} extraRegion - extra zone name
  * @property {string} key - zone key
  * @property {number} daily - get symbol by daily quest everyday
+ * @property {boolean} isEstimate - estimated symbol, not release yet
  */
 const GrandisZone = [
   {
     name: 'cernium',
-    extraRegion: 'burning_cernium',
     daily: 20,
     key: 'cernium',
     costFormula: baseCostFormula(IncrementMap.cernium),
@@ -53,13 +53,22 @@ const GrandisZone = [
     name: 'shangri_la',
     daily: 10,
     key: 'shangrila',
+    isEstimate: true,
     costFormula: baseCostFormula(IncrementMap.shangrila),
   },
   {
     name: 'arteria',
     daily: 10,
     key: 'arteria',
+    isEstimate: true,
     costFormula: baseCostFormula(IncrementMap.arteria),
+  },
+  {
+    name: 'carcion',
+    daily: 10,
+    key: 'carcion',
+    isEstimate: true,
+    costFormula: baseCostFormula(IncrementMap.carcion),
   },
 ]
 
