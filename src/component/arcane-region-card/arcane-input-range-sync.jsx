@@ -12,8 +12,7 @@ import SymbolMapping from '../../mapping/symbol'
 
 export const Level = ({ value: arcane, onChange, region, disabled }) => {
   const currentArcane = arcMatching(region, arcane)
-  const CurrentSymbolMapping =
-    SymbolMapping[region.region][region.zone] || SymbolMapping[region.region]
+  const CurrentSymbolMapping = SymbolMapping[region.region]
   return (
     <InputNumber
       precision={0}
@@ -67,8 +66,7 @@ const ArcaneInputRangeSync = ({
   defaultAvatar,
 }) => {
   const regionData = { region, zone }
-  const CurrentSymbolMapping =
-    SymbolMapping[region][zone] || SymbolMapping[region]
+  const CurrentSymbolMapping = SymbolMapping[region]
   return (
     <Fragment>
       <Tooltip title={t('symbol_level_tips')}>

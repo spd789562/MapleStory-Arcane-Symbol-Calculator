@@ -14,7 +14,7 @@ import { propEq, times } from 'ramda'
  */
 const getSymbolMesosTotal = ({ region, zone, count }) => {
   const SymbolRegion = RegionMapping[region]
-  const currenSymbol = symbolMatch({ region, zone }, count)
+  const currenSymbol = symbolMatch({ region }, count)
   const costFormula = SymbolRegion.find(propEq('key', zone)).costFormula
 
   const totalCost = times((n) => n + 1, currenSymbol.level).reduce(

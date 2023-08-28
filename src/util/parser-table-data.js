@@ -31,11 +31,10 @@ const parserTableData = ({
   currentWeekIsDone = false,
   t = (_) => _,
 }) => {
-  const RegionSymbolMapping =
-    SymbolMapping[region][zone] || SymbolMapping[region]
+  const RegionSymbolMapping = SymbolMapping[region]
   const CurrentRegionMapping = SymbolRegion[region]
   const TargetArcane = RegionSymbolMapping[level]
-  const currentArcane = symbolMatch({ region, zone }, currentCount)
+  const currentArcane = symbolMatch({ region }, currentCount)
   const remainSymbolCount = TargetArcane.stack - currentCount
   let remainDays = 0 // Math.ceil(remainSymbolCount / dailyTotalCount)
 

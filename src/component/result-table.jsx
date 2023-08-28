@@ -54,8 +54,7 @@ const useTableData = (data, t) => {
         ? pquest.count || dailyParty
         : 0
     const dailyTotalCount = dailySymbol + dailyQuestCount + dailyPartyQuestCount
-    const CurrentSymbolMapping =
-      SymbolMapping[region][key] || SymbolMapping[region]
+    const CurrentSymbolMapping = SymbolMapping[region]
     const subTableData =
       (dailyTotalCount > 0 || weeklyPartyQuestCount > 0) && currentCount > 0
         ? CurrentSymbolMapping.filter(({ stack }) => {

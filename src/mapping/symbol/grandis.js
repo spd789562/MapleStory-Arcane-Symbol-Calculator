@@ -24,7 +24,7 @@ const stackSymbol = scan(
   times((level) => getAUTUpgradeCount(level), AUT_MAX_LEVEL)
 )
 
-const calcSymbol = (getRegionMesos) =>
+const calcSymbol = () =>
   stackSymbol.map((stackCount, level) => ({
     level,
     stack: level === 1 ? 1 : stackCount,
@@ -45,13 +45,13 @@ const calcSymbol = (getRegionMesos) =>
  * @description Authentic symbol data
  * @type {Array<ArcaneSymbolData>}
  *
- * @typedef {object} AuthenticSymbol
+ * @typedef {object} ArcaneSymbolData
  * @property {string} level - symbol level
  * @property {string} stack - symbol current level need symbol
  * @property {number} count - symbol current level need symbol to upgrade
  */
-// const CerniumSymbol = calcSymbol(getCerniumMesos)
-const CerniumSymbol = [
+// const AuthenticSymbol = calcSymbol()
+const AuthenticSymbol = [
   { count: 1, level: 0, stack: 0 },
   { count: 28, level: 1, stack: 1 },
   { count: 76, level: 2, stack: 29 },
@@ -66,8 +66,4 @@ const CerniumSymbol = [
   { count: 0, level: 11, stack: 4565 },
 ]
 
-export default {
-  cernium: CerniumSymbol,
-  hotelarcs: CerniumSymbol,
-  odium: CerniumSymbol,
-}
+export default AuthenticSymbol

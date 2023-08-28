@@ -9,9 +9,8 @@ import { curry } from 'ramda'
  *  symbolMatch(6) // -> { level: 1 ...}
  *  symbolMatch(24) // -> { level: 2 ...}
  */
-const symbolMatch = function symbolMatch({ region, zone }, currentExp) {
-  const RegionSymbolMapping =
-    SymbolMapping[region][zone] || SymbolMapping[region]
+const symbolMatch = function symbolMatch({ region }, currentExp) {
+  const RegionSymbolMapping = SymbolMapping[region]
   return (
     RegionSymbolMapping.find(
       // get match range of arcane

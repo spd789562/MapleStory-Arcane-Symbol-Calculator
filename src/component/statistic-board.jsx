@@ -61,7 +61,7 @@ const useStatisticData = (data, t) => {
       })
       return {
         name,
-        level: symbolMatch({ region, zone: key }, currentCount).level || 0,
+        level: symbolMatch({ region }, currentCount).level || 0,
         completeDate,
         remainDays,
       }

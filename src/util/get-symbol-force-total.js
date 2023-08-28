@@ -13,7 +13,7 @@ const getSymbolForceTotal = ({ region, zoneData }) => {
   const { forceBasic, forceUnit } = currentRegion.symbol
   const basic = zoneData.filter((e) => e > 0).length * forceBasic
   const total = zoneData.reduce((d, count) => {
-    const { level } = symbolMatch({ region, zone: 'cernium' }, count) || {
+    const { level } = symbolMatch({ region }, count) || {
       level: 0,
     }
     return d + level * forceUnit
