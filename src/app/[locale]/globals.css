@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@media (max-width: 575px) {
+  .ant-form .ant-form-item .ant-col-xs-24 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .ant-form .ant-form-item .ant-col-xs-18 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .ant-form .ant-form-item .ant-col-xs-16 {
+    flex: 0 0 66.66666667%;
+    max-width: 66.66666667%;
+  }
+  .ant-form .ant-form-item .ant-col-xs-8 {
+    flex: 0 0 33.33333333%;
+    max-width: 33.33333333%;
+  }
+  .ant-form .ant-form-item .ant-col-xs-6 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+    word-break: keep-all;
+    white-space: pre-wrap;
+  }
+  .ant-form .ant-form-item .ant-form-item-label, .ant-form .ant-form-item .ant-form-item-control {
+    flex-basis: auto;
+  }
+  .ant-form .ant-form-item .ant-form-item-label+.ant-form-item-control {
+    padding-left: 8px;
+  }
+}
