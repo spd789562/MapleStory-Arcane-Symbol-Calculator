@@ -1,16 +1,16 @@
 import ForceMapping from '@/mapping/force/arcane';
-import type { SymbolRegionData } from './type';
+import { SymbolRegionData, ArcaneSymbolType } from './type';
 
-enum IncrementMap {
-  vanishingJourney = 8,
-  chuchu = 10,
-  lachelein = 12,
-  arcana = 14,
-  morass = 16,
-  esfera = 18,
-}
+const IncrementMap = {
+  [ArcaneSymbolType.VanishingJourney]: 8,
+  [ArcaneSymbolType.ChuChu]: 10,
+  [ArcaneSymbolType.Lachelein]: 12,
+  [ArcaneSymbolType.Arcana]: 14,
+  [ArcaneSymbolType.Morass]: 16,
+  [ArcaneSymbolType.Esfera]: 18,
+} as const;
 
-const baseCostFormula = (increment: IncrementMap) => (level: number) => {
+const baseCostFormula = (increment: number) => (level: number) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0;
   }
@@ -27,6 +27,7 @@ const baseCostFormula = (increment: IncrementMap) => (level: number) => {
 const ArcaneRiverZone: SymbolRegionData[] = [
   {
     name: 'vanishing_journey',
+    key: ArcaneSymbolType.VanishingJourney,
     extraRegion: 'reverse_city',
     daily: [10, 20],
     pquest: {
@@ -35,11 +36,11 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    key: 'vanishingjourney',
-    costFormula: baseCostFormula(IncrementMap.vanishingJourney),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.VanishingJourney]),
   },
   {
     name: 'chu_chu_island',
+    key: ArcaneSymbolType.ChuChu,
     extraRegion: 'yum_yum_island',
     daily: [10, 20],
     pquest: {
@@ -48,12 +49,11 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    key: 'chuchu',
-    costFormula: baseCostFormula(IncrementMap.chuchu),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.ChuChu]),
   },
   {
     name: 'lachelein',
-    key: 'lachelein',
+    key: ArcaneSymbolType.Lachelein,
     daily: 20,
     pquest: {
       name: 'dream_defender',
@@ -61,11 +61,11 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    costFormula: baseCostFormula(IncrementMap.lachelein),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.Lachelein]),
   },
   {
     name: 'arcana',
-    key: 'arcana',
+    key: ArcaneSymbolType.Arcana,
     daily: 20,
     pquest: {
       name: 'spirit_savior',
@@ -73,10 +73,11 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    costFormula: baseCostFormula(IncrementMap.arcana),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.Arcana]),
   },
   {
     name: 'morass',
+    key: ArcaneSymbolType.Morass,
     daily: 20,
     pquest: {
       name: 'ranheim_defense',
@@ -84,11 +85,11 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    key: 'morass',
-    costFormula: baseCostFormula(IncrementMap.morass),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.Morass]),
   },
   {
     name: 'esfera',
+    key: ArcaneSymbolType.Esfera,
     daily: 20,
     pquest: {
       name: 'esfera_guardian',
@@ -96,8 +97,7 @@ const ArcaneRiverZone: SymbolRegionData[] = [
       count: 45, // 15*3
       doneType: 'weekly',
     },
-    key: 'esfera',
-    costFormula: baseCostFormula(IncrementMap.esfera),
+    costFormula: baseCostFormula(IncrementMap[ArcaneSymbolType.Esfera]),
   },
 ];
 

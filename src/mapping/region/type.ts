@@ -1,6 +1,26 @@
-/**
- * @description symbol party quest data
- */
+export enum SymbolType {
+  Grandis = 'grandis',
+  Arcane = 'arcane',
+}
+
+export enum ArcaneSymbolType {
+  VanishingJourney = 'vanishingjourney',
+  ChuChu = 'chuchu',
+  Lachelein = 'lachelein',
+  Arcana = 'arcana',
+  Morass = 'morass',
+  Esfera = 'esfera',
+}
+
+export enum GrandisSymbolType {
+  Cernium = 'cernium',
+  HotelArcs = 'hotelarcs',
+  Odium = 'odium',
+  ShangriLa = 'shangrila',
+  Arteria = 'arteria',
+  Carcion = 'carcion',
+}
+
 export interface SymbolPartyQuestData {
   /** party quest name */
   name: string;
@@ -22,7 +42,7 @@ export interface SymbolRegionData {
   /** symbol party quest */
   pquest?: SymbolPartyQuestData;
   /** key for mapping or something */
-  key: string;
+  key: ArcaneSymbolType | GrandisSymbolType;
   /** how many cost base on given level */
   costFormula: (level: number) => number;
   /** value might be estimate by me */

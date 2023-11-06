@@ -1,15 +1,16 @@
 import ForceMapping from '@/mapping/force/grandis';
-import type { SymbolRegionData } from './type';
+import { SymbolRegionData, GrandisSymbolType } from './type';
 
-enum IncrementMap {
-  cernium = 13.2,
-  hotelarcs = 15,
-  odium = 16.8,
-  shangrila = 18.6,
-  arteria = 20.4,
-  carcion = 22.2,
-}
-const baseCostFormula = (increment: IncrementMap) => (level: number) => {
+const IncrementMap = {
+  [GrandisSymbolType.Cernium]: 13.2,
+  [GrandisSymbolType.HotelArcs]: 15,
+  [GrandisSymbolType.Odium]: 16.8,
+  [GrandisSymbolType.ShangriLa]: 18.6,
+  [GrandisSymbolType.Arteria]: 20.4,
+  [GrandisSymbolType.Carcion]: 22.2,
+} as const;
+
+const baseCostFormula = (increment: number) => (level: number) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0;
   }
@@ -27,41 +28,41 @@ const GrandisZone: SymbolRegionData[] = [
   {
     name: 'cernium',
     daily: 20,
-    key: 'cernium',
-    costFormula: baseCostFormula(IncrementMap.cernium),
+    key: GrandisSymbolType.Cernium,
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Cernium]),
   },
   {
     name: 'hotel_arcs',
     daily: 10,
-    key: 'hotelarcs',
-    costFormula: baseCostFormula(IncrementMap.hotelarcs),
+    key: GrandisSymbolType.HotelArcs,
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.HotelArcs]),
   },
   {
     name: 'odium',
     daily: 10,
-    key: 'odium',
-    costFormula: baseCostFormula(IncrementMap.odium),
+    key: GrandisSymbolType.Odium,
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Odium]),
   },
   {
     name: 'shangri_la',
     daily: 10,
-    key: 'shangrila',
+    key: GrandisSymbolType.ShangriLa,
     isEstimate: true,
-    costFormula: baseCostFormula(IncrementMap.shangrila),
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.ShangriLa]),
   },
   {
     name: 'arteria',
     daily: 10,
-    key: 'arteria',
+    key: GrandisSymbolType.Arteria,
     isEstimate: true,
-    costFormula: baseCostFormula(IncrementMap.arteria),
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Arteria]),
   },
   {
     name: 'carcion',
     daily: 10,
-    key: 'carcion',
+    key: GrandisSymbolType.Carcion,
     isEstimate: true,
-    costFormula: baseCostFormula(IncrementMap.carcion),
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Carcion]),
   },
 ];
 
