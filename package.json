@@ -30,5 +30,8 @@
     "tailwindcss": "3.3.5",
     "throttle-debounce": "^5.0.0",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/ramda": "^0.29.7"
   }
 }
