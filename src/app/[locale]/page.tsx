@@ -2,11 +2,13 @@ import Layout from 'antd/lib/layout';
 
 import { Footer, Header, Content } from 'antd/lib/layout/layout';
 import BackTop from 'antd/lib/float-button/BackTop';
+import Card from 'antd/lib/card';
 
 import PageHeader from '@/components/Headers/PageHeader';
 import OldVersionLinks from '@/components/OldVersionLinks';
 import { FormStyle } from '@/components/Form/Form';
 import Setting from '@/components/Setting';
+import ToolTabs from '@/components/ToolTabs';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -18,7 +20,12 @@ export default function Home() {
       <Content className="pt-2 px-4 xl:px-0 w-full xl:max-w-header-max xl:mx-auto">
         <OldVersionLinks />
         <FormStyle />
-        <Setting />
+        <Card className="mb-2">
+          <Setting />
+        </Card>
+        <Card className="mb-2">
+          <ToolTabs />
+        </Card>
       </Content>
       <BackTop />
       <Footer className="text-center px-4">
