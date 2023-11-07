@@ -11,17 +11,18 @@ export interface FormItemProps {
   wrapperCol?: ColProps;
   style?: React.CSSProperties;
   children?: React.ReactNode;
+  /** need colon in the end of label */
   withColon?: boolean;
 }
 const FormItem = ({ name, id, label, wrapperCol, style, withColon, children }: FormItemProps) => {
   return (
-    <Row className="ant-form-item" style={style}>
-      <Col className="ant-form-item-label" {...wrapperCol}>
+    <Row className="antd-form-item" style={style}>
+      <Col className="antd-form-item-label" {...wrapperCol}>
         <FormLabel name={name} id={id} label={label} withColon={withColon} />
       </Col>
-      <Col className="ant-form-item-control" {...wrapperCol}>
-        <div className="ant-form-item-control-input">
-          <div className="ant-form-item-control-input-content">{children}</div>
+      <Col className="antd-form-item-control" {...wrapperCol}>
+        <div className="antd-form-item-control-input">
+          <div className="antd-form-item-control-input-content">{children}</div>
         </div>
       </Col>
     </Row>
