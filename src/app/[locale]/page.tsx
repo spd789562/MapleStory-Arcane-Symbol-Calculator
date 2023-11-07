@@ -5,6 +5,8 @@ import BackTop from 'antd/lib/float-button/BackTop';
 
 import PageHeader from '@/components/Headers/PageHeader';
 import OldVersionLinks from '@/components/OldVersionLinks';
+import { FormStyle } from '@/components/Form/Form';
+import Setting from '@/components/Setting';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -15,6 +17,8 @@ export default function Home() {
       </Header>
       <Content className="pt-2 px-4 xl:px-0 w-full xl:max-w-header-max xl:mx-auto">
         <OldVersionLinks />
+        <FormStyle />
+        <Setting />
       </Content>
       <BackTop />
       <Footer className="text-center px-4">
