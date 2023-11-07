@@ -13,7 +13,7 @@ const OldVersionLinks = () => {
         <I18nText id="web_daily_party_version" />
         &nbsp;&gt;
       </Button>
-      <Button href={link_before} target="_blank" className="ml-2">
+      <Button href={link_before} target="_blank" className="mt-2 sm:mt-0 sm:ml-2">
         <I18nText id="web_weekly_party_version" />
         &nbsp;&gt;
       </Button>
