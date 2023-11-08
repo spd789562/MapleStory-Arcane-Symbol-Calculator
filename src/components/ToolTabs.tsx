@@ -1,6 +1,9 @@
 'use client';
 import { useTranslations } from 'next-intl';
 
+import { useAtom } from 'jotai';
+import { tabAtom, TabType } from '@/store/tab';
+
 import Tabs from 'antd/lib/tabs';
 
 import { evolve } from 'ramda';
@@ -13,9 +16,12 @@ const TabItems: { key: string; label: keyof IntlMessages }[] = [
 
 const ToolTabs = () => {
   const t = useTranslations();
-  const handleChange = (value: any) => {};
+  const [tab, setTab] = useAtom(tabAtom);
+  const handleChange = (key: string) => {
+    setTab(key as TabType);
+  };
 
-  return <Tabs defaultActiveKey="arcane" onChange={handleChange} items={TabItems.map(evolve({ label: t }))} />;
+  return <Tabs activeKey={tab} onChange={handleChange} items={TabItems.map(evolve({ label: t }))} />;
 };
 
 export default ToolTabs;

@@ -9,6 +9,7 @@ import OldVersionLinks from '@/components/OldVersionLinks';
 import { FormStyle } from '@/components/Form/Form';
 import Setting from '@/components/Setting';
 import ToolTabs from '@/components/ToolTabs';
+import Tools from '@/components/Tools';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <Card className="mb-2">
           <ToolTabs />
         </Card>
+        <Tools />
       </Content>
       <BackTop />
       <Footer className="text-center px-4">
