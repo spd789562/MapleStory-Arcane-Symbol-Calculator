@@ -1,3 +1,4 @@
+'use client'
 import { atomWithStorage } from 'jotai/utils';
 
 export enum TabType {
