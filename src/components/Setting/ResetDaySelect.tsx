@@ -1,6 +1,8 @@
 'use client';
 import { useTranslations } from 'next-intl';
-// import { useAtom } from 'jotai';
+
+import { useAtom } from 'jotai';
+import { resetDayAtom } from '@/store/settings';
 
 import Select from 'antd/lib/select';
 
@@ -18,8 +20,11 @@ const dayOptions: { value: number; label: keyof IntlMessages }[] = [
 
 const ResetDaySelect = () => {
   const t = useTranslations();
-  const onChange = (value: number) => {};
-  return <Select defaultValue={1} onChange={onChange} options={dayOptions.map(evolve({ label: t }))} />;
+  const [resetDay, setResetDay] = useAtom(resetDayAtom);
+  const onChange = (value: number) => {
+    setResetDay(value);
+  };
+  return <Select value={resetDay} onChange={onChange} options={dayOptions.map(evolve({ label: t }))} />;
 };
 
 export default ResetDaySelect;
