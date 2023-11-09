@@ -13,12 +13,12 @@ const TabToSymbol = {
 };
 
 interface ToolsProps {
-  ArcaneTab?: React.FC<any>;
-  GrandisTab?: React.FC<any>;
-  OtherToolsTab?: React.FC<any>;
-  StatisticBoard?: React.FC<any>;
-  ResultTable?: React.FC<any>;
-  ResultChart?: React.FC<any>;
+  ArcaneTab?: React.ReactNode;
+  GrandisTab?: React.ReactNode;
+  OtherToolsTab?: React.ReactNode;
+  StatisticBoard?: React.ReactNode;
+  ResultTable?: React.ReactNode;
+  ResultChart?: React.ReactNode;
 }
 const Tools = (props: ToolsProps) => {
   const { ArcaneTab, GrandisTab, OtherToolsTab, StatisticBoard, ResultTable, ResultChart } = props;
@@ -27,15 +27,15 @@ const Tools = (props: ToolsProps) => {
   return (
     <>
       <Row gutter={[8, 8]}>
-        {tab === TabType.Arcane && ArcaneTab && <ArcaneTab />}
-        {tab === TabType.Grandis && GrandisTab && <GrandisTab />}
-        {tab === TabType.Other && OtherToolsTab && <OtherToolsTab />}
+        {tab === TabType.Arcane && ArcaneTab}
+        {tab === TabType.Grandis && GrandisTab}
+        {tab === TabType.Other && OtherToolsTab}
       </Row>
       {tab !== TabType.Other && (
         <Col span={24}>
-          {StatisticBoard && <StatisticBoard region={TabToSymbol[tab]} />}
-          {ResultTable && <ResultTable region={TabToSymbol[tab]} />}
-          {ResultChart && <ResultChart region={TabToSymbol[tab]} />}
+          {StatisticBoard}
+          {ResultTable}
+          {ResultChart}
         </Col>
       )}
     </>
