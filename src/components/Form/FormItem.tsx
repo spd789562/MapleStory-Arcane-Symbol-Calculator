@@ -4,6 +4,7 @@ import FormLabel from './FormLabel';
 
 export interface FormItemProps {
   name: string;
+  className?: string;
   /** label i18n key */
   id?: keyof IntlMessages;
   /** label fallback when no i18n key */
@@ -14,9 +15,9 @@ export interface FormItemProps {
   /** need colon in the end of label */
   withColon?: boolean;
 }
-const FormItem = ({ name, id, label, wrapperCol, style, withColon, children }: FormItemProps) => {
+const FormItem = ({ name, className, id, label, wrapperCol, style, withColon, children }: FormItemProps) => {
   return (
-    <Row className="antd-form-item" style={style}>
+    <Row className={`antd-form-item ${className}`} style={style}>
       <Col className="antd-form-item-label" {...wrapperCol}>
         <FormLabel name={name} id={id} label={label} withColon={withColon} />
       </Col>

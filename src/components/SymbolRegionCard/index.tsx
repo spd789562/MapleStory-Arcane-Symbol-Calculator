@@ -6,6 +6,11 @@ import I18nText from '@/components/I18nText';
 import I18nTooltip from '@/components/I18nTooltip';
 
 import SymbolRangeSync from '@/components/SymbolRegionCard/SymbolRangeSync';
+import DailyQuestTooltip from './DailyQuestTooltip';
+import DailyQuestSlider from './DailyQuestSlider';
+import DailyQuestSwitch from './DailyQuestSwitch';
+import PartyQuestTooltip from './PartyQuestTooltop';
+import PartyQuestSwitch from './PartyQuestSwitch';
 
 /* mapping */
 import SymbolRegionData, { SymbolType } from '@/mapping/region';
@@ -48,11 +53,24 @@ const SymbolRegionCard: React.FC<SymbolRegionCardProps> = ({ region, index }) =>
             <I18nText id="daily_symbol_source" />:
           </h4>
         </Col>
-        <Col span={extraRegion ? 24 : 12} sm={12}>
-          {/* daily quest switch */}
-          {/* daily quest silder */}
-        </Col>
-        {pquest && <Col span={12}>{/* party quest switch */}</Col>}
+        <DailyQuestTooltip extraRegion={extraRegion} count={daily}>
+          {extraRegion ? (
+            <Col span={24} sm={12}>
+              <DailyQuestSlider region={key} counts={daily as number[]} />
+            </Col>
+          ) : (
+            <Col span={12}>
+              <DailyQuestSwitch region={key} count={daily as number} />
+            </Col>
+          )}
+        </DailyQuestTooltip>
+        {pquest && (
+          <Col span={12}>
+            <PartyQuestTooltip partyQuest={pquest}>
+              <PartyQuestSwitch region={key} count={pquest.count} />
+            </PartyQuestTooltip>
+          </Col>
+        )}
       </Row>
     </Card>
   );
