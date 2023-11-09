@@ -17,7 +17,7 @@ interface MetadataParams {
 }
 export async function generateMetadata({ params: { locale } }: MetadataParams): Promise<Metadata> {
   const _locale = locale || 'en';
-  let messages = (await import(`@/i18n/${_locale || 'en'}/index.json`)).default;
+  const messages = (await import(`@/i18n/${_locale || 'en'}/index.json`)).default;
   const t = createTranslator({ locale, messages });
 
   return {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params: { locale } }: MetadataParams): 
 }
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'zh_tw' }, { locale: 'zh_cn' }];
+  return [{ locale: 'en' }, { locale: 'zh-tw' }, { locale: 'zh-cn' }];
 }
 
 interface LocaleLayoutProps {

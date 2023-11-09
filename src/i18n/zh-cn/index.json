@@ -3,9 +3,9 @@
 
   "seo_desc": "冒险岛神秘徽章(神秘力量)计算器，支援原初徽章(原初之力)，方便的输入神秘徽章每日可获得数量、是否完成组队任务，并完整计算出每个神秘徽章每级的完成日期及花费",
 
-  "alt_symbol": "{{name}}徽章等级",
-  "alt_daily": "{{name}}每日任务",
-  "alt_coin": "{{name}}硬币数",
+  "alt_symbol": "{name}徽章等级",
+  "alt_daily": "{name}每日任务",
+  "alt_coin": "{name}硬币数",
   "alt_extra": "每日额外获取数",
 
   "setting_yes": "是",
@@ -26,12 +26,12 @@
   "reset": "清除资料",
   "comma": "，",
   "daily_symbol_source": "每日徽章获取来源",
-  "daily_quest_tips": "每日任务: 此地区每日可获得 {{count}} 个",
-  "daily_quest_tips_extra": "，到达{{region}}后可额外获得{{count}}个",
-  "party_quest_tips": "{{name}}: 最多每日可获得 {{count}} 个",
-  "party_quest_weekly_tips": "{{name}}: 最多每周可获得 {{count}} 个",
-  "party_quest_tips_exchange": ", {{unit}} 个可兑换 1 个徽章",
-  "party_quest_tips_exchange_basic": "{{name}}: 最多可获得 {{dailyMax}} 个, {{unit}} 个可兑换 1 个徽章, 已自动计入雕像对话保底 {{basic}} 个",
+  "daily_quest_tips": "每日任务: 此地区每日可获得 {count} 个",
+  "daily_quest_tips_extra": "，到达{region}后可额外获得{count}个",
+  "party_quest_tips": "{name}: 最多每日可获得 {count} 个",
+  "party_quest_weekly_tips": "{name}: 最多每周可获得 {count} 个",
+  "party_quest_tips_exchange": ", {unit} 个可兑换 1 个徽章",
+  "party_quest_tips_exchange_basic": "{name}: 最多可获得 {dailyMax} 个, {unit} 个可兑换 1 个徽章, 已自动计入雕像对话保底 {basic} 个",
   "party_quest": "组队任务",
   "extra_symbol": "选择徽章，预览套用后数量",
   "extra_symbol_add": "套用",
@@ -45,8 +45,8 @@
   "complete_date_never": "永远完成不了",
   "complete_date_none": "无",
   "all_complete_date": "全满完成日期(天数)",
-  "complete_date_tips_last": "{{area}}将最后完成",
-  "complete_date_tips": "不计入{{areas}}，因为你不解任务",
+  "complete_date_tips_last": "{area}将最后完成",
+  "complete_date_tips": "不计入{areas}，因为你不解任务",
   "complete_date": "完成日期(天数)",
   "complete_days": "天",
   "stat_increase": "属性加成量",
@@ -54,7 +54,7 @@
   "authentic_force": "原初之力",
   "table_symbol_max": "已满级",
   "table_symbol_none": "未获得此徽章",
-  "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
+  "table_symbol_never": "你每天都不拿，就卡在 {level} 等吧",
   "table_zone": "地区",
   "table_symbol_level": "等级",
   "tabel_total_symbol": "累计徽章",
@@ -89,6 +89,11 @@
   "arteria": "阿尔泰利亚(暂译)",
   "carcion": "卡尔西温(暂译)",
 
+  "vanishingjourney": "消亡旅途",
+  "chuchu": "啾啾村",
+  "hotelarcs": "亚克斯旅馆",
+  "shangrila": "香格里拉(暂译)",
+
   "is_estimated": "(预估值)",
 
   "option_current": "当前",
@@ -116,7 +121,7 @@
   "web_weekly_party_20th_version": "每周组队任务版本",
   
   "page_not_found": "无此页面",
-  "error_with_status": "A {{statusCode}} error occurred on server",
+  "error_with_status": "A {statusCode} error occurred on server",
   "error_without_status": "服务器本身发生了错误"
 }
 

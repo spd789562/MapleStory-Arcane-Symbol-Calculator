@@ -2,7 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 
 export default createMiddleware({
   // A list of all locales that are supported
-  locales: ['en', 'zh_tw', 'zh_cn'],
+  locales: ['en', 'zh-tw', 'zh-cn'],
 
   // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
   defaultLocale: 'en',

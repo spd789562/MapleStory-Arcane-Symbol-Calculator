@@ -3,9 +3,9 @@
 
   "seo_desc": "楓之谷秘法符文(ARC)計算機，支援真實符文(AUT)，方便的輸入符文每日可獲得數量、是否完成組隊任務，並完整計算出每個符文每級的完成日期及花費",
   
-  "alt_symbol": "{{name}}符文等級",
-  "alt_daily": "{{name}}每日任務",
-  "alt_coin": "{{name}}硬幣數",
+  "alt_symbol": "{name}符文等級",
+  "alt_daily": "{name}每日任務",
+  "alt_coin": "{name}硬幣數",
   "alt_extra": "每日額外獲取數",
 
   "setting_yes": "是",
@@ -26,12 +26,12 @@
   "reset": "清除資料",
   "comma": "，",
   "daily_symbol_source": "每日符文獲取來源",
-  "daily_quest_tips": "每日任務: 此地區每日可獲得 {{count}} 個",
-  "daily_quest_tips_extra": "，到達{{region}}後可額外獲得{{count}}個",
-  "party_quest_tips": "{{name}}: 最多每日可獲得 {{count}} 個",
-  "party_quest_weekly_tips": "{{name}}: 最多每周可獲得 {{count}} 個",
-  "party_quest_tips_exchange": ", {{unit}} 個可兌換 1 個符文",
-  "party_quest_tips_exchange_basic": "{{name}}: 最多可獲得 {{dailyMax}} 個, {{unit}} 個可兌換 1 個符文, 已自動計入雕像對話保底 {{basic}} 個",
+  "daily_quest_tips": "每日任務: 此地區每日可獲得 {count} 個",
+  "daily_quest_tips_extra": "，到達{region}後可額外獲得{count}個",
+  "party_quest_tips": "{name}: 最多每日可獲得 {count} 個",
+  "party_quest_weekly_tips": "{name}: 最多每周可獲得 {count} 個",
+  "party_quest_tips_exchange": ", {unit} 個可兌換 1 個符文",
+  "party_quest_tips_exchange_basic": "{name}: 最多可獲得 {dailyMax} 個, {unit} 個可兌換 1 個符文, 已自動計入雕像對話保底 {basic} 個",
   "party_quest": "組隊任務",
   "extra_symbol": "選擇符文，預覽套用後數量",
   "extra_symbol_add": "套用",
@@ -45,8 +45,8 @@
   "complete_date_never": "永遠完成不了",
   "complete_date_none": "無",
   "all_complete_date": "全滿完成日期(天數)",
-  "complete_date_tips_last": "{{area}}將最後完成",
-  "complete_date_tips": "不計入{{areas}}，因為你不解任務",
+  "complete_date_tips_last": "{area}將最後完成",
+  "complete_date_tips": "不計入{areas}，因為你不解任務",
   "complete_date": "完成日期(天數)",
   "complete_days": "天",
   "stat_increase": "屬性加成量",
@@ -54,7 +54,7 @@
   "authentic_force": "AUT",
   "table_symbol_max": "已滿級",
   "table_symbol_none": "未獲得此符文",
-  "table_symbol_never": "你每天都不拿，就卡在 {{level}} 等吧",
+  "table_symbol_never": "你每天都不拿，就卡在 {level} 等吧",
   "table_zone": "地區",
   "table_symbol_level": "等級",
   "tabel_total_symbol": "累計符文",
@@ -89,6 +89,11 @@
   "arteria": "阿爾泰利亞(暫譯)",
   "carcion": "卡爾西溫(暫譯)",
 
+  "vanishingjourney": "消逝的旅途",
+  "chuchu": "啾啾愛爾蘭",
+  "hotelarcs": "阿爾克斯",
+  "shangrila": "香格里拉(暫譯)",
+
   "is_estimated": "(預估值)",
   
   "option_current": "當前",
@@ -116,7 +121,7 @@
   "web_weekly_party_20th_version": "每周組隊任務版本",
 
   "page_not_found": "無此頁面",
-  "error_with_status": "A {{statusCode}} error occurred on server",
+  "error_with_status": "A {statusCode} error occurred on server",
   "error_without_status": "An error occurred on the server"
 }
 

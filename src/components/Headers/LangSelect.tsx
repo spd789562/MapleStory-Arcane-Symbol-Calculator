@@ -6,8 +6,8 @@ import Select from 'antd/lib/select';
 
 const langOptions = [
   { value: 'en', label: 'English' },
-  { value: 'zh_tw', label: '繁體中文' },
-  { value: 'zh_cn', label: '简体中文' },
+  { value: 'zh-tw', label: '繁體中文' },
+  { value: 'zh-cn', label: '简体中文' },
 ];
 
 const LangSelect = () => {
