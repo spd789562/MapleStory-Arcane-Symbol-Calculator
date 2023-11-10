@@ -11,16 +11,20 @@ import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
 interface SelectableApplyButtonProps {
   name: ArcaneSymbolType | GrandisSymbolType;
 }
-const SelectableApplyButton: React.FC<SelectableApplyButtonProps> = ({ name }) => {
+const SelectableApplyButton: React.FC<SelectableApplyButtonProps> = ({
+  name,
+}) => {
   const t = useTranslations();
-  const [disabled, addExtraToCount] = useAtom(symbolAtomMap[name].addExtraToCount);
+  const [disabled, addExtraToCount] = useAtom(
+    symbolAtomMap[name].addExtraToCount,
+  );
 
   const handleClick = () => {
     addExtraToCount();
   };
 
   return (
-    <Button onClick={handleClick} disabled={disabled}>
+    <Button block onClick={handleClick} disabled={disabled}>
       {t('extra_symbol_add')}
     </Button>
   );
