@@ -72,12 +72,22 @@ const createSymbolStateAtoms = (symbolType: ArcaneSymbolType | GrandisSymbolType
     },
   );
 
+  const addExtraToCount = atom(
+    /** is disabled */
+    (get) => !get(extraAtom),
+    (get, set) => {
+      set(countAtom, get(extraAtom) + get(countAtom));
+      set(extraAtom, 0);
+    },
+  );
+
   return {
     symbolAtom,
     questAtom,
     countAtom,
     extraAtom,
     partyAtom,
+    addExtraToCount,
   };
 };
 

@@ -16,7 +16,7 @@ const SymbolAvatar: React.FC<SymbolAvatarProps> = ({ region, name }) => {
     <Avatar
       src={`/${region}-symbol-${name}.png`}
       alt={t('alt_symbol', { name: isDefault ? 'default' : t(name) })}
-      style={{ cursor: 'pointer' }}
+      className='cursor-pointer'
     />
   );
 };

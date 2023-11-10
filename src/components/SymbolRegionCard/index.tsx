@@ -5,12 +5,17 @@ import Card from 'antd/lib/card';
 import I18nText from '@/components/I18nText';
 import I18nTooltip from '@/components/I18nTooltip';
 
-import SymbolRangeSync from '@/components/SymbolRegionCard/SymbolRangeSync';
+import FormItem from '@/components/Form/FormItem';
+import SymbolRangeSync from './SymbolRangeSync';
 import DailyQuestTooltip from './DailyQuestTooltip';
 import DailyQuestSlider from './DailyQuestSlider';
 import DailyQuestSwitch from './DailyQuestSwitch';
 import PartyQuestTooltip from './PartyQuestTooltop';
 import PartyQuestSwitch from './PartyQuestSwitch';
+import SelectableInput from './SelectableInput';
+import SelectableResultPreview from './SelectableResultPreview';
+import SelectableApplyButton from './SelectableApplyButton';
+import SelectableAvatar from './SelectableAvatar';
 
 /* mapping */
 import SymbolRegionData, { SymbolType } from '@/mapping/region';
@@ -39,12 +44,14 @@ const SymbolRegionCard: React.FC<SymbolRegionCardProps> = ({ region, index }) =>
           <Row>
             <Col flex="none">
               <I18nTooltip id="extra_symbol" className="flex items-center">
-                {/* Selectable input */}
-                {/* Selectable level preview */}
+                <FormItem name="extra" className="inline-flex mb-0" label={<SelectableAvatar region={region} />}>
+                  <SelectableInput name={key} />
+                </FormItem>
+                <SelectableResultPreview region={region} name={key} />
               </I18nTooltip>
             </Col>
             <Col xs={24} sm={5} className="ml-auto">
-              {/* Selectable apply button */}
+              <SelectableApplyButton name={key} />
             </Col>
           </Row>
         </Col>

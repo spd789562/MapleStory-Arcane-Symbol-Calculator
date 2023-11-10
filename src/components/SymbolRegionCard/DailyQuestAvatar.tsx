@@ -10,7 +10,7 @@ const SymbolAvatar: React.FC<SymbolAvatarProps> = ({ name }) => {
   const t = useTranslations();
 
   return (
-    <Avatar shape="square" src="/daily.png" alt={t('alt_daily', { name: t(name) })} style={{ cursor: 'pointer' }} />
+    <Avatar shape="square" src="/daily.png" alt={t('alt_daily', { name: t(name) })} className="cursor-pointer" />
   );
 };
 

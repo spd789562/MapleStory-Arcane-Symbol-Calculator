@@ -18,7 +18,7 @@ export interface FormItemProps {
 const FormItem = ({ name, className, id, label, wrapperCol, style, withColon, children }: FormItemProps) => {
   return (
     <Row className={`antd-form-item ${className}`} style={style}>
-      <Col className="antd-form-item-label" {...wrapperCol}>
+      <Col className="antd-form-item-label">
         <FormLabel name={name} id={id} label={label} withColon={withColon} />
       </Col>
       <Col className="antd-form-item-control" {...wrapperCol}>
