@@ -2,7 +2,7 @@
 import { atom, useAtomValue } from 'jotai';
 
 import { symbolTypeAtom } from '@/store/tab';
-import { symbolLevelAndHoldSelector } from '@/store/selector';
+import { forceProgressSelector } from '@/store/selector';
 import { hyperStatAtom, guildSkillAtom } from '@/store/settings';
 
 import Statistic from 'antd/lib/statistic/Statistic';
@@ -19,18 +19,8 @@ const forceInfoSelector = atom((get) => {
     return { currentForce: 0, availableForce: 0, symbolType: '' };
 
   const CurrentSymbolInfo = SymbolInfo[symbolType];
-  const { holdCount: symbolHoldCount, levelTotal: symbolLevelTotal } = get(
-    symbolLevelAndHoldSelector,
-  );
 
-  const currentForce =
-    symbolLevelTotal * CurrentSymbolInfo.symbol.forceUnit +
-    symbolHoldCount * CurrentSymbolInfo.symbol.forceBasic;
-  /* max force per symbol give */
-  const symbolMaxForce =
-    CurrentSymbolInfo.symbol.maxLevel * CurrentSymbolInfo.symbol.forceUnit +
-    CurrentSymbolInfo.symbol.forceBasic;
-  const availableForce = symbolHoldCount * symbolMaxForce;
+  const { currentForce, availableForce } = get(forceProgressSelector);
 
   let additionalForce = 0;
 

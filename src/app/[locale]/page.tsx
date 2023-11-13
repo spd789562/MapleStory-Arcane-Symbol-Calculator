@@ -10,7 +10,11 @@ import { FormStyle } from '@/components/Form/Form';
 import Setting from '@/components/Setting';
 import ToolTabs from '@/components/ToolTabs';
 import Tools from '@/components/Tools';
-import { ArcaneSymbolRegion, GrandisSymbolRegion } from '@/components/Tools/SymbolTools';
+import {
+  ArcaneSymbolRegion,
+  GrandisSymbolRegion,
+} from '@/components/Tools/SymbolTools';
+import StatisticBoard from '@/components/StatisticBoard';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -28,7 +32,11 @@ export default function Home() {
         <Card className="mb-2">
           <ToolTabs />
         </Card>
-        <Tools ArcaneTab={<ArcaneSymbolRegion />} GrandisTab={<GrandisSymbolRegion />} />
+        <Tools
+          ArcaneTab={<ArcaneSymbolRegion />}
+          GrandisTab={<GrandisSymbolRegion />}
+          StatisticBoard={<StatisticBoard />}
+        />
       </Content>
       <BackTop />
       <Footer className="text-center px-4">
