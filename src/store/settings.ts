@@ -4,7 +4,7 @@ import { atomWithStorage } from 'jotai/utils';
 import { withImmer } from 'jotai-immer';
 
 export interface Settings {
-  role: 'general' | 'xenon' | 'demon_avenger';
+  role: number;
   /** weekly party quest reset day */
   resetDay: number;
   /** current week is done */
@@ -13,7 +13,7 @@ export interface Settings {
   guildSkill: number;
 }
 const _settingsAtom = atomWithStorage<Settings>('ms_symbol_calc_Settings', {
-  role: 'general',
+  role: 0,
   resetDay: 3, // default reset day is Wednesday
   currentWeekIsDone: false,
   hyperStat: 0,
@@ -49,7 +49,7 @@ export const currentWeekIsDoneAtom = atom(
 );
 
 export const hyperStatAtom = atom(
-  (get) => get(settingsAtom).hyperStat,
+  (get) => get(settingsAtom).hyperStat || 0,
   (_, set, hyperStat: number) => {
     set(settingsAtom, (draft) => {
       draft.hyperStat = hyperStat;
@@ -58,7 +58,7 @@ export const hyperStatAtom = atom(
 );
 
 export const guildSkillAtom = atom(
-  (get) => get(settingsAtom).guildSkill,
+  (get) => get(settingsAtom).guildSkill || 0,
   (_, set, guildSkill: number) => {
     set(settingsAtom, (draft) => {
       draft.guildSkill = guildSkill;

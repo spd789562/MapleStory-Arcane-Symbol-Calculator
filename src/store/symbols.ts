@@ -31,7 +31,7 @@ const _symbolsAtom = atomWithStorage<Record<ArcaneSymbolType | GrandisSymbolType
   [GrandisSymbolType.Arteria]: {},
   [GrandisSymbolType.Carcion]: {},
 });
-const symbolsAtom = withImmer(_symbolsAtom);
+export const symbolsAtom = withImmer(_symbolsAtom);
 
 const createSymbolStateAtoms = (symbolType: ArcaneSymbolType | GrandisSymbolType) => {
   const symbolAtom = atom((get) => get(symbolsAtom)[symbolType] || {});

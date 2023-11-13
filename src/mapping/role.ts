@@ -1,8 +1,14 @@
 interface Role {
   /** role name ex: general, xenon */
-  name: string;
+  name: RoleType;
   /** role stat unit, for calcuate stat */
   unit: number;
+}
+
+export enum RoleType {
+  General = 'general',
+  Xenon = 'xenon',
+  DemonAvenger = 'demon_avenger',
 }
 
 /**
@@ -11,15 +17,15 @@ interface Role {
  */
 const RoleMapping: Role[] = [
   {
-    name: 'general',
+    name: RoleType.General,
     unit: 100,
   },
   {
-    name: 'xenon',
+    name: RoleType.Xenon,
     unit: 48,
   },
   {
-    name: 'demon_avenger',
+    name: RoleType.DemonAvenger,
     unit: 2100,
   },
 ];
