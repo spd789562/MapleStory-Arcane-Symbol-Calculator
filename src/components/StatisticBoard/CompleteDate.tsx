@@ -10,7 +10,11 @@ import { forceProgressSelector } from '@/store/selector';
 import Statistic from 'antd/lib/statistic/Statistic';
 import Tooltip from 'antd/lib/tooltip';
 
-import calcToTargetLevelData from '@/util/calcToTargetLevelData';
+import {
+  calcToTargetLevelData,
+  getDailyQuestCount,
+  getPartyQuestCountByType,
+} from '@/util/calcToTargetLevelData';
 
 import SymbolRegion from '@/mapping/region';
 import SymbolInfo from '@/mapping/force';
@@ -46,20 +50,17 @@ const completeDateSelector = atom((get) => {
     .filter(({ currentCount }) => currentCount > 0)
     .map(
       ({ name, key, daily, pquest, currentCount, dailyQuest, dailyParty }) => {
-        const dailyQuestCount = dailyQuest
-          ? typeof daily === 'number'
-            ? daily
-            : daily[(dailyQuest as number) - 1]
-          : 0;
-        // has party quest
-        const dailyPartyQuestCount =
-          dailyParty && pquest && pquest.doneType === 'daily'
-            ? pquest.count
-            : 0;
-        const weeklyPartyQuestCount =
-          dailyParty && pquest && pquest.doneType === 'weekly'
-            ? pquest.count
-            : 0;
+        const dailyQuestCount = getDailyQuestCount(daily, dailyQuest);
+        const dailyPartyQuestCount = getPartyQuestCountByType(
+          pquest,
+          dailyParty,
+          'daily',
+        );
+        const weeklyPartyQuestCount = getPartyQuestCountByType(
+          pquest,
+          dailyParty,
+          'weekly',
+        );
 
         const dailyTotalCount = dailyQuestCount + dailyPartyQuestCount;
         const { completeDate, remainDays } = calcToTargetLevelData({

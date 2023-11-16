@@ -2,6 +2,7 @@ import SymbolRegionInfo, {
   SymbolType,
   ArcaneSymbolType,
   GrandisSymbolType,
+  SymbolRegionData,
 } from '@/mapping/region';
 import SymbolLevelInfo from '@/mapping/symbol';
 
@@ -14,7 +15,7 @@ import { propEq } from 'ramda';
 
 dayjs.extend(isoWeek);
 
-interface CalcToTargetLevelDataParam {
+export interface CalcToTargetLevelDataParam {
   region: SymbolType;
   key: ArcaneSymbolType | GrandisSymbolType;
   /** target symbol level */
@@ -31,7 +32,7 @@ interface CalcToTargetLevelDataParam {
   currentWeekIsDone: boolean;
 }
 
-interface ToTargetLevelData {
+export interface ToTargetLevelData {
   key: ArcaneSymbolType | GrandisSymbolType;
   /** target symbol level */
   level: number;
@@ -131,5 +132,27 @@ function calcToTargetLevelData({
     totalCost: numberFormat(totalCost),
   };
 }
+
+function getDailyQuestCount(
+  daily: SymbolRegionData['daily'],
+  dailyQuestIsDone: boolean | number,
+) {
+  return dailyQuestIsDone
+    ? typeof daily === 'number'
+      ? daily
+      : daily[(dailyQuestIsDone as number) - 1]
+    : 0;
+}
+function getPartyQuestCountByType(
+  partyQuest: SymbolRegionData['pquest'],
+  partyQuestIsDone: boolean,
+  doneType: 'daily' | 'weekly',
+) {
+  return partyQuestIsDone && partyQuest && partyQuest.doneType === doneType
+    ? partyQuest.count
+    : 0;
+}
+
+export { calcToTargetLevelData, getDailyQuestCount, getPartyQuestCountByType };
 
 export default calcToTargetLevelData;
