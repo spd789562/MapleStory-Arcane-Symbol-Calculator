@@ -2,12 +2,25 @@ import { atom } from 'jotai';
 
 import { symbolsAtom } from './symbols';
 import { symbolTypeAtom } from './tab';
+import {
+  resetDayAtom,
+  currentWeekIsDoneAtom,
+  hyperStatAtom,
+  guildSkillAtom,
+} from './settings';
 
 import SymbolInfo from '@/mapping/force';
-import { SymbolTypeMapping } from '@/mapping/region';
+import SymbolLevelInfo from '@/mapping/symbol';
+import SymbolRegionInfo, { SymbolTypeMapping } from '@/mapping/region';
 
 import { path, sum } from 'ramda';
 import symbolMatch from '@/util/symbol-match';
+import {
+  calcToTargetLevelData,
+  getDailyQuestCount,
+  getPartyQuestCountByType,
+  type ToTargetLevelData,
+} from '@/util/calcToTargetLevelData';
 
 export const symbolLevelsSelector = atom((get) => {
   const symbolType = get(symbolTypeAtom);
@@ -68,4 +81,114 @@ export const forceProgressSelector = atom((get) => {
     currentForce,
     availableForce,
   };
+});
+
+export const additionalForceSelector = atom((get) => {
+  const symbolType = get(symbolTypeAtom);
+  if (!symbolType) return 0;
+
+  const CurrentSymbolInfo = SymbolInfo[symbolType];
+
+  let additionalForce = 0;
+
+  if (CurrentSymbolInfo.hyper) {
+    const hyperStatLevel = get(hyperStatAtom);
+    additionalForce += CurrentSymbolInfo.hyper.formula(hyperStatLevel) || 0;
+  }
+
+  if (CurrentSymbolInfo.guild) {
+    const guildSkillLevel = get(guildSkillAtom);
+    additionalForce += CurrentSymbolInfo.guild.formula(guildSkillLevel) || 0;
+  }
+
+  return additionalForce;
+});
+
+export interface SymbolProgressTableChildData extends ToTargetLevelData {
+  _key: string;
+}
+export interface SymbolProgressTableRowData extends ToTargetLevelData {
+  _key: string;
+  name: string;
+  dailyTotalCount: number;
+  weeklyCount: number;
+  currentCount: number;
+  children?: SymbolProgressTableChildData[];
+}
+
+export const symbolProgressTableSelector = atom((get) => {
+  const symbolType = get(symbolTypeAtom);
+  if (!symbolType) return null;
+
+  const resetDay = get(resetDayAtom);
+  const currentWeekIsDone = get(currentWeekIsDoneAtom);
+  const symbols = get(symbolsAtom);
+
+  const SymbolMaxLevel = SymbolInfo[symbolType].symbol.maxLevel;
+  const CurrentSymbolRegionInfo = SymbolRegionInfo[symbolType];
+  const CurrentSymbolLevelInfo = SymbolLevelInfo[symbolType];
+
+  const tableData = CurrentSymbolRegionInfo.map((regionData) => ({
+    ...regionData,
+    currentCount: symbols[regionData.key].count || 0,
+    dailyQuest: symbols[regionData.key].quest || false,
+    dailyParty: symbols[regionData.key].party || false,
+  }))
+    .filter(({ currentCount }) => currentCount > 0)
+    .map((regionData) => {
+      const { name, key, daily, pquest, currentCount, dailyQuest, dailyParty } =
+        regionData;
+      const dailyQuestCount = getDailyQuestCount(daily, dailyQuest);
+      const dailyPartyQuestCount = getPartyQuestCountByType(
+        pquest,
+        dailyParty,
+        'daily',
+      );
+      const weeklyPartyQuestCount = getPartyQuestCountByType(
+        pquest,
+        dailyParty,
+        'weekly',
+      );
+
+      const dailyTotalCount = dailyQuestCount + dailyPartyQuestCount;
+
+      const tableCommonData = {
+        key,
+        currentCount,
+        dailyTotalCount,
+        currentWeekIsDone,
+        region: symbolType,
+        weeklyCount: weeklyPartyQuestCount,
+        weekResetDay: resetDay,
+      };
+
+      const subTableData: SymbolProgressTableChildData[] =
+        (dailyTotalCount > 0 || weeklyPartyQuestCount > 0) && currentCount > 0
+          ? CurrentSymbolLevelInfo.filter(({ stack }) => {
+              return currentCount < stack;
+            })
+              .map(({ level }) =>
+                calcToTargetLevelData({
+                  ...tableCommonData,
+                  level,
+                }),
+              )
+              .map((data) => ({ ...data, _key: `${key}-${data.level}` }))
+          : ([] as SymbolProgressTableChildData[]);
+
+      return {
+        ...calcToTargetLevelData({
+          ...tableCommonData,
+          level: SymbolMaxLevel,
+        }),
+        _key: key as string,
+        dailyTotalCount,
+        weeklyCount: weeklyPartyQuestCount,
+        currentCount,
+        name,
+        ...(subTableData.length ? { children: subTableData } : {}),
+      };
+    });
+
+  return tableData as SymbolProgressTableRowData[];
 });

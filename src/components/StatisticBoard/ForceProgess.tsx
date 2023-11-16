@@ -2,13 +2,14 @@
 import { atom, useAtomValue } from 'jotai';
 
 import { symbolTypeAtom } from '@/store/tab';
-import { forceProgressSelector } from '@/store/selector';
-import { hyperStatAtom, guildSkillAtom } from '@/store/settings';
+import {
+  additionalForceSelector,
+  forceProgressSelector,
+} from '@/store/selector';
 
 import Statistic from 'antd/lib/statistic/Statistic';
 import I18nText from '@/components/I18nText';
 
-import SymbolInfo from '@/mapping/force';
 import { SymbolType } from '@/mapping/region';
 
 import numberFormat from '@/util/numberFormat';
@@ -18,21 +19,8 @@ const forceInfoSelector = atom((get) => {
   if (!symbolType)
     return { currentForce: 0, availableForce: 0, symbolType: '' };
 
-  const CurrentSymbolInfo = SymbolInfo[symbolType];
-
   const { currentForce, availableForce } = get(forceProgressSelector);
-
-  let additionalForce = 0;
-
-  if (CurrentSymbolInfo.hyper) {
-    const hyperStatLevel = get(hyperStatAtom);
-    additionalForce += CurrentSymbolInfo.hyper.formula(hyperStatLevel) || 0;
-  }
-
-  if (CurrentSymbolInfo.guild) {
-    const guildSkillLevel = get(guildSkillAtom);
-    additionalForce += CurrentSymbolInfo.guild.formula(guildSkillLevel) || 0;
-  }
+  const additionalForce = get(additionalForceSelector);
 
   return {
     currentForce: currentForce + additionalForce,
@@ -63,7 +51,6 @@ const ForceProgress: React.FC = () => {
       value={numberFormat(currentForce)}
       suffix={`/${numberFormat(availableForce)}`}
       precision={0}
-      valueStyle={{ color: '#3f8600' }}
     />
   );
 };
