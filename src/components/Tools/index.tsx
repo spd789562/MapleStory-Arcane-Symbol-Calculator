@@ -1,16 +1,10 @@
 'use client';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
+import ChartCard from './ChartCard';
 
 import { useAtomValue } from 'jotai';
 import { tabAtom, TabType } from '@/store/tab';
-
-import { SymbolType } from '@/mapping/region';
-
-const TabToSymbol = {
-  [TabType.Arcane]: SymbolType.Arcane,
-  [TabType.Grandis]: SymbolType.Grandis,
-};
 
 interface ToolsProps {
   ArcaneTab?: React.ReactNode;
@@ -21,7 +15,14 @@ interface ToolsProps {
   ResultChart?: React.ReactNode;
 }
 const Tools = (props: ToolsProps) => {
-  const { ArcaneTab, GrandisTab, OtherToolsTab, StatisticBoard, ResultTable, ResultChart } = props;
+  const {
+    ArcaneTab,
+    GrandisTab,
+    OtherToolsTab,
+    StatisticBoard,
+    ResultTable,
+    ResultChart,
+  } = props;
   const tab = useAtomValue(tabAtom);
 
   return (
@@ -35,7 +36,7 @@ const Tools = (props: ToolsProps) => {
         <Col span={24}>
           {StatisticBoard}
           {ResultTable}
-          {ResultChart}
+          <ChartCard>{ResultChart}</ChartCard>
         </Col>
       )}
     </>

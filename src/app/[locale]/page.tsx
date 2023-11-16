@@ -15,6 +15,8 @@ import {
   GrandisSymbolRegion,
 } from '@/components/Tools/SymbolTools';
 import StatisticBoard from '@/components/StatisticBoard';
+import ResultTable from '@/components/Result/Table';
+import ResultChart from '@/components/Result/Chart';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -36,6 +38,8 @@ export default function Home() {
           ArcaneTab={<ArcaneSymbolRegion />}
           GrandisTab={<GrandisSymbolRegion />}
           StatisticBoard={<StatisticBoard />}
+          ResultTable={<ResultTable />}
+          ResultChart={<ResultChart />}
         />
       </Content>
       <BackTop />
