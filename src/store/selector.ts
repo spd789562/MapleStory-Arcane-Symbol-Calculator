@@ -83,25 +83,34 @@ export const forceProgressSelector = atom((get) => {
   };
 });
 
-export const additionalForceSelector = atom((get) => {
+export const hyperStatForceSelector = atom((get) => {
   const symbolType = get(symbolTypeAtom);
   if (!symbolType) return 0;
 
   const CurrentSymbolInfo = SymbolInfo[symbolType];
 
-  let additionalForce = 0;
-
   if (CurrentSymbolInfo.hyper) {
     const hyperStatLevel = get(hyperStatAtom);
-    additionalForce += CurrentSymbolInfo.hyper.formula(hyperStatLevel) || 0;
+    return CurrentSymbolInfo.hyper.formula(hyperStatLevel) || 0;
   }
+  return 0;
+});
+
+export const guildSkillForceSelector = atom((get) => {
+  const symbolType = get(symbolTypeAtom);
+  if (!symbolType) return 0;
+
+  const CurrentSymbolInfo = SymbolInfo[symbolType];
 
   if (CurrentSymbolInfo.guild) {
     const guildSkillLevel = get(guildSkillAtom);
-    additionalForce += CurrentSymbolInfo.guild.formula(guildSkillLevel) || 0;
+    return CurrentSymbolInfo.guild.formula(guildSkillLevel) || 0;
   }
+  return 0;
+});
 
-  return additionalForce;
+export const additionalForceSelector = atom((get) => {
+  return get(hyperStatForceSelector) + get(guildSkillForceSelector);
 });
 
 export interface SymbolProgressTableChildData extends ToTargetLevelData {

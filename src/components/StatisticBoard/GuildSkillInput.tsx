@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { guildSkillAtom } from '@/store/settings';
 
+import Space from 'antd/lib/space';
 import InputNumber from 'antd/lib/input-number';
 
 import SymbolInfo from '@/mapping/force';
@@ -21,20 +22,26 @@ const GuildSkillInput: React.FC<GuildSkillInputProps> = ({ region }) => {
     return null;
   }
 
+  const guildForce = CurrentSymbolInfo.guild.formula(guildSkill);
+
   const handleChange = (value: number | null) => {
     setGuildSkill(value ?? 0);
   };
 
   return (
-    <InputNumber
-      value={guildSkill}
-      onChange={handleChange}
-      size="small"
-      min={0}
-      max={CurrentSymbolInfo.guild.maxLevel}
-      precision={0}
-      placeholder={t('guild_skill')}
-    />
+    <Space>
+      <InputNumber
+        value={guildSkill === 0 ? null : guildSkill}
+        onChange={handleChange}
+        size="small"
+        min={0}
+        max={CurrentSymbolInfo.guild.maxLevel}
+        precision={0}
+        placeholder={t('guild_skill')}
+      />
+      <span>/</span>
+      <span>{guildForce}</span>
+    </Space>
   );
 };
 

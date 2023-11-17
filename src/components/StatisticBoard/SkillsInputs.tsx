@@ -27,18 +27,18 @@ const SkillInputs: React.FC = () => {
   return (
     <Row gutter={[0, 8]}>
       {CurrentSymbolInfo.hyper && (
-        <Col span={24}>
-          <I18nTooltip id="hyper_stat_tips">
+        <I18nTooltip id="hyper_stat_tips">
+          <Col span={24}>
             <HyperStatInput region={symbolType} />
-          </I18nTooltip>
-        </Col>
+          </Col>
+        </I18nTooltip>
       )}
       {CurrentSymbolInfo.guild && (
-        <Col span={24}>
-          <I18nTooltip id="guild_skill_tips">
+        <I18nTooltip id="guild_skill_tips">
+          <Col span={24}>
             <GuildSkillInput region={symbolType} />
-          </I18nTooltip>
-        </Col>
+          </Col>
+        </I18nTooltip>
       )}
     </Row>
   );
