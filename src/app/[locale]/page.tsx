@@ -45,11 +45,7 @@ export default function Home() {
               <GrandisSymbolRegion />
             </Suspense>
           }
-          StatisticBoard={
-            <Suspense>
-              <StatisticBoard />
-            </Suspense>
-          }
+          StatisticBoard={<StatisticBoard />}
           ResultTable={<ResultTable />}
           ResultChart={<ResultChart />}
         />
