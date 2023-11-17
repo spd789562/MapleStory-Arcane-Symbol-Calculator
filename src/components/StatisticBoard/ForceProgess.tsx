@@ -33,10 +33,6 @@ const ForceProgress: React.FC = () => {
   const { currentForce, availableForce, symbolType } =
     useAtomValue(forceInfoSelector);
 
-  if (availableForce === 0) {
-    return null;
-  }
-
   return (
     <Statistic
       title={
@@ -49,7 +45,7 @@ const ForceProgress: React.FC = () => {
         />
       }
       value={numberFormat(currentForce)}
-      suffix={`/${numberFormat(availableForce)}`}
+      suffix={`/ ${numberFormat(availableForce)}`}
       precision={0}
     />
   );

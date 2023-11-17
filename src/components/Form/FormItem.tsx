@@ -15,7 +15,7 @@ export interface FormItemProps {
   /** need colon in the end of label */
   withColon?: boolean;
 }
-const FormItem = ({ name, className, id, label, wrapperCol, style, withColon, children }: FormItemProps) => {
+const FormItem = ({ name, className = '', id, label, wrapperCol, style, withColon = false, children }: FormItemProps) => {
   return (
     <Row className={`antd-form-item ${className}`} style={style}>
       <Col className="antd-form-item-label">

@@ -13,7 +13,7 @@ export default function FormLabel({ name, id, label, className = '', withColon =
   const text = (id && t(id)) || label;
   const title = typeof text === 'string' ? text : undefined;
   return (
-    <label className={`${withColon ? '' : 'ant-form-item-no-colon '}${className}`} htmlFor={name} title={title}>
+    <label className={`${withColon ? '' : 'antd-form-item-no-colon'} ${className}`} htmlFor={name} title={title}>
       {text}
     </label>
   );

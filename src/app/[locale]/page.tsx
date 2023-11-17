@@ -1,5 +1,5 @@
+import { Suspense } from 'react';
 import Layout from 'antd/lib/layout';
-
 import { Footer, Header, Content } from 'antd/lib/layout/layout';
 import BackTop from 'antd/lib/float-button/BackTop';
 import Card from 'antd/lib/card';
@@ -35,16 +35,30 @@ export default function Home() {
           <ToolTabs />
         </Card>
         <Tools
-          ArcaneTab={<ArcaneSymbolRegion />}
-          GrandisTab={<GrandisSymbolRegion />}
-          StatisticBoard={<StatisticBoard />}
+          ArcaneTab={
+            <Suspense>
+              <ArcaneSymbolRegion />
+            </Suspense>
+          }
+          GrandisTab={
+            <Suspense>
+              <GrandisSymbolRegion />
+            </Suspense>
+          }
+          StatisticBoard={
+            <Suspense>
+              <StatisticBoard />
+            </Suspense>
+          }
           ResultTable={<ResultTable />}
           ResultChart={<ResultChart />}
         />
       </Content>
       <BackTop />
       <Footer className="text-center px-4">
-        <PageFooter />
+        <Suspense>
+          <PageFooter />
+        </Suspense>
       </Footer>
     </Layout>
   );
