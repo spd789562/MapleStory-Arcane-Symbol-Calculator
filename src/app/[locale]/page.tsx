@@ -14,6 +14,7 @@ import {
   ArcaneSymbolRegion,
   GrandisSymbolRegion,
 } from '@/components/Tools/SymbolTools';
+import OtherTools from '@/components/Tools/OtherTools';
 import StatisticBoard from '@/components/StatisticBoard';
 import ResultTable from '@/components/Result/Table';
 import ResultChart from '@/components/Result/Chart';
@@ -43,6 +44,11 @@ export default function Home() {
           GrandisTab={
             <Suspense>
               <GrandisSymbolRegion />
+            </Suspense>
+          }
+          OtherToolsTab={
+            <Suspense>
+              <OtherTools />
             </Suspense>
           }
           StatisticBoard={<StatisticBoard />}
