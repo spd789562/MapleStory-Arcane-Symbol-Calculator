@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { symbolsAtom } from './symbols';
+import { symbolsAtom, type SymbolState } from './symbols';
 import { symbolTypeAtom } from './tab';
 import {
   resetDayAtom,
@@ -11,7 +11,7 @@ import {
 
 import SymbolInfo from '@/mapping/force';
 import SymbolLevelInfo from '@/mapping/symbol';
-import SymbolRegionInfo, { SymbolTypeMapping } from '@/mapping/region';
+import SymbolRegionInfo, { SymbolTypeMapping, SymbolType } from '@/mapping/region';
 
 import { path, sum } from 'ramda';
 import symbolMatch from '@/util/symbol-match';
@@ -22,15 +22,19 @@ import {
   type ToTargetLevelData,
 } from '@/util/calcToTargetLevelData';
 
+export const getSymbolLevels = (symbolType: SymbolType, symbolDatas: Record<string, SymbolState>) => {
+  const symbolExps = SymbolTypeMapping[symbolType].map(
+    (regionType) => path([regionType, 'count'], symbolDatas) || 0,
+  );
+  return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
+}
+
 export const symbolLevelsSelector = atom((get) => {
   const symbolType = get(symbolTypeAtom);
   if (!symbolType) return [];
 
   const symbols = get(symbolsAtom);
-  const symbolExps = SymbolTypeMapping[symbolType].map(
-    (regionType) => path([regionType, 'count'], symbols) || 0,
-  );
-  return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
+  return getSymbolLevels(symbolType, symbols);
 });
 
 export const symbolLevelAndHoldSelector = atom((get) => {
