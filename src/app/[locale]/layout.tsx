@@ -7,6 +7,7 @@ import { NextIntlClientProvider, createTranslator } from 'next-intl';
 import StyledComponentsRegistry from './lib.client/AntdRegistry';
 import JotaiProvider from './lib.client/JotaiProvider';
 import ConfigProvider from 'antd/lib/config-provider';
+import Analytics from './analytics';
 
 import theme from '@/theme/antd';
 
@@ -60,6 +61,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Loc
             </ConfigProvider>
           </NextIntlClientProvider>
         </JotaiProvider>
+        <Analytics />
       </body>
     </html>
   );
