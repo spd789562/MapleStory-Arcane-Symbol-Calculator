@@ -43,7 +43,6 @@ const SymbolCatalyst = () => {
                 <CustomSwitch />
               </div>
               <div>
-                <I18nText id="catalyst_upgrade_cost" />
                 <CostToUpgrade />
               </div>
             </div>

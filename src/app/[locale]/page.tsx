@@ -18,6 +18,7 @@ import OtherTools from '@/components/Tools/OtherTools';
 import StatisticBoard from '@/components/StatisticBoard';
 import ResultTable from '@/components/Result/Table';
 import ResultChart from '@/components/Result/Chart';
+import AdInfo from '@/components/AdInfo';
 import PageFooter from '@/components/PageFooter';
 
 export default function Home() {
@@ -55,6 +56,7 @@ export default function Home() {
           ResultTable={<ResultTable />}
           ResultChart={<ResultChart />}
         />
+        <AdInfo />
       </Content>
       <BackTop />
       <Footer className="text-center px-4">

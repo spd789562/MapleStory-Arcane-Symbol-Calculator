@@ -1,6 +1,9 @@
-import Script from "next/script";
+import Script from 'next/script';
 
 const Analytics = () => {
+  if (!process.env.NEXT_PUBLIC_ANALYTICS_ID) {
+    return null;
+  }
   return (
     <>
       <Script
