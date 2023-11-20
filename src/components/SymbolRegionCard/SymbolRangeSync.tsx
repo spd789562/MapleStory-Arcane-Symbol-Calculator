@@ -6,10 +6,10 @@ import { symbolAtomMap } from '@/store/symbols';
 
 import SymbolInputRangeSync from '@/components/SymbolInputRangeSync';
 
-import type { SymbolType, ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolType, SymbolRegionType } from '@/mapping/region';
 
 interface SymbolRangeSyncProps {
-  name: ArcaneSymbolType | GrandisSymbolType;
+  name: SymbolRegionType;
   region: SymbolType;
 }
 const SymbolRangeSync: React.FC<SymbolRangeSyncProps> = ({ name, region }) => {

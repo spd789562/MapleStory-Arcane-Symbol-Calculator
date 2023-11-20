@@ -7,10 +7,10 @@ import { symbolAtomMap } from '@/store/symbols';
 import Switch from 'antd/lib/switch';
 import FormItem from '@/components/Form/FormItem';
 
-import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolRegionType } from '@/mapping/region';
 
 interface PartyQuestSwitchProps {
-  region: ArcaneSymbolType | GrandisSymbolType;
+  region: SymbolRegionType;
   count: number;
 }
 const PartyQuestSwitch: React.FC<PartyQuestSwitchProps> = ({ region, count }) => {

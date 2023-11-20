@@ -2,11 +2,11 @@ import Avatar from 'antd/lib/avatar/avatar';
 
 import { useTranslations } from 'next-intl';
 
-import type { SymbolType, ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolType, SymbolRegionType } from '@/mapping/region';
 
 interface SymbolAvatarProps {
   region: SymbolType;
-  name: ArcaneSymbolType | GrandisSymbolType | 'default';
+  name: SymbolRegionType | 'default';
 }
 const SymbolAvatar: React.FC<SymbolAvatarProps> = ({ region, name }) => {
   const t = useTranslations();

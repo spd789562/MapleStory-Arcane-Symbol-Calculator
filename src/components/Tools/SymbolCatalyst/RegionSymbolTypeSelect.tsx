@@ -7,12 +7,7 @@ import { symbolTypeAtom, currentSymbolTypeAtom } from './store';
 
 import Select from 'antd/lib/select';
 
-import {
-  SymbolType,
-  SymbolTypeMapping,
-  ArcaneSymbolType,
-  GrandisSymbolType,
-} from '@/mapping/region';
+import { SymbolTypeMapping, SymbolRegionType } from '@/mapping/region';
 
 const RegionSymbolTypeSelect = () => {
   const symbolType = useAtomValue(symbolTypeAtom);
@@ -28,7 +23,7 @@ const RegionSymbolTypeSelect = () => {
     [t, symbolType],
   );
 
-  const handleChange = (value: ArcaneSymbolType | GrandisSymbolType | null) => {
+  const handleChange = (value: SymbolRegionType | null) => {
     if (value === null) {
       return;
     }

@@ -1,8 +1,7 @@
 import SymbolRegionInfo, {
   SymbolType,
-  ArcaneSymbolType,
-  GrandisSymbolType,
   SymbolRegionData,
+  type SymbolRegionType,
 } from '@/mapping/region';
 import SymbolLevelInfo from '@/mapping/symbol';
 
@@ -17,7 +16,7 @@ dayjs.extend(isoWeek);
 
 export interface CalcToTargetLevelDataParam {
   region: SymbolType;
-  key: ArcaneSymbolType | GrandisSymbolType;
+  key: SymbolRegionType;
   /** target symbol level */
   level: number;
   /** current symbol exp */
@@ -33,7 +32,7 @@ export interface CalcToTargetLevelDataParam {
 }
 
 export interface ToTargetLevelData {
-  key: ArcaneSymbolType | GrandisSymbolType;
+  key: SymbolRegionType;
   /** target symbol level */
   level: number;
   /** target symbol complete date */

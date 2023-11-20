@@ -6,10 +6,10 @@ import { symbolAtomMap } from '@/store/symbols';
 
 import Button from 'antd/lib/button';
 
-import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolRegionType } from '@/mapping/region';
 
 interface SelectableApplyButtonProps {
-  name: ArcaneSymbolType | GrandisSymbolType;
+  name: SymbolRegionType;
 }
 const SelectableApplyButton: React.FC<SelectableApplyButtonProps> = ({
   name,

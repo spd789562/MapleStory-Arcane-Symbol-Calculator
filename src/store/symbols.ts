@@ -3,7 +3,7 @@ import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { withImmer } from 'jotai-immer';
 
-import { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import { ArcaneSymbolType, GrandisSymbolType, type SymbolRegionType } from '@/mapping/region';
 
 const legacyStorageKey = 'MAPLESTORE_ARCANE_SYMBOL_CALCULATOR_DATA';
 
@@ -17,7 +17,7 @@ export interface SymbolState {
   /** party quest */
   party?: boolean;
 }
-const _symbolsAtom = atomWithStorage<Record<ArcaneSymbolType | GrandisSymbolType, SymbolState>>(legacyStorageKey, {
+const _symbolsAtom = atomWithStorage<Record<SymbolRegionType, SymbolState>>(legacyStorageKey, {
   [ArcaneSymbolType.VanishingJourney]: {},
   [ArcaneSymbolType.ChuChu]: {},
   [ArcaneSymbolType.Lachelein]: {},
@@ -33,7 +33,7 @@ const _symbolsAtom = atomWithStorage<Record<ArcaneSymbolType | GrandisSymbolType
 });
 export const symbolsAtom = withImmer(_symbolsAtom);
 
-const createSymbolStateAtoms = (symbolType: ArcaneSymbolType | GrandisSymbolType) => {
+const createSymbolStateAtoms = (symbolType: SymbolRegionType) => {
   const symbolAtom = atom((get) => get(symbolsAtom)[symbolType] || {});
 
   const questAtom = atom(

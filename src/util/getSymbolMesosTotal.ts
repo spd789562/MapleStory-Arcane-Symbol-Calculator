@@ -4,15 +4,11 @@ import symbolMatch from './symbol-match';
 import numberFormat from './numberFormat';
 import { propEq, times } from 'ramda';
 
-import type {
-  SymbolType,
-  ArcaneSymbolType,
-  GrandisSymbolType,
-} from '@/mapping/region';
+import type { SymbolType, SymbolRegionType } from '@/mapping/region';
 
 interface GetSymbolMesosTotalParam {
   region: SymbolType;
-  zone: ArcaneSymbolType | GrandisSymbolType;
+  zone: SymbolRegionType;
   /** symbol exp */
   count: number;
 }

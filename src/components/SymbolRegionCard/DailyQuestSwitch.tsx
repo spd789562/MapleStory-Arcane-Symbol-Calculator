@@ -8,10 +8,10 @@ import Switch from 'antd/lib/switch';
 import FormItem from '@/components/Form/FormItem';
 import DailyQuestAvatar from '@/components/SymbolRegionCard/DailyQuestAvatar';
 
-import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolRegionType } from '@/mapping/region';
 
 interface DailyQuestSwitchProps {
-  region: ArcaneSymbolType | GrandisSymbolType;
+  region: SymbolRegionType;
   count: number;
 }
 const DailyQuestSwitch: React.FC<DailyQuestSwitchProps> = ({ region, count }) => {

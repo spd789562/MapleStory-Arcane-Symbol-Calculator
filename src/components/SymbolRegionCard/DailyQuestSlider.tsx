@@ -8,10 +8,10 @@ import Slider from 'antd/lib/slider';
 import FormItem from '@/components/Form/FormItem';
 import DailyQuestAvatar from '@/components/SymbolRegionCard/DailyQuestAvatar';
 
-import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolRegionType } from '@/mapping/region';
 
 interface DailyQuestSliderProps {
-  region: ArcaneSymbolType | GrandisSymbolType;
+  region: SymbolRegionType;
   counts: number[];
 }
 const DailyQuestSlider: React.FC<DailyQuestSliderProps> = ({ region, counts }) => {

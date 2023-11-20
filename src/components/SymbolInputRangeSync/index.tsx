@@ -8,12 +8,12 @@ import ExpInput from '@/components/SymbolInputRangeSync/ExpInput';
 import TotalExpDisplay from '@/components/SymbolInputRangeSync/TotalExpDisplay';
 import TotalExpSlider from '@/components/SymbolInputRangeSync/TotalExpSlider';
 
-import type { SymbolType, ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolType, SymbolRegionType } from '@/mapping/region';
 
 import symbolMatch from '@/util/symbol-match';
 
 interface SymbolInputRangeSyncProps {
-  name: ArcaneSymbolType | GrandisSymbolType | 'default';
+  name: SymbolRegionType | 'default';
   region: SymbolType;
   value: number;
   onChange?: (value: number | null) => void;

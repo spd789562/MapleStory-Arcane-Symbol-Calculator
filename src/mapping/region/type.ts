@@ -21,6 +21,8 @@ export enum GrandisSymbolType {
   Carcion = 'carcion',
 }
 
+export type SymbolRegionType = ArcaneSymbolType | GrandisSymbolType;
+
 export interface SymbolPartyQuestData {
   /** party quest name */
   name: string;
@@ -42,7 +44,7 @@ export interface SymbolRegionData {
   /** symbol party quest */
   pquest?: SymbolPartyQuestData;
   /** key for mapping or something */
-  key: ArcaneSymbolType | GrandisSymbolType;
+  key: SymbolRegionType;
   /** how many cost base on given level */
   costFormula: (level: number) => number;
   /** value might be estimate by me */

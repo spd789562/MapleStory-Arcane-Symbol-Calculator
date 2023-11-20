@@ -8,9 +8,9 @@ import ArrowRightOutlined from '@ant-design/icons/ArrowRightOutlined';
 
 import symbolMatch from '@/util/symbol-match';
 
-import type { SymbolType, ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolType, SymbolRegionType } from '@/mapping/region';
 
-const createPreviewAtom = (region: SymbolType, name: ArcaneSymbolType | GrandisSymbolType) => {
+const createPreviewAtom = (region: SymbolType, name: SymbolRegionType) => {
   return atom((get) => {
     const extra = get(symbolAtomMap[name].extraAtom);
     const total = get(symbolAtomMap[name].countAtom) + extra;
@@ -26,7 +26,7 @@ const createPreviewAtom = (region: SymbolType, name: ArcaneSymbolType | GrandisS
 
 interface SelectableResultPreviewProps {
   region: SymbolType;
-  name: ArcaneSymbolType | GrandisSymbolType;
+  name: SymbolRegionType;
 }
 const SelectableResultPreview: React.FC<SelectableResultPreviewProps> = ({ region, name }) => {
   /* it seems none sense though.... */

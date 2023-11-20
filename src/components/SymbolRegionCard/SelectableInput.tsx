@@ -5,10 +5,10 @@ import { symbolAtomMap } from '@/store/symbols';
 
 import InputNumber from 'antd/lib/input-number';
 
-import type { ArcaneSymbolType, GrandisSymbolType } from '@/mapping/region';
+import type { SymbolRegionType } from '@/mapping/region';
 
 interface SelectableInputProps {
-  name: ArcaneSymbolType | GrandisSymbolType;
+  name: SymbolRegionType;
 }
 const SelectableInput: React.FC<SelectableInputProps> = ({ name }) => {
   const [value, setValue] = useAtom(symbolAtomMap[name].extraAtom);
