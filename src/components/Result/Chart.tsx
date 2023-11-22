@@ -8,13 +8,18 @@ import {
 } from '@/store/selector';
 import { symbolTypeAtom } from '@/store/tab';
 
-import Line, { LineConfig } from '@ant-design/plots/lib/components/line';
+import type { LineConfig } from '@ant-design/plots/lib/components/line';
 
 import dayjs from 'dayjs';
 import { evolve } from 'ramda';
+import dynamic from 'next/dynamic';
 
 import SymbolInfo from '@/mapping/force';
 import { SymbolType } from '@/mapping/region';
+
+const Line = dynamic(() => import('@ant-design/plots/lib/components/line'), {
+  ssr: false,
+});
 
 const chartDataAtom = atom((get) => {
   const symbolType = get(symbolTypeAtom);
