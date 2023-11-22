@@ -1,5 +1,5 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: true,
+  enabled: process.env.ANALYZE === 'true',
 });
 
 const withPWA = require('@ducanh2912/next-pwa').default({
