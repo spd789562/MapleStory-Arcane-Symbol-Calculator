@@ -105,9 +105,9 @@
   "web_maplesalon": "Maplesalon",
   "web_boss_crystal_calculator": "Boss Crystal Calculator (Optimal)",
 
-  "web_daily_party_version": "Daily Party Quest Version (Before Savior Update)",
+  "web_daily_party_version": "Daily Party Quest Version (Before Savior)",
   "web_weekly_party_version": "Weekly Party Quest Version",
-  "web_weekly_party_20th_version": "Weekly Party Quest Version (After KMS 20th anniversary)",
+  "web_weekly_party_20th_version": "After NewAge",
 
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",

@@ -58,7 +58,7 @@ const link_daily =
   'https://maplestory-arcane-symbol-calculator-git-reserv-35cbad-spd789562.vercel.app'
 
 const link_before =
-  'https://maplestory-arcane-symbol-calculator-git-featur-c06853-spd789562.vercel.app'
+  'https://maplestory-arcane-symbol-calculator.vercel.app'
 
 function Home({ t, i18n }) {
   const [form] = Form.useForm()
