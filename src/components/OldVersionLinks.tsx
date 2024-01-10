@@ -10,11 +10,11 @@ const OldVersionLinks = () => {
   return (
     <Col span={24} className="mb-2">
       <Button href={link_daily} target="_blank">
-        <I18nText id="web_daily_party_version" />
+        <I18nText id="web_weekly_party_version" />
         &nbsp;&gt;
       </Button>
       <Button href={link_before} target="_blank" className="mt-2 sm:mt-0 sm:ml-2">
-        <I18nText id="web_weekly_party_version" />
+        <I18nText id="web_daily_party_version" />
         &nbsp;&gt;
       </Button>
     </Col>
