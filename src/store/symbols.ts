@@ -40,6 +40,7 @@ const createSymbolStateAtoms = (symbolType: SymbolRegionType) => {
     (get) => get(symbolAtom).quest || false,
     (_, set, quest: SymbolState['quest']) => {
       set(symbolsAtom, (draft) => {
+        if(!draft[symbolType]) draft[symbolType] = {};
         draft[symbolType].quest = quest;
       });
     },
@@ -49,6 +50,7 @@ const createSymbolStateAtoms = (symbolType: SymbolRegionType) => {
     (get) => get(symbolAtom).count || 0,
     (_, set, count: SymbolState['count']) => {
       set(symbolsAtom, (draft) => {
+        if(!draft[symbolType]) draft[symbolType] = {};
         draft[symbolType].count = count;
       });
     },
@@ -58,6 +60,7 @@ const createSymbolStateAtoms = (symbolType: SymbolRegionType) => {
     (get) => get(symbolAtom).extra || 0,
     (_, set, extra: SymbolState['extra']) => {
       set(symbolsAtom, (draft) => {
+        if(!draft[symbolType]) draft[symbolType] = {};
         draft[symbolType].extra = extra;
       });
     },
@@ -67,6 +70,7 @@ const createSymbolStateAtoms = (symbolType: SymbolRegionType) => {
     (get) => get(symbolAtom).party || false,
     (_, set, party: SymbolState['party']) => {
       set(symbolsAtom, (draft) => {
+        if(!draft[symbolType]) draft[symbolType] = {};
         draft[symbolType].party = party;
       });
     },
