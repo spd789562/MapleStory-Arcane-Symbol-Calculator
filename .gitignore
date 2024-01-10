@@ -38,3 +38,4 @@ local.config.js
 **/public/worker**
 **/public/fallback**
 **/public/precache**
+.vercel

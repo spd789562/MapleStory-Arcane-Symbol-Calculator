@@ -47,7 +47,6 @@ const GrandisZone: SymbolRegionData[] = [
     name: 'shangri_la',
     daily: 10,
     key: GrandisSymbolType.ShangriLa,
-    isEstimate: true,
     costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.ShangriLa]),
   },
   {
