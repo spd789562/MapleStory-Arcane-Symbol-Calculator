@@ -11,7 +11,10 @@ import {
 
 import SymbolInfo from '@/mapping/force';
 import SymbolLevelInfo from '@/mapping/symbol';
-import SymbolRegionInfo, { SymbolTypeMapping, SymbolType } from '@/mapping/region';
+import SymbolRegionInfo, {
+  SymbolTypeMapping,
+  SymbolType,
+} from '@/mapping/region';
 
 import { path, sum } from 'ramda';
 import symbolMatch from '@/util/symbol-match';
@@ -22,12 +25,15 @@ import {
   type ToTargetLevelData,
 } from '@/util/calcToTargetLevelData';
 
-export const getSymbolLevels = (symbolType: SymbolType, symbolDatas: Record<string, SymbolState>) => {
+export const getSymbolLevels = (
+  symbolType: SymbolType,
+  symbolDatas: Record<string, SymbolState>,
+) => {
   const symbolExps = SymbolTypeMapping[symbolType].map(
     (regionType) => path([regionType, 'count'], symbolDatas) || 0,
   );
   return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
-}
+};
 
 export const symbolLevelsSelector = atom((get) => {
   const symbolType = get(symbolTypeAtom);
@@ -141,12 +147,15 @@ export const symbolProgressTableSelector = atom((get) => {
   const CurrentSymbolRegionInfo = SymbolRegionInfo[symbolType];
   const CurrentSymbolLevelInfo = SymbolLevelInfo[symbolType];
 
-  const tableData = CurrentSymbolRegionInfo.map((regionData) => ({
-    ...regionData,
-    currentCount: symbols[regionData.key].count || 0,
-    dailyQuest: symbols[regionData.key].quest || false,
-    dailyParty: symbols[regionData.key].party || false,
-  }))
+  const tableData = CurrentSymbolRegionInfo.map((regionData) => {
+    const data = symbols[regionData.key] || {};
+    return {
+      ...regionData,
+      currentCount: data.count || 0,
+      dailyQuest: data.quest || false,
+      dailyParty: data.party || false,
+    };
+  })
     .filter(({ currentCount }) => currentCount > 0)
     .map((regionData) => {
       const { name, key, daily, pquest, currentCount, dailyQuest, dailyParty } =

@@ -41,12 +41,15 @@ const completeDateSelector = atom((get) => {
   }
 
   const statisticData = SymbolRegion[symbolType]
-    .map((regionData) => ({
-      ...regionData,
-      currentCount: symbols[regionData.key].count || 0,
-      dailyQuest: symbols[regionData.key].quest || false,
-      dailyParty: symbols[regionData.key].party || false,
-    }))
+    .map((regionData) => {
+      const data = symbols[regionData.key] || {};
+      return {
+          ...regionData,
+          currentCount: data.count || 0,
+          dailyQuest: data.quest || false,
+          dailyParty: data.party || false,
+        }
+      })
     .filter(({ currentCount }) => currentCount > 0)
     .map(
       ({ name, key, daily, pquest, currentCount, dailyQuest, dailyParty }) => {
