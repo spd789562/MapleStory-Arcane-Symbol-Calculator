@@ -25,16 +25,16 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*.local
 
 # vercel
 .vercel
 local.config.js
 .env
 
-#service worker
-public/sw.js*
-public/workbox-*
+# next-pwa
+**/public/workbox**
+**/public/sw**
+**/public/worker**
+**/public/fallback**
+**/public/precache**
