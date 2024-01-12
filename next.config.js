@@ -15,8 +15,13 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: '/:locale(zh_tw|zh_cn)',
-        destination: '/:locale(zh-tw|zh-cn)',
+        source: '/zh_tw',
+        destination: '/zh-tw)',
+        permanent: true,
+      },
+      {
+        source: '/zh_cn',
+        destination: '/zh-cn)',
         permanent: true,
       },
     ];
