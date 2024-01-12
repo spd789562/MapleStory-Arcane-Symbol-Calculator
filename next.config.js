@@ -16,12 +16,12 @@ const nextConfig = {
     return [
       {
         source: '/zh_tw',
-        destination: '/zh-tw)',
+        destination: '/',
         permanent: true,
       },
       {
         source: '/zh_cn',
-        destination: '/zh-cn)',
+        destination: '/',
         permanent: true,
       },
     ];
