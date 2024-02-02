@@ -72,6 +72,7 @@ export const currentCountSelector = atom((get) => {
 
 /* after catalyst value */
 export const afterCountSelector = atom((get) => {
+  const multiply = get(symbolTypeAtom) === SymbolType.Arcane ? 0.8 : 0.6;
   return Math.floor(get(currentCountSelector) * 0.8);
 });
 
