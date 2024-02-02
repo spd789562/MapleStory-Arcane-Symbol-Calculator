@@ -25,13 +25,20 @@ import {
   type ToTargetLevelData,
 } from '@/util/calcToTargetLevelData';
 
+export const getSymbolExps = (
+  symbolType: SymbolType,
+  symbolDatas: Record<string, SymbolState>,
+) => {
+  return SymbolTypeMapping[symbolType].map(
+    (regionType) => path([regionType, 'count'], symbolDatas) || 0,
+  );
+};
+
 export const getSymbolLevels = (
   symbolType: SymbolType,
   symbolDatas: Record<string, SymbolState>,
 ) => {
-  const symbolExps = SymbolTypeMapping[symbolType].map(
-    (regionType) => path([regionType, 'count'], symbolDatas) || 0,
-  );
+  const symbolExps = getSymbolExps(symbolType, symbolDatas);
   return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
 };
 

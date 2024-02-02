@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 
 import { symbolsAtom } from '@/store/symbols';
 import { hyperStatAtom, guildSkillAtom } from '@/store/settings';
-import { getSymbolLevels } from '@/store/selector';
+import { getSymbolExps } from '@/store/selector';
 
 import getSymbolForceTotal from '@/util/getSymbolForceTotal';
 import { add, multiply, pipe, evolve, prop } from 'ramda';
@@ -32,10 +32,10 @@ export const currentForceSelector = atom((get) => {
   }
   const symbols = get(symbolsAtom);
   const symbolType = get(calcForceTypeAtom);
-  const symbolLevels = getSymbolLevels(symbolType, symbols);
+  const symbolExps = getSymbolExps(symbolType, symbols);
   const force = getSymbolForceTotal({
     region: symbolType,
-    symbolExpList: symbolLevels,
+    symbolExpList: symbolExps,
   });
 
   let additionalForce = 0;
