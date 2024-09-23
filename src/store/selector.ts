@@ -13,7 +13,8 @@ import SymbolInfo from '@/mapping/force';
 import SymbolLevelInfo from '@/mapping/symbol';
 import SymbolRegionInfo, {
   SymbolTypeMapping,
-  SymbolType,
+  type SymbolType,
+  type SymbolRegionType,
 } from '@/mapping/region';
 
 import { path, sum } from 'ramda';
@@ -39,6 +40,24 @@ export const getSymbolLevels = (
   symbolDatas: Record<string, SymbolState>,
 ) => {
   const symbolExps = getSymbolExps(symbolType, symbolDatas);
+  return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
+};
+
+export const getSymbolExpsByRegions = (
+  regions: SymbolRegionType[],
+  symbolDatas: Record<string, SymbolState>,
+) => {
+  return regions.map(
+    (regionType) => path([regionType, 'count'], symbolDatas) || 0,
+  );
+};
+
+export const getSymbolLevelsByRegions = (
+  symbolType: SymbolType,
+  regions: SymbolRegionType[],
+  symbolDatas: Record<string, SymbolState>,
+) => {
+  const symbolExps = getSymbolExpsByRegions(regions, symbolDatas);
   return symbolExps.map((exp) => symbolMatch(symbolType, exp).level);
 };
 

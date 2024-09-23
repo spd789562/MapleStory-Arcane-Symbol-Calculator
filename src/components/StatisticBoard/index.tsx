@@ -7,6 +7,7 @@ import RoleStat from './RoleStat';
 import RoleSelect from './RoleSelect';
 import SkillInputs from './SkillsInputs';
 import CompleteDate from './CompleteDate';
+import OtherStatCards from './OtherStatCards';
 
 function StatisticBoard() {
   return (
@@ -40,6 +41,7 @@ function StatisticBoard() {
           <CompleteDate />
         </Card>
       </Col>
+      <OtherStatCards />
     </Row>
   );
 }
