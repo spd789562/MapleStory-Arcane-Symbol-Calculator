@@ -1,5 +1,5 @@
 import ForceMapping from '@/mapping/force/grandis';
-import { SymbolRegionData, GrandisSymbolType } from './type';
+import { type SymbolRegionData, GrandisSymbolType } from './type';
 
 const IncrementMap = {
   [GrandisSymbolType.Cernium]: 13.2,
@@ -8,14 +8,18 @@ const IncrementMap = {
   [GrandisSymbolType.ShangriLa]: 18.6,
   [GrandisSymbolType.Arteria]: 20.4,
   [GrandisSymbolType.Carcion]: 22.2,
+  [GrandisSymbolType.Tallahart]: 39.8,
 } as const;
 
 const baseCostFormula = (increment: number) => (level: number) => {
   if (level < 1 || level > ForceMapping.symbol.maxLevel) {
     return 0;
   }
-  const floatResult = (9 * Math.pow(level, 2) + 20 * level) * (increment - 0.6 * level);
-  const precisionResult = parseFloat(floatResult.toString()).toPrecision(12);
+  const floatResult =
+    (9 * Math.pow(level, 2) + 20 * level) * (increment - 0.6 * level);
+  const precisionResult = Number.parseFloat(floatResult.toString()).toPrecision(
+    12,
+  );
   return 100000 * Math.floor(+precisionResult);
 };
 
@@ -53,15 +57,22 @@ const GrandisZone: SymbolRegionData[] = [
     name: 'arteria',
     daily: 10,
     key: GrandisSymbolType.Arteria,
-    isEstimate: true,
+    isEstimate: false,
     costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Arteria]),
   },
   {
     name: 'carcion',
     daily: 10,
     key: GrandisSymbolType.Carcion,
-    isEstimate: true,
+    isEstimate: false,
     costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Carcion]),
+  },
+  {
+    name: 'tallahart',
+    daily: 10,
+    key: GrandisSymbolType.Tallahart,
+    isEstimate: false,
+    costFormula: baseCostFormula(IncrementMap[GrandisSymbolType.Tallahart]),
   },
 ];
 

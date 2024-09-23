@@ -19,6 +19,7 @@ export enum GrandisSymbolType {
   ShangriLa = 'shangrila',
   Arteria = 'arteria',
   Carcion = 'carcion',
+  Tallahart = 'tallahart',
 }
 
 export type SymbolRegionType = ArcaneSymbolType | GrandisSymbolType;

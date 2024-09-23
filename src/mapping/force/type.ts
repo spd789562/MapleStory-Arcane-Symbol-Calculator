@@ -1,3 +1,5 @@
+import type { SymbolRegionType } from '@/mapping/region/type';
+
 export interface ForceCalculateEffect {
   /** mate of require value */
   req: number;
@@ -29,6 +31,19 @@ export interface SymbolStateData {
   stateMultiple: number;
   /** symbol state will give by default base on stat unit */
   getStateBasic: (unit: number) => number;
+}
+
+export interface SymbolMainStateData {
+  regions: SymbolRegionType[];
+  /** symbol state will give multiply */
+  stateMultiple: number;
+  /** symbol state will give by default base on stat unit */
+  getStateBasic: (unit: number) => number;
+}
+
+export interface OtherStateData {
+  regions: SymbolRegionType[];
+  formula: (level: number) => number;
 }
 
 export interface ExtraStateData {
@@ -86,6 +101,11 @@ export interface SymbolForceData {
   force: ForceCalculateData;
   /** symbol state data */
   symbol: SymbolStateData;
+  /** symbol main state data like str, dex..etc. */
+  state: SymbolMainStateData;
+  exp?: OtherStateData;
+  mesos?: OtherStateData;
+  drop?: OtherStateData;
   /** hyper state data */
   hyper?: HyperStateData;
   /** guild state data */

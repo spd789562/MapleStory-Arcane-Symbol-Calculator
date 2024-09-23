@@ -1,4 +1,5 @@
-import { SymbolForceData } from './type';
+import type { SymbolForceData } from './type';
+import { GrandisSymbolType } from '../region/type';
 
 const GrandisForceData: SymbolForceData = {
   force: {
@@ -29,6 +30,31 @@ const GrandisForceData: SymbolForceData = {
     forceUnit: 10,
     stateMultiple: 2,
     getStateBasic: (unit) => (unit / 2) * 3,
+  },
+  state: {
+    regions: [
+      GrandisSymbolType.Cernium,
+      GrandisSymbolType.HotelArcs,
+      GrandisSymbolType.Odium,
+      GrandisSymbolType.ShangriLa,
+      GrandisSymbolType.Arteria,
+      GrandisSymbolType.Carcion,
+    ],
+    stateMultiple: 2,
+    getStateBasic: (unit) => (unit / 2) * 3,
+  },
+  /* thous three data may separate by region in future */
+  exp: {
+    regions: [GrandisSymbolType.Tallahart],
+    formula: (level) => 4 * level + 6,
+  },
+  mesos: {
+    regions: [GrandisSymbolType.Tallahart],
+    formula: (level) => level + 4,
+  },
+  drop: {
+    regions: [GrandisSymbolType.Tallahart],
+    formula: (level) => level + 4,
   },
 };
 

@@ -19,6 +19,7 @@ export const SymbolTypeMapping = {
     GrandisSymbolType.ShangriLa,
     GrandisSymbolType.Arteria,
     GrandisSymbolType.Carcion,
+    GrandisSymbolType.Tallahart,
   ],
 };
 

@@ -1,4 +1,5 @@
-import { SymbolForceData } from './type';
+import type { SymbolForceData } from './type';
+import { ArcaneSymbolType } from '../region/type';
 
 const preventOverflowNumber = ({
   number,
@@ -33,6 +34,18 @@ const ArcaneForceData: SymbolForceData = {
     stateMultiple: 1,
     getStateBasic: (unit) => unit * 2,
   },
+  state: {
+    regions: [
+      ArcaneSymbolType.VanishingJourney,
+      ArcaneSymbolType.ChuChu,
+      ArcaneSymbolType.Lachelein,
+      ArcaneSymbolType.Arcana,
+      ArcaneSymbolType.Morass,
+      ArcaneSymbolType.Esfera,
+    ],
+    stateMultiple: 1,
+    getStateBasic: (unit) => unit * 2,
+  },
   hyper: {
     maxLevel: 15,
     maxPower: 100,
@@ -48,7 +61,8 @@ const ArcaneForceData: SymbolForceData = {
   guild: {
     maxLevel: 4,
     maxPower: 30,
-    formula: (level) => (level > 0 ? 10 + preventOverflowNumber({ max: 4, number: level }) * 5 : 0),
+    formula: (level) =>
+      level > 0 ? 10 + preventOverflowNumber({ max: 4, number: level }) * 5 : 0,
     restore: (power = 0) => {
       const _power = +power;
       return _power > 0 ? (_power - 10) / 5 : 0;
